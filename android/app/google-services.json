@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "684068065529",
+    "project_id": "cosmocare-c2fec",
+    "storage_bucket": "cosmocare-c2fec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684068065529:android:6d3ae49cb0c6fb8a905228",
+        "android_client_info": {
+          "package_name": "com.example.app_release2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684068065529-4lv4ugt70nvjncgdmiusvj7t5p4rj5mg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdH7obDZj0lmtBrSvxlCZCeoWjhnmO0jQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "684068065529-4lv4ugt70nvjncgdmiusvj7t5p4rj5mg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

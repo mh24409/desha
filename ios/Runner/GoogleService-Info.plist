@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>684068065529-fl95gpcgk71b05qsf9278hn1t5d6ijgg.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.684068065529-fl95gpcgk71b05qsf9278hn1t5d6ijgg</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBBplJwyIJMQ9PVDgNFdG_-Llz5Ut29uR8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>684068065529</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.appRelease2</string>
+	<key>PROJECT_ID</key>
+	<string>cosmocare-c2fec</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cosmocare-c2fec.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:684068065529:ios:17901ccd13b5f75c905228</string>
+</dict>
+</plist>
