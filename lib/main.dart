@@ -1,50 +1,68 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app_release2/constants.dart';
-import 'package:app_release2/core/Localizations.dart';
-import 'package:app_release2/core/auth/auth_provider.dart';
-import 'package:app_release2/core/navbar.dart';
-import 'package:app_release2/features/Login/views/login_view.dart';
-import 'package:app_release2/features/Splash/views/splash_view.dart';
-import 'package:app_release2/features/home/views/home_view.dart';
-import 'package:app_release2/features/profile/views/profile_view.dart';
-import 'package:flutter/gestures.dart';
+import 'package:cosmo_care/features/customers/controller/customers_controller.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
+import 'core/Constants/ui_constants.dart';
+import 'core/utils/app_languages/controller/binding.dart';
+import 'core/utils/app_languages/translation/translation.dart';
+import 'features/app_control_feature/controllers/main_view_control_cubit.dart';
+import 'features/auth/controller/auth_cubit.dart';
+import 'features/auth/controller/user_cubit.dart';
+import 'features/customers/controller/get_all_customer_cubit.dart';
+import 'features/splash_view/screens/cosmo_care_splash_screen.dart';
+import 'firebase_options.dart';
 
-void main() {
-    WidgetsFlutterBinding.ensureInitialized();
-      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: KPrimaryColor));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-  runApp( ChangeNotifierProvider(
-    create: (ctx) => AuthProvider() ,
-    child: CosmoTrackingApp()
-    )
-    );
+  runApp(const CosmoCareTrackingApp());
 }
 
-class CosmoTrackingApp extends StatelessWidget {
-   CosmoTrackingApp({super.key});
-    
-
+class CosmoCareTrackingApp extends StatelessWidget {
+  const CosmoCareTrackingApp({super.key});
   @override
   Widget build(BuildContext context) {
-final auth = Provider.of<AuthProvider>(context);
-auth.tryAutoLogin();
-
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData().copyWith(scaffoldBackgroundColor: KPrimaryColor ),
-      locale: Get.deviceLocale,
-      translations: Languages(),
-      home: SplashView(),
-      //home: auth.isAuthenticated ? HomeView() : LoginView(),
-
-
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthCubit>(
+          create: (context) => AuthCubit()..onSplashViewScreenLaunch(context),
+        ),
+        BlocProvider<UserCubit>(
+          create: (context) => UserCubit()..getCurrentUserInfo(),
+        ),
+        BlocProvider<MainViewControlCubit>(
+          create: (context) => MainViewControlCubit(),
+        ),
+        BlocProvider<GetAllCustomerCubit>(
+          create: (context) => GetAllCustomerCubit()..getAllCustomers(),
+        ),
+        
+      ],
+      child: ScreenUtilInit(
+        designSize: const Size(360, 690),
+        builder: (context, child) => GetMaterialApp(
+          theme: ThemeData(
+            useMaterial3: true,
+            primaryColor: UiConstant.kCosmoCareCustomColors1,
+            fontFamily: "Gilory",
+          ),
+          debugShowCheckedModeBanner: false,
+          initialBinding: Binding(),
+          translations: Translation(),
+          locale: Locale(Get.deviceLocale!.languageCode),
+          fallbackLocale: const Locale("en"),
+          home: const CosmoCareSplashScreen(),
+        ),
+      ),
     );
   }
 }

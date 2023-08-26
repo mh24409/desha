@@ -1,0 +1,5 @@
+enum PickedImageSources
+{
+  gallery,
+  camera,
+}
