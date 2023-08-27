@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/Constants/api_constants.dart';
 import '../../../core/helper/api_helper.dart';
 import '../model/customer_model.dart';
+import '../view/screens/customer_details_screen.dart';
 import 'get_all_customers_states.dart';
 
 class GetAllCustomerCubit extends Cubit<GetAllCustomersStates> {
   GetAllCustomerCubit() : super(GetAllCustomersInitState());
+
+ 
 
   Future<void> getAllCustomers() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();

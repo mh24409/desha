@@ -9,7 +9,7 @@ import '../../../../core/widgets/widgets/app_language_selector_widget.dart';
 import '../../../auth/view/screens/profile_screen.dart';
 import '../../../customers/view/screens/customer_screen.dart';
 import '../../../map/views/screens/map_screen.dart';
-import '../../../products/views/category_view.dart';
+import '../../../products/views/product_divided_by_cate_screen.dart';
 import '../../controllers/main_view_control_cubit.dart';
 import '../../controllers/main_view_control_state.dart';
 
@@ -116,10 +116,8 @@ class _MainControlScreenState extends State<MainControlScreen> {
         builder: (context, state) {
           if (state is AccountViewStates) {
             return const ProfileScreen();
-            // return const HomeScreen();
           } else if (state is ProductViewStates) {
-            return CategoryView();
-            // return const ShoppingControlScreen();
+            return const ProductDividedByCateScreen();
           } else if (state is CustomersViewStates) {
             return  const CustomersScreen();
           } else {

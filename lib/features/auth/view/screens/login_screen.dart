@@ -10,6 +10,7 @@ import '../../../../core/shared/methods/auth_validation.dart';
 import '../../../../core/widgets/widgets/custom_text_field.dart';
 import '../../../../core/widgets/widgets/vertical_spacer.dart';
 import '../../../app_control_feature/views/screens/main_control_screen.dart';
+import '../../../customers/controller/get_all_customer_cubit.dart';
 import '../../controller/auth_cubit.dart';
 import '../../controller/auth_state.dart';
 import 'package:iconsax/iconsax.dart';
@@ -30,6 +31,7 @@ class LoginScreen extends StatelessWidget {
           if (state is LoginSuccessState) {
             AuthCubit.liveLocation();
             await Get.offAll(() => const MainControlScreen());
+            
           }
           if (state is LoginFailureState) {
             Get.snackbar(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:cosmo_care/core/shared/global_variables.dart' as global;
@@ -14,18 +13,19 @@ class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _MapScreenState createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> {
   List<CustomerModel> allCustomers = [];
   List<Marker> displayedMarkers = [];
-  bool customerLoaded = false;
+  bool customersLoaded = false;
 
   @override
   void initState() {
     super.initState();
-    _getAllCustomers();
+      _getAllCustomers();
   }
 
   Future<void> _getAllCustomers() async {
@@ -33,7 +33,7 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
       allCustomers = customers;
       displayedMarkers = customers.map(_createMarker).toList();
-      customerLoaded = true;
+      customersLoaded = true;
     });
   }
 
@@ -69,16 +69,21 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       body: Stack(
         children: [
-         customerLoaded? GoogleMap(
-            myLocationEnabled: true,
-            markers: Set.from(displayedMarkers),
-            initialCameraPosition: CameraPosition(
-              target: LatLng(global.currentUserLat, global.currentUserLong),
-              zoom: 8.0,
-            ),
-            mapType: MapType.normal,
-          ): const Center(
-                  child: CircularProgressIndicator(color: UiConstant.kCosmoCareCustomColors1,),
+          customersLoaded
+              ? GoogleMap(
+                  myLocationEnabled: true,
+                  markers: Set.from(displayedMarkers),
+                  initialCameraPosition: CameraPosition(
+                    target:
+                        LatLng(global.currentUserLat, global.currentUserLong),
+                    zoom: 8.0,
+                  ),
+                  mapType: MapType.normal,
+                )
+              : const Center(
+                  child: CircularProgressIndicator(
+                    color: UiConstant.kCosmoCareCustomColors1,
+                  ),
                 ),
           Padding(
             padding: const EdgeInsets.all(10.0),

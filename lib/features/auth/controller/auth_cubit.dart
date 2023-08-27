@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/Constants/api_constants.dart';
 import '../../../core/helper/api_helper.dart';
+import '../../customers/controller/get_all_customer_cubit.dart';
 import '../view/screens/login_screen.dart';
 import 'auth_state.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -43,6 +44,8 @@ class AuthCubit extends Cubit<AuthStates> {
         preferences.setString("userName", response["profile"]["full_name"]);
         preferences.setString("image", response["profile"]["image"]);
         BlocProvider.of<UserCubit>(context).getCurrentUserInfo();
+        await BlocProvider.of<GetAllCustomerCubit>(context)
+                .getAllCustomers();
         emit(LoginSuccessState());
       }
     } catch (e) {
@@ -95,9 +98,8 @@ class AuthCubit extends Cubit<AuthStates> {
     bool serviceEnabled;
     PermissionStatus permissionGranted;
     Location location = Location();
-    location.enableBackgroundMode(enable: true);
+    // await enableBackgroundMode();
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
     //---------Request to enable location---------------
     serviceEnabled = await location.serviceEnabled();
     if (!serviceEnabled) {
@@ -125,7 +127,6 @@ class AuthCubit extends Cubit<AuthStates> {
           if (isLogin) {
             global.currentUserLat = currentLocation.latitude!;
             global.currentUserLong = currentLocation.longitude!;
-            
             await _updateUserLocation(
               userId: userId.toString(), // Replace with the actual user ID
               lat: currentLocation.latitude!,
@@ -143,5 +144,7 @@ class AuthCubit extends Cubit<AuthStates> {
         }
       },
     );
+    location.enableBackgroundMode(enable: true);
+
   }
 }

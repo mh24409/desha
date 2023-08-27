@@ -14,6 +14,7 @@ import 'features/app_control_feature/controllers/main_view_control_cubit.dart';
 import 'features/auth/controller/auth_cubit.dart';
 import 'features/auth/controller/user_cubit.dart';
 import 'features/customers/controller/get_all_customer_cubit.dart';
+import 'features/products/controller/categories_cubit.dart';
 import 'features/splash_view/screens/cosmo_care_splash_screen.dart';
 import 'firebase_options.dart';
 
@@ -44,6 +45,9 @@ class CosmoCareTrackingApp extends StatelessWidget {
         ),
         BlocProvider<GetAllCustomerCubit>(
           create: (context) => GetAllCustomerCubit()..getAllCustomers(),
+        ),
+        BlocProvider<CategoriesCubit>(
+          create: (context) => CategoriesCubit()..getProductDividedByCategories(),
         ),
         
       ],
