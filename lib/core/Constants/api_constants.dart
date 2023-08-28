@@ -8,4 +8,5 @@ class ApiConstants {
   static const String createCustomerEndPoint = '/customers/create';
   static const String categoriesEndPoint = '/products_categorized';
   static const String saleZonesEndPoint = '/sales-unit';
+  static const String createSaleOrderEndPoint = '/invoices/invoice';
 }

@@ -12,9 +12,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import '../../../orders/controller/order_controller.dart';
+import '../../../orders/model/customer_products_model.dart';
+import '../../../orders/views/screens/sale_order_line_screen.dart';
 import '../../model/customer_model.dart';
-
+import 'package:cosmo_care/core/shared/global_variables.dart' as global;
 
 class CustomerDetailsScreen extends StatefulWidget {
   final CustomerModel customer;
@@ -200,7 +202,32 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                 contentGap: 6.0,
                 buttonColor: UiConstant.kCosmoCareCustomColors1,
                 borderRadius: 20,
-                onPressed: () async {},
+                onPressed: () async {
+                  if (OrderController.inSaveZoneToCreateOrder(
+                    customerLat: widget.customer.lat,
+                    customerLong: widget.customer.lng,
+                    currentLat: global.currentUserLat,
+                    currentLong: global.currentUserLong,
+                  )) {
+                    int invoiceId = await OrderController.createSaleOrder(
+                        customerId: widget.customer.id);
+                    if (invoiceId != 0) {
+                    List<CustomerProductsModel> offers =  await OrderController.getCustomerOffers(
+                          customerId: widget.customer.id);
+                      Get.to(
+                        () => SaleOrderLineScreen(
+                          offers:offers,
+                          invoiceId: invoiceId,
+                        ),
+                      );
+                    }
+                  } else {
+                    Get.snackbar("Can't Create Order",
+                        "You mustn't be in a distance more than 500m from the customer",
+                        backgroundColor: Colors.red,
+                        duration: const Duration(seconds: 5));
+                  }
+                },
               ),
             )
           ],
