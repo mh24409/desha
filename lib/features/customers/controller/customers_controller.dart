@@ -153,8 +153,8 @@ class CustomersController {
 
   static Future<void> createCustomer(
       {required CustomerData customerData,
-      required ResponsibleData responsibleData,
-      required OwnerData ownerData}) async {
+      required ResponsibleData? responsibleData,
+      required OwnerData? ownerData}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String userToken = preferences.getString("token")!;
     Map<String, String> headers = {
@@ -174,7 +174,7 @@ class CustomersController {
       "website": customerData.website,
       "email": customerData.email,
       "term_duration": customerData.paymentTermId,
-      "owners": [
+      "owners": ownerData != null ?[
         {
           "name": ownerData.name,
           "phone": ownerData.phoneNumber,
@@ -186,8 +186,8 @@ class CustomersController {
           "government": customerData.governmentId,
           "city": customerData.cityId
         }
-      ],
-      "responsiblies": [
+      ]: [],
+      "responsiblies": responsibleData != null?[
         {
           "name": responsibleData.name,
           "phone": responsibleData.phoneNumber,
@@ -199,15 +199,19 @@ class CustomersController {
           "government": customerData.governmentId,
           "city": customerData.cityId
         },
-      ],
+      ] :[],
     };
     try {
-      await ApiHelper().post(
+      final response = await ApiHelper().post(
           url: ApiConstants.baseUrl + ApiConstants.createCustomerEndPoint,
           headers: headers,
           body: body);
-      Get.snackbar("Create Customer", "Create New Customer Success");
-      Get.offAll(()=> const MainControlScreen());
+      if (response["status"] != 5000) {
+        Get.snackbar("Create Customer", "Create New Customer Success");
+        Get.offAll(() => const MainControlScreen());
+      } else {
+        Get.snackbar("Create Customer", "Failed Create New Customer" , backgroundColor: Colors.red);
+      }
     } catch (e) {
       Get.snackbar("error", "Something went wrong please try agin",
           backgroundColor: Colors.red);

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/Constants/ui_constants.dart';
+import '../../../../core/shared/methods/auth_validation.dart';
 import '../../../../core/widgets/widgets/custom_button_widget.dart';
 import '../../../../core/widgets/widgets/custom_text_field.dart';
 import '../../../../core/widgets/widgets/vertical_spacer.dart';
@@ -15,6 +16,7 @@ import 'add_owner_screen.dart';
 class AddResponsibleScreen extends StatelessWidget {
   CustomerData customerData;
   ResponsibleData responsibleData = ResponsibleData();
+  GlobalKey<FormState> formKey = GlobalKey();
   AddResponsibleScreen({Key? key, required this.customerData})
       : super(key: key);
 
@@ -31,91 +33,131 @@ class AddResponsibleScreen extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              children: [
-                CustomTextField(
-                  prefixIconData: Iconsax.user,
-                  hintText: "Responsible Name",
-                  onChange: (value) {
-                    responsibleData.name = value;
-                  },
-                ),
-                const VerticalSpacer(10),
-                CustomTextField(
-                  prefixIconData: Iconsax.mobile,
-                  hintText: "Phone number",
-                  onChange: (value) {
-                    responsibleData.phoneNumber = value;
-                  },
-                ),
-                const VerticalSpacer(10),
-                CustomTextField(
-                  prefixIconData: Icons.email,
-                  hintText: "Email",
-                  onChange: (value) {
-                    responsibleData.email = value;
-                  },
-                ),
-                const VerticalSpacer(10),
-                CustomSingleSelectField<String>(
-                  items: CustomersController.daysData,
-                  title: "Work Start Day",
-                  onSelectionDone: (value) async {
-                    responsibleData.workStartDay = value;
-                  },
-                  itemAsString: (item) => item,
-                  decoration:
-                      selectionFiledDecoration(hintText: "Work Start Day"),
-                ),
-                const VerticalSpacer(10),
-                CustomSingleSelectField<String>(
-                  items: CustomersController.daysData,
-                  title: "Work End Day",
-                  onSelectionDone: (value) async {
-                    responsibleData.workEndDay = value;
-                  },
-                  itemAsString: (item) => item,
-                  decoration:
-                      selectionFiledDecoration(hintText: " Work End Day"),
-                ),
-                const VerticalSpacer(10),
-                CustomSingleSelectField<String>(
-                  items: CustomersController.timeList,
-                  title: "Work Start At",
-                  onSelectionDone: (value) async {
-                    responsibleData.workStartTime = value;
-                  },
-                  itemAsString: (item) => item,
-                  decoration:
-                      selectionFiledDecoration(hintText: "Work Start At"),
-                ),
-                const VerticalSpacer(10),
-                CustomSingleSelectField<String>(
-                  items: CustomersController.timeList,
-                  title: "Work End At",
-                  onSelectionDone: (value) async {
-                    responsibleData.workEndTime = value;
-                  },
-                  itemAsString: (item) => item,
-                  decoration: selectionFiledDecoration(hintText: "Work End At"),
-                ),
-                const VerticalSpacer(10),
-                CustomButton(
-                  buttonColor: UiConstant.kCosmoCareCustomColors1,
-                  buttonHeight: 40.h,
-                  buttonText: "Next",
-                  buttonWidth: MediaQuery.of(context).size.width / 2,
-                  buttonAction: () async {
-                    await Get.to(() => AddOwnerScreen(
-                          customerData: customerData,
-                          responsibleData: responsibleData,
-                        ));
-                  },
-                  buttonMargin: 10,
-                  buttonTextFontSize: 14.sp,
-                  buttonBorderRadius: 10,
-                ),
-              ],
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  CustomTextField(
+                    prefixIconData: Iconsax.user,
+                    hintText: "Responsible Name",
+                    onChange: (value) {
+                      responsibleData.name = value;
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validate: (value) {
+                      return responsibleNameControllerValidator(value);
+                    },
+                  ),
+                  const VerticalSpacer(10),
+                  CustomTextField(
+                    prefixIconData: Iconsax.mobile,
+                    hintText: "Phone number",
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    onChange: (value) {
+                      responsibleData.phoneNumber = value;
+                    },
+                    validate: (value) {
+                      return phoneNumberControllerValidator(value);
+                    },
+                  ),
+                  const VerticalSpacer(10),
+                  CustomTextField(
+                    prefixIconData: Icons.email,
+                    hintText: "Email",
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    onChange: (value) {
+                      responsibleData.email = value;
+                    },
+                    validate: (value) {
+                      return emailControllerValidator(value);
+                    },
+                  ),
+                  const VerticalSpacer(10),
+                  CustomSingleSelectField<String>(
+                    items: CustomersController.daysData,
+                    title: "Work Start Day",
+                    onSelectionDone: (value) async {
+                      responsibleData.workStartDay = value;
+                    },
+                    itemAsString: (item) => item,
+                    decoration:
+                        selectionFiledDecoration(hintText: "Work Start Day"),
+                  ),
+                  const VerticalSpacer(10),
+                  CustomSingleSelectField<String>(
+                    items: CustomersController.daysData,
+                    title: "Work End Day",
+                    onSelectionDone: (value) async {
+                      responsibleData.workEndDay = value;
+                    },
+                    itemAsString: (item) => item,
+                    decoration:
+                        selectionFiledDecoration(hintText: " Work End Day"),
+                  ),
+                  const VerticalSpacer(10),
+                  CustomSingleSelectField<String>(
+                    items: CustomersController.timeList,
+                    title: "Work Start At",
+                    onSelectionDone: (value) async {
+                      responsibleData.workStartTime = value;
+                    },
+                    itemAsString: (item) => item,
+                    decoration:
+                        selectionFiledDecoration(hintText: "Work Start At"),
+                  ),
+                  const VerticalSpacer(10),
+                  CustomSingleSelectField<String>(
+                    items: CustomersController.timeList,
+                    title: "Work End At",
+                    onSelectionDone: (value) async {
+                      responsibleData.workEndTime = value;
+                    },
+                    itemAsString: (item) => item,
+                    decoration:
+                        selectionFiledDecoration(hintText: "Work End At"),
+                  ),
+                  const VerticalSpacer(10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CustomButton(
+                        buttonColor: UiConstant.kCosmoCareCustomColors1,
+                        buttonHeight: 40.h,
+                        buttonText: "Skip",
+                        buttonWidth: MediaQuery.of(context).size.width / 2.5,
+                        buttonAction: () async {
+                          await Get.to(() => AddOwnerScreen(
+                                customerData: customerData,
+                                responsibleData: null,
+                              ));
+                        },
+                        buttonMargin: 10,
+                        buttonTextFontSize: 14.sp,
+                        buttonBorderRadius: 10,
+                      ),
+                      CustomButton(
+                        buttonColor: UiConstant.kCosmoCareCustomColors1,
+                        buttonHeight: 40.h,
+                        buttonText: "Next",
+                        buttonWidth: MediaQuery.of(context).size.width / 2.5,
+                        buttonAction: () async {
+                          if (formKey.currentState!.validate()) {
+                            await Get.to(
+                              () => AddOwnerScreen(
+                                customerData: customerData,
+                                responsibleData: responsibleData,
+                              ),
+                            );
+                          }
+                        },
+                        buttonMargin: 10,
+                        buttonTextFontSize: 14.sp,
+                        buttonBorderRadius: 10,
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

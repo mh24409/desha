@@ -31,6 +31,20 @@ String? userNameControllerValidator(String? value) {
   return null;
 }
 
+String? responsibleNameControllerValidator(String? value) {
+  if (value!.isEmpty) {
+    return 'Responsible name is empty'.tr;
+  }
+  return null;
+}
+
+String? ownerNameControllerValidator(String? value) {
+  if (value!.isEmpty) {
+    return 'Owner name is empty'.tr;
+  }
+  return null;
+}
+
 String? addressControllerValidator(String? value) {
   if (value!.isEmpty) {
     return 'Customer address is empty'.tr;
@@ -44,8 +58,6 @@ String? distinctiveAddressControllerValidator(String? value) {
   }
   return null;
 }
-
-
 
 String? confirmPasswordControllerValidator(String? value, String? password) {
   if (value!.isEmpty) {
