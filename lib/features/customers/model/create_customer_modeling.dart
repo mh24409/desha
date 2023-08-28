@@ -9,6 +9,7 @@ class CustomerData {
   int? paymentTermId;
   int? governmentId;
   int? cityId;
+  int? saleZoneId;
   double? lat;
   double? lng;
 
@@ -25,6 +26,7 @@ class CustomerData {
     this.cityId,
     this.lat,
     this.lng,
+    this.saleZoneId
   });
 }
 

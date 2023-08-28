@@ -7,4 +7,5 @@ class ApiConstants {
   static const String getCustomerGovernmentsEndPoint = '/governorates';
   static const String createCustomerEndPoint = '/customers/create';
   static const String categoriesEndPoint = '/products_categorized';
+  static const String saleZonesEndPoint = '/sales-unit';
 }

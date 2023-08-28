@@ -12,6 +12,8 @@ import '../model/customer_model.dart';
 import '../model/government_model.dart';
 import 'package:cosmo_care/core/shared/global_variables.dart' as global;
 
+import '../model/sale_zone_model.dart';
+
 class CustomersController {
   static List<String> daysData = [
     "Saturday",
@@ -151,6 +153,26 @@ class CustomersController {
     }
   }
 
+  static Future<List<SaleZoneModel>> getSaleZones() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String userToken = preferences.getString("token")!;
+    List<SaleZoneModel> zones = [];
+    Map<String, String> headers = {"Authorization": "Bearer $userToken"};
+    try {
+      final response = await ApiHelper().get(
+          url: ApiConstants.baseUrl + ApiConstants.saleZonesEndPoint,
+          headers: headers);
+      for (var saleZone in response) {
+        zones.add(SaleZoneModel.fromJson(saleZone));
+      }
+      return zones;
+    } catch (e) {
+      Get.snackbar("error", "Something went wrong please try agin",
+          backgroundColor: Colors.red);
+      return zones;
+    }
+  }
+
   static Future<void> createCustomer(
       {required CustomerData customerData,
       required ResponsibleData? responsibleData,
@@ -161,6 +183,7 @@ class CustomersController {
       "Authorization": "token $userToken",
       "Content-Type": "text/html",
     };
+    print(customerData.saleZoneId);
     Map<String, dynamic> body = {
       "title": customerData.name,
       "customer_type": customerData.customerTypeId,
@@ -174,32 +197,37 @@ class CustomersController {
       "website": customerData.website,
       "email": customerData.email,
       "term_duration": customerData.paymentTermId,
-      "owners": ownerData != null ?[
-        {
-          "name": ownerData.name,
-          "phone": ownerData.phoneNumber,
-          "email": ownerData.email,
-          "work_start_at": ownerData.workStartTime,
-          "work_end_at": ownerData.workEndTime,
-          "work_start_day": ownerData.workStartDay,
-          "work_end_day": ownerData.workEndDay,
-          "government": customerData.governmentId,
-          "city": customerData.cityId
-        }
-      ]: [],
-      "responsiblies": responsibleData != null?[
-        {
-          "name": responsibleData.name,
-          "phone": responsibleData.phoneNumber,
-          "email": responsibleData.email,
-          "work_start_at": responsibleData.workStartTime,
-          "work_end_at": responsibleData.workEndTime,
-          "work_start_day": responsibleData.workStartDay,
-          "work_end_day": responsibleData.workEndDay,
-          "government": customerData.governmentId,
-          "city": customerData.cityId
-        },
-      ] :[],
+      "sales_unit": customerData.saleZoneId,
+      "owners": ownerData != null
+          ? [
+              {
+                "name": ownerData.name,
+                "phone": ownerData.phoneNumber,
+                "email": ownerData.email,
+                "work_start_at": ownerData.workStartTime,
+                "work_end_at": ownerData.workEndTime,
+                "work_start_day": ownerData.workStartDay,
+                "work_end_day": ownerData.workEndDay,
+                "government": customerData.governmentId,
+                "city": customerData.cityId
+              }
+            ]
+          : [],
+      "responsiblies": responsibleData != null
+          ? [
+              {
+                "name": responsibleData.name,
+                "phone": responsibleData.phoneNumber,
+                "email": responsibleData.email,
+                "work_start_at": responsibleData.workStartTime,
+                "work_end_at": responsibleData.workEndTime,
+                "work_start_day": responsibleData.workStartDay,
+                "work_end_day": responsibleData.workEndDay,
+                "government": customerData.governmentId,
+                "city": customerData.cityId
+              },
+            ]
+          : [],
     };
     try {
       final response = await ApiHelper().post(
@@ -210,7 +238,8 @@ class CustomersController {
         Get.snackbar("Create Customer", "Create New Customer Success");
         Get.offAll(() => const MainControlScreen());
       } else {
-        Get.snackbar("Create Customer", "Failed Create New Customer" , backgroundColor: Colors.red);
+        Get.snackbar("Create Customer", "Failed Create New Customer",
+            backgroundColor: Colors.red);
       }
     } catch (e) {
       Get.snackbar("error", "Something went wrong please try agin",

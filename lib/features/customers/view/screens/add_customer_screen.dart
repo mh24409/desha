@@ -13,6 +13,7 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../core/widgets/widgets/custom_button_widget.dart';
 import '../../controller/customers_controller.dart';
 import '../../model/create_customer_modeling.dart';
+import '../../model/sale_zone_model.dart';
 import 'add_responsible_screen.dart';
 
 // ignore: must_be_immutable
@@ -20,7 +21,9 @@ class AddCustomerScreen extends StatefulWidget {
   List<CustomerTypeModel> types;
   List<PaymentTermsModel> payments;
   List<GovernmentModel> governments;
-  AddCustomerScreen({Key? key, required this.governments, required this.payments, required this.types}) : super(key: key);
+  List<SaleZoneModel> saleZone;
+
+  AddCustomerScreen({Key? key, required this.governments, required this.payments, required this.types, required this.saleZone}) : super(key: key);
   @override
   State<AddCustomerScreen> createState() => _AddCustomerScreenState();
 }
@@ -80,6 +83,27 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     itemAsString: (item) => item,
                     decoration: selectionFiledDecoration(
                         hintText: "Customer Type"),
+                  ),
+                  CustomSingleSelectField<String>(
+                    items:
+                        widget.saleZone.map((e) => e.title!).toList(),
+                    title: "Sale Zone",
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Sale Zone is Required";
+                      }
+                      return null;
+                    },
+                    onSelectionDone: (value) {
+                      for (var item in widget.saleZone) {
+                        if (item.title == value) {
+                          customerData.saleZoneId = item.id;
+                        }
+                      }
+                    },
+                    itemAsString: (item) => item,
+                    decoration: selectionFiledDecoration(
+                        hintText: "Sale Zone"),
                   ),
                   CustomSingleSelectField<String>(
                     items: widget.payments.map((e) => e.title!).toList(),
