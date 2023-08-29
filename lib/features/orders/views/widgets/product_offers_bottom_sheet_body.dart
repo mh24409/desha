@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import '../../../../core/Constants/ui_constants.dart';
 import '../../model/offers_model.dart';
 
@@ -26,7 +26,7 @@ class ProductOffersBottomSheetBody extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: Text(
-                  "${offersModel.amount.toString()} to ${offersModel.amountTo.toString()}",
+                  "${offersModel.amount.toString()} ${"to".tr} ${offersModel.amountTo.toString()}",
                   textAlign: TextAlign.center,
                 ),
               ),

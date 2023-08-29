@@ -41,7 +41,7 @@ class OrderController {
       return response["invoiceid"];
     } catch (e) {
       Get.snackbar(
-        "Something went wrong. please try agin",
+        "Something went wrong. please try agin".tr,
         "",
         backgroundColor: Colors.red,
       );
@@ -69,7 +69,7 @@ class OrderController {
       return products;
     } catch (e) {
       Get.snackbar(
-        "Something went wrong. please try agin",
+        "Something went wrong. please try agin".tr,
         "",
         backgroundColor: Colors.red,
       );
@@ -101,22 +101,22 @@ class OrderController {
       );
       if (response["status"] == 5000) {
         Get.snackbar(
-          "Something went wrong. please try agin",
+          "Something went wrong. please try agin".tr,
           "",
           backgroundColor: Colors.red,
         );
       } else {
         Get.offAll(const MainControlScreen());
         Get.snackbar(
-          "New Sale Order",
-          "Creating Success",
+          "New Sale Order".tr,
+          "Creating Success".tr,
           backgroundColor: Colors.green,
         );
       }
     } catch (e) {
       Get.snackbar(
-        "Internet connection",
-        "Please check your internet connection",
+        "Internet connection".tr,
+        "Please check your internet connection".tr,
         backgroundColor: Colors.red,
       );
     }

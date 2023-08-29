@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/Constants/ui_constants.dart';
 
 class DetailRow extends StatelessWidget {

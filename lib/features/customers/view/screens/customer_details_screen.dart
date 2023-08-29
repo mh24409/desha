@@ -44,9 +44,9 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 1.0,
-        title: const Text(
-          'Customer Details',
-          style: TextStyle(
+        title: Text(
+          'Customer Details'.tr,
+          style: const TextStyle(
             color: Colors.black,
           ),
         ),
@@ -120,9 +120,9 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                         _currentView = DetailsView.CustomerDetails;
                       });
                     },
-                    child: const Text(
-                      'Customer Details',
-                      style: TextStyle(
+                    child: Text(
+                      'Customer Details'.tr,
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
@@ -145,9 +145,9 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                         _currentView = DetailsView.Responsibility;
                       });
                     },
-                    child: const Text(
-                      'Responsibility',
-                      style: TextStyle(
+                    child: Text(
+                      'Responsibility'.tr,
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
@@ -169,9 +169,9 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                         _currentView = DetailsView.Owner;
                       });
                     },
-                    child: const Text(
-                      'Owner',
-                      style: TextStyle(
+                    child: Text(
+                      'Owner'.tr,
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
@@ -223,10 +223,15 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                       );
                     }
                   } else {
-                    Get.snackbar("Can't Create Order",
-                        "You mustn't be in a distance more than 500m from the customer",
-                        backgroundColor: Colors.red,
-                        duration: const Duration(seconds: 5));
+                    Get.snackbar(
+                      "Can't Create Order".tr,
+                      "You mustn't be in a distance more than 500m from the customer"
+                          .tr,
+                      backgroundColor: Colors.red,
+                      duration: const Duration(
+                        seconds: 5,
+                      ),
+                    );
                   }
                 },
               ),
@@ -281,37 +286,37 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                   child: ListView(
                     children: <Widget>[
                       Text(
-                          'Name: ${widget.customer.responsiblies![index].name ?? 'N/A'}'),
+                          '${"Name:".tr} ${widget.customer.responsiblies![index].name ?? 'N/A'}'),
                       Divider(
                         color: Colors.grey.shade200,
                       ),
                       Text(
-                          'Mobile: ${widget.customer.responsiblies![index].mobile ?? 'N/A'}'),
+                          '${"Mobile:".tr} ${widget.customer.responsiblies![index].mobile ?? 'N/A'}'),
                       Divider(
                         color: Colors.grey.shade200,
                       ),
                       Text(
-                          'Email: ${widget.customer.responsiblies![index].email ?? 'N/A'}'),
+                          '${"Email:".tr} ${widget.customer.responsiblies![index].email ?? 'N/A'}'),
                       Divider(
                         color: Colors.grey.shade200,
                       ),
                       Text(
-                          'Work At: ${widget.customer.responsiblies![index].workAt ?? 'N/A'}'),
+                          '${"Work At:".tr} ${widget.customer.responsiblies![index].workAt ?? 'N/A'}'),
                       Divider(
                         color: Colors.grey.shade200,
                       ),
                       Text(
-                          'Work To: ${widget.customer.responsiblies![index].workTo ?? 'N/A'}'),
+                          '${"Work To:".tr} ${widget.customer.responsiblies![index].workTo ?? 'N/A'}'),
                       Divider(
                         color: Colors.grey.shade200,
                       ),
                       Text(
-                          'Work Day From: ${widget.customer.responsiblies![index].workDayFrom ?? 'N/A'}'),
+                          '${"Work Day From:".tr} ${widget.customer.responsiblies![index].workDayFrom ?? 'N/A'}'),
                       Divider(
                         color: Colors.grey.shade200,
                       ),
                       Text(
-                          'Work Day To: ${widget.customer.responsiblies![index].workDayTo ?? 'N/A'}'),
+                          '${"Work Day To:".tr} ${widget.customer.responsiblies![index].workDayTo ?? 'N/A'}'),
                     ],
                   ),
                 );
@@ -321,7 +326,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
             ),
           );
         } else {
-          return const Center(child: Text("No Data"));
+          return  Center(child: Text("No Responsiblies For this Customer".tr));
         }
 
       case DetailsView.Owner:
@@ -339,37 +344,37 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                   child: ListView(
                     children: <Widget>[
                       Text(
-                          'Name: ${widget.customer.owners![index].name ?? 'N/A'}'),
+                          '${"Name:".tr} ${widget.customer.owners![index].name ?? 'N/A'}'),
                       Divider(
                         color: Colors.grey.shade200,
                       ),
                       Text(
-                          'Mobile: ${widget.customer.owners![index].mobile ?? 'N/A'}'),
+                          '${"Mobile:".tr} ${widget.customer.owners![index].mobile ?? 'N/A'}'),
                       Divider(
                         color: Colors.grey.shade200,
                       ),
                       Text(
-                          'Email: ${widget.customer.owners![index].email ?? 'N/A'}'),
+                          '${"Email:".tr} ${widget.customer.owners![index].email ?? 'N/A'}'),
                       Divider(
                         color: Colors.grey.shade200,
                       ),
                       Text(
-                          'Work At: ${widget.customer.owners![index].workAt ?? 'N/A'}'),
+                          '${"Work At:".tr} ${widget.customer.owners![index].workAt ?? 'N/A'}'),
                       Divider(
                         color: Colors.grey.shade200,
                       ),
                       Text(
-                          'Work To: ${widget.customer.owners![index].workTo ?? 'N/A'}'),
+                          '${"Work To:".tr} ${widget.customer.owners![index].workTo ?? 'N/A'}'),
                       Divider(
                         color: Colors.grey.shade200,
                       ),
                       Text(
-                          'Work Day From: ${widget.customer.owners![index].workDayFrom ?? 'N/A'}'),
+                          '${"Work Day From:".tr} ${widget.customer.owners![index].workDayFrom ?? 'N/A'}'),
                       Divider(
                         color: Colors.grey.shade200,
                       ),
                       Text(
-                          'Work Day To: ${widget.customer.owners![index].workDayTo ?? 'N/A'}'),
+                          '${"Work Day To:".tr} ${widget.customer.owners![index].workDayTo ?? 'N/A'}'),
                     ],
                   ),
                 );
@@ -379,7 +384,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
             ),
           );
         } else {
-          return const Center(child: Text("No Data"));
+          return  Center(child: Text("No Owners For this Customer".tr));
         }
     }
   }

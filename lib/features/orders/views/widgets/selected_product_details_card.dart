@@ -38,7 +38,7 @@ class SelectedProductDetailsCard extends StatelessWidget {
                       buttonBorderRadius: 0,
                       buttonMargin: 0,
                       buttonTextFontSize: 12,
-                      buttonText: "delete",
+                      buttonText: "delete".tr,
                       buttonAction: buttonAction,
                       buttonColor: UiConstant.kCosmoCareCustomColors1,
                     )
@@ -59,14 +59,14 @@ class SelectedProductDetailsCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(selectedProduct.productCode),
-                        Text("${selectedProduct.quantity} pice"),
+                        Text("${selectedProduct.quantity} ${"pice".tr}"),
                       ],
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Price before tax"),
+                         Text("Price before tax".tr),
                         Text(
                           selectedProduct.priceBeforeTax.toString(),
                         ),
@@ -76,7 +76,7 @@ class SelectedProductDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("price with tax"),
+                         Text("price with tax".tr),
                         Text(selectedProduct.price.toString()),
                       ],
                     ),
@@ -84,7 +84,7 @@ class SelectedProductDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Discount Amount"),
+                         Text("Discount Amount".tr),
                         Text(
                           selectedProduct.discountAmount
                               .toString()
@@ -96,7 +96,7 @@ class SelectedProductDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("total"),
+                         Text("total".tr),
                         Text(
                           selectedProduct.total.toString(),
                         ),

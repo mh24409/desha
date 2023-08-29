@@ -30,7 +30,7 @@ class GetAllCustomerCubit extends Cubit<GetAllCustomersStates> {
       allCustomers = customers;
       emit(GetAllCustomersSuccessState(customers: customers));
     } catch (e) {
-      Get.snackbar("Connection Error", "Please check your internet connection",
+      Get.snackbar("Connection Error".tr, "Please check your internet connection".tr,
           backgroundColor: Colors.red);
       emit(GetAllCustomersFailedState());
     }

@@ -91,7 +91,7 @@ class _MapScreenState extends State<MapScreen> {
               padding: const EdgeInsets.only(right: 50),
               child: CustomTextField(
                 borderRadius: 0,
-                hintText: "Search by customer name",
+                hintText: "Search by customer name".tr,
                 prefixIconData: Iconsax.user,
                 onChange: _searchMarkers,
               ),
@@ -102,57 +102,3 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 }
-
-// class MapScreen extends StatelessWidget {
-//   const MapScreen({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: FutureBuilder<List<CustomerModel>>(
-//           future: CustomersController.getAllCustomers(),
-//           builder: (context, snapShot) {
-//             if (snapShot.connectionState == ConnectionState.waiting) {
-//               return const Center(
-//                 child: CircularProgressIndicator(),
-//               );
-//             } else {
-//               if (snapShot.hasData) {
-//                 List<Marker> markers = [];
-//                 if (snapShot.hasData) {
-//                   for (var customer in snapShot.data!) {
-//                     markers.add(
-//                       Marker(
-//                         infoWindow: InfoWindow(
-//                           title: customer.title,
-//                         ),
-//                         markerId: MarkerId(customer.id.toString()),
-//                         position: LatLng(customer.lat, customer.lng),
-//                         // icon: BitmapDescriptor.fromBytes(markersData[index]),
-
-//                         onTap: () {
-//                           Get.to(
-//                               () => CustomerDetailsScreen(customer: customer));
-//                         },
-//                       ),
-//                     );
-//                   }
-//                 }
-//                 return GoogleMap(
-//                   myLocationEnabled: true,
-//                   markers: Set.from(markers),
-//                   initialCameraPosition: CameraPosition(
-//                     target:
-//                         LatLng(global.currentUserLat, global.currentUserLong),
-//                     zoom: 10.0,
-//                   ),
-//                   mapType: MapType.normal,
-//                 );
-//               } else {
-//                 return Container();
-//               }
-//             }
-//           }),
-//     );
-//   }
-// }

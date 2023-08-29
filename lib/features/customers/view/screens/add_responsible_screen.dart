@@ -24,8 +24,8 @@ class AddResponsibleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Add New Responsible",
+        title:  Text(
+          "Add New Responsible".tr,
         ),
       ),
       body: SingleChildScrollView(
@@ -39,7 +39,7 @@ class AddResponsibleScreen extends StatelessWidget {
                 children: [
                   CustomTextField(
                     prefixIconData: Iconsax.user,
-                    hintText: "Responsible Name",
+                    hintText: "Responsible Name".tr,
                     onChange: (value) {
                       responsibleData.name = value;
                     },
@@ -51,7 +51,7 @@ class AddResponsibleScreen extends StatelessWidget {
                   const VerticalSpacer(10),
                   CustomTextField(
                     prefixIconData: Iconsax.mobile,
-                    hintText: "Phone number",
+                    hintText: "Phone number".tr,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     onChange: (value) {
                       responsibleData.phoneNumber = value;
@@ -63,7 +63,7 @@ class AddResponsibleScreen extends StatelessWidget {
                   const VerticalSpacer(10),
                   CustomTextField(
                     prefixIconData: Icons.email,
-                    hintText: "Email",
+                    hintText: "Email".tr,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     onChange: (value) {
                       responsibleData.email = value;
@@ -75,29 +75,29 @@ class AddResponsibleScreen extends StatelessWidget {
                   const VerticalSpacer(10),
                   CustomSingleSelectField<String>(
                     items: CustomersController.daysData,
-                    title: "Work Start Day",
+                    title: "Work Start Day".tr,
                     onSelectionDone: (value) async {
                       responsibleData.workStartDay = value;
                     },
                     itemAsString: (item) => item,
                     decoration:
-                        selectionFiledDecoration(hintText: "Work Start Day"),
+                        selectionFiledDecoration(hintText: "Work Start Day".tr),
                   ),
                   const VerticalSpacer(10),
                   CustomSingleSelectField<String>(
                     items: CustomersController.daysData,
-                    title: "Work End Day",
+                    title: "Work End Day".tr,
                     onSelectionDone: (value) async {
                       responsibleData.workEndDay = value;
                     },
                     itemAsString: (item) => item,
                     decoration:
-                        selectionFiledDecoration(hintText: " Work End Day"),
+                        selectionFiledDecoration(hintText: " Work End Day".tr),
                   ),
                   const VerticalSpacer(10),
                   CustomSingleSelectField<String>(
                     items: CustomersController.timeList,
-                    title: "Work Start At",
+                    title: "Work Start At".tr,
                     onSelectionDone: (value) async {
                       responsibleData.workStartTime = value;
                     },
@@ -108,13 +108,13 @@ class AddResponsibleScreen extends StatelessWidget {
                   const VerticalSpacer(10),
                   CustomSingleSelectField<String>(
                     items: CustomersController.timeList,
-                    title: "Work End At",
+                    title: "Work End At".tr,
                     onSelectionDone: (value) async {
                       responsibleData.workEndTime = value;
                     },
                     itemAsString: (item) => item,
                     decoration:
-                        selectionFiledDecoration(hintText: "Work End At"),
+                        selectionFiledDecoration(hintText: "Work End At".tr),
                   ),
                   const VerticalSpacer(10),
                   Row(
@@ -123,7 +123,7 @@ class AddResponsibleScreen extends StatelessWidget {
                       CustomButton(
                         buttonColor: UiConstant.kCosmoCareCustomColors1,
                         buttonHeight: 40.h,
-                        buttonText: "Skip",
+                        buttonText: "Skip".tr,
                         buttonWidth: MediaQuery.of(context).size.width / 2.5,
                         buttonAction: () async {
                           await Get.to(() => AddOwnerScreen(
@@ -138,7 +138,7 @@ class AddResponsibleScreen extends StatelessWidget {
                       CustomButton(
                         buttonColor: UiConstant.kCosmoCareCustomColors1,
                         buttonHeight: 40.h,
-                        buttonText: "Next",
+                        buttonText: "Next".tr,
                         buttonWidth: MediaQuery.of(context).size.width / 2.5,
                         buttonAction: () async {
                           if (formKey.currentState!.validate()) {

@@ -33,6 +33,7 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
   double total = 0;
   List<CustomerProductsModel> saleOrderLineProducts = [];
   CustomerProductsModel? selectedProduct;
+  TextEditingController quantityController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("Total"),
+                    Text("Total".tr),
                     Text(
                       total.toString(),
                     ),
@@ -85,10 +86,10 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: CustomSingleSelectField<String>(
                 items: widget.offers.map((e) => e.title).toList(),
-                title: "Product Name",
+                title: "Product Name".tr,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Product is required";
+                    return "Product is required".tr;
                   }
                   return null;
                 },
@@ -103,7 +104,8 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
                   }
                 },
                 itemAsString: (item) => item,
-                decoration: selectionFiledDecoration(hintText: "Product Name"),
+                decoration:
+                    selectionFiledDecoration(hintText: "Product Name".tr),
               ),
             ),
             VerticalSpacer(10.h),
@@ -115,8 +117,9 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
                   children: [
                     Expanded(
                       child: CustomTextField(
+                        controller: quantityController,
                         prefixIconData: Icons.format_list_numbered,
-                        hintText: "Quantity",
+                        hintText: "Quantity".tr,
                         keyboardType: TextInputType.number,
                         validate: (value) {
                           return quantityControllerValidator(value);
@@ -125,7 +128,7 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
                           if (selectedProduct != null) {
                             selectedProduct!.quantity = value;
                           } else {
-                            Get.snackbar("Select Product At first", "");
+                            Get.snackbar("Select Product At first".tr, "");
                           }
                         },
                       ),
@@ -137,15 +140,18 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
                         buttonHeight: 45.h,
                         buttonMargin: 0,
                         buttonTextFontSize: 14,
-                        buttonText: "Add",
+                        buttonText: "Add".tr,
                         buttonBorderRadius: 10,
                         buttonAction: () {
                           if (formKey.currentState!.validate()) {
                             if (saleOrderLineProducts.any((product) =>
                                 product.productId ==
                                 selectedProduct!.productId)) {
-                              Get.snackbar("this product already added", "",
-                                  backgroundColor: Colors.blue);
+                              Get.snackbar(
+                                "this product already added".tr,
+                                "",
+                                backgroundColor: Colors.blue,
+                              );
                             } else {
                               setState(() {
                                 selectedProduct!.total = (selectedProduct!
@@ -153,6 +159,7 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
                                         int.parse(selectedProduct!.quantity)) -
                                     selectedProduct!.discountAmount;
                                 saleOrderLineProducts.add(selectedProduct!);
+                                quantityController.clear();
                                 total = 0;
                                 for (var product in saleOrderLineProducts) {
                                   total = total + product.total;

@@ -24,7 +24,7 @@ class ProductDividedByCateScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("CosmoCare Current Products"),
+               Text("CosmoCare Current Products".tr),
               GestureDetector(
                 onTap: () async {
                   await BlocProvider.of<CategoriesCubit>(context)
@@ -118,19 +118,13 @@ class ProductDividedByCateScreen extends StatelessWidget {
                                                     .imageURL !=
                                                 "",
                                             builder: (context) {
-                                              // try {
-                                              // return Image.network(
-                                              //   state.categories[index]
-                                              //       .products[position].imageURL,
-                                              //   fit: BoxFit.fill,
-                                              // );
-                                              // } catch (e) {
+                                            
                                               return Image.asset(
                                                 AssetsPathConstants
                                                     .kProductPlaceholder,
                                                 fit: BoxFit.fill,
                                               );
-                                              // }
+                                              
                                             },
                                             fallback: (context) => Image.asset(
                                               AssetsPathConstants

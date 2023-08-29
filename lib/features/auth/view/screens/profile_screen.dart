@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../../core/Constants/ui_constants.dart';
 import '../../../../core/widgets/widgets/horizontal_spacer.dart';
 import '../../controller/auth_cubit.dart';
@@ -34,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: ProfileCard(
-                    cardName: "User Name",
+                    cardName: "User Name".tr,
                     cardValue: state.currentUser.userName!,
                   ),
                 ),
@@ -42,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: ProfileCard(
-                    cardName: "User Email",
+                    cardName: "User Email".tr,
                     cardValue: state.currentUser.email!,
                   ),
                 ),

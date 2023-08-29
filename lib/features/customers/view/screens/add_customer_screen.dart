@@ -37,13 +37,13 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Add New Customer",
+        title:  Text(
+          "Add New Customer".tr,
         ),
       ),
       body: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height + 50,
+          height: MediaQuery.of(context).size.height + 150,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
@@ -51,10 +51,10 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Text("New Customer Data"),
+                   Text("New Customer Data".tr),
                   CustomTextField(
                     prefixIconData: Iconsax.user,
-                    hintText: "Customer Name",
+                    hintText: "Customer Name".tr,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validate: (value) {
                       return userNameControllerValidator(value);
@@ -64,15 +64,17 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     },
                   ),
                   CustomSingleSelectField<String>(
+                    
                     items:
                         widget.types.map((e) => e.title!).toList(),
-                    title: "Customers Types",
+                    title: "Customers Types".tr,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Customers Types is Required";
+                        return "Customers Types is Required".tr;
                       }
                       return null;
                     },
+                    
                     onSelectionDone: (value) {
                       for (var item in widget.types) {
                         if (item.title == value) {
@@ -82,15 +84,16 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     },
                     itemAsString: (item) => item,
                     decoration: selectionFiledDecoration(
-                        hintText: "Customer Type"),
+                        hintText: "Customers Types".tr),
+                        
                   ),
                   CustomSingleSelectField<String>(
                     items:
                         widget.saleZone.map((e) => e.title!).toList(),
-                    title: "Sale Zone",
+                    title: "Sale Zone".tr,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Sale Zone is Required";
+                        return "Sale Zone is Required".tr;
                       }
                       return null;
                     },
@@ -103,14 +106,14 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     },
                     itemAsString: (item) => item,
                     decoration: selectionFiledDecoration(
-                        hintText: "Sale Zone"),
+                        hintText: "Sale Zone".tr),
                   ),
                   CustomSingleSelectField<String>(
                     items: widget.payments.map((e) => e.title!).toList(),
-                    title: "Payment Terms",
+                    title: "Payment Terms".tr,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Customers Types is Req";
+                        return "Customers Payment is Required".tr;
                       }
                       return null;
                     },
@@ -123,11 +126,11 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     },
                     itemAsString: (item) => item,
                     decoration: selectionFiledDecoration(
-                        hintText: "Payment Terms"),
+                        hintText: "Payment Terms".tr),
                   ),
                   CustomTextField(
                     prefixIconData: Iconsax.location,
-                    hintText: "Address",
+                    hintText: "Address".tr,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validate: (value) {
                       return addressControllerValidator(value);
@@ -138,7 +141,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                   ),
                   CustomTextField(
                     prefixIconData: Iconsax.user,
-                    hintText: "Distinctive Address",
+                    hintText: "Distinctive Address".tr,
                     validate: (value) {
                       return distinctiveAddressControllerValidator(value);
                     },
@@ -148,10 +151,10 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                   ),
                   CustomSingleSelectField<String>(
                     items:widget.governments.map((e) => e.title!).toList(),
-                    title: "Government",
+                    title: "Government".tr,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Customers Types is Req";
+                        return "Government is Required".tr;
                       }
                       return null;
                     },
@@ -170,14 +173,14 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     },
                     itemAsString: (item) => item,
                     decoration:
-                        selectionFiledDecoration(hintText: "Government"),
+                        selectionFiledDecoration(hintText: "Government".tr),
                   ),
                   CustomSingleSelectField<String>(
                       items: cities.map((e) => e.title!).toList(),
-                      title: "City",
+                      title: "City".tr,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Customers Types is Req";
+                          return "City is Required";
                         }
                         return null;
                       },
@@ -189,10 +192,10 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                         }
                       },
                       itemAsString: (item) => item,
-                      decoration: selectionFiledDecoration(hintText: "City")),
+                      decoration: selectionFiledDecoration(hintText: "City".tr)),
                   CustomTextField(
                     prefixIconData: Iconsax.mobile,
-                    hintText: "Phone Number",
+                    hintText: "Phone Number".tr,
                     validate: (value) {
                       return phoneNumberControllerValidator(value);
                     },
@@ -202,14 +205,14 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                   ),
                   CustomTextField(
                     prefixIconData: Icons.web,
-                    hintText: "Website",
+                    hintText: "Website".tr,
                     onChange: (value) {
                       customerData.website = value;
                     },
                   ),
                   CustomTextField(
                     prefixIconData: Icons.email,
-                    hintText: "Email",
+                    hintText: "Email".tr,
                     validate: (value) {
                       return emailControllerValidator(value);
                     },
@@ -220,7 +223,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                   CustomButton(
                     buttonColor: UiConstant.kCosmoCareCustomColors1,
                     buttonHeight: 40.h,
-                    buttonText: "Next",
+                    buttonText: "Next".tr,
                     buttonWidth: MediaQuery.of(context).size.width / 1.5,
                     buttonAction: () {
                       if (formKey.currentState!.validate()) {

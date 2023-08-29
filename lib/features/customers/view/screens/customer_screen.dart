@@ -27,11 +27,11 @@ class CustomersScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: 50.h,
             color: UiConstant.kCosmoCareCustomColors1,
-            child: const Padding(
-              padding: EdgeInsets.all(16.0),
+            child:  Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Our Customers',
-                style: TextStyle(color: Colors.white, fontSize: 18),
+                'Our Customers'.tr,
+                style: const TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),
           ),
@@ -43,7 +43,7 @@ class CustomersScreen extends StatelessWidget {
                 Expanded(
                   flex: 5,
                   child: CustomTextField(
-                    hintText: "Search here",
+                    hintText: "Search here".tr,
                     prefixIconData: Iconsax.search_normal,
                     onChange: (value) async {
                       await BlocProvider.of<GetAllCustomerCubit>(context)
@@ -77,7 +77,7 @@ class CustomersScreen extends StatelessWidget {
                     color: UiConstant.kCosmoCareCustomColors1,
                   ));
                 } else if (state is GetAllCustomersFailedState) {
-                  return const Center(child: Text('Error: '));
+                  return  Center(child: Text('Something went wrong please try agin'.tr));
                 } else if (state is GetAllCustomersSuccessState) {
                   return ListView.builder(
                     itemCount: BlocProvider.of<GetAllCustomerCubit>(context)

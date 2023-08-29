@@ -64,7 +64,7 @@ class CustomersController {
       }
       return customers;
     } catch (e) {
-      Get.snackbar("Connection Error", "Please check your internet connection",
+      Get.snackbar("Connection Error".tr, "Please check your internet connection".tr,
           backgroundColor: Colors.red);
       return customers;
     }
@@ -86,7 +86,7 @@ class CustomersController {
       }
       return governments;
     } catch (e) {
-      Get.snackbar("error", "Something went wrong please try agin",
+      Get.snackbar("error".tr, "Something went wrong please try agin".tr,
           backgroundColor: Colors.red);
       return governments;
     }
@@ -106,7 +106,7 @@ class CustomersController {
       }
       return customerTypes;
     } catch (e) {
-      Get.snackbar("error", "Something went wrong please try agin",
+      Get.snackbar("error".tr, "Something went wrong please try agin".tr,
           backgroundColor: Colors.red);
       return customerTypes;
     }
@@ -126,7 +126,7 @@ class CustomersController {
       }
       return customerPaymentTerms;
     } catch (e) {
-      Get.snackbar("Connection Error", "Please check your internet connection",
+      Get.snackbar("error".tr, "Something went wrong please try agin".tr,
           backgroundColor: Colors.red);
       return customerPaymentTerms;
     }
@@ -147,7 +147,7 @@ class CustomersController {
       }
       return cities;
     } catch (e) {
-      Get.snackbar("error", "Something went wrong please try agin",
+      Get.snackbar("error".tr, "Something went wrong please try agin".tr,
           backgroundColor: Colors.red);
       return cities;
     }
@@ -167,7 +167,7 @@ class CustomersController {
       }
       return zones;
     } catch (e) {
-      Get.snackbar("error", "Something went wrong please try agin",
+      Get.snackbar("error".tr, "Something went wrong please try agin".tr,
           backgroundColor: Colors.red);
       return zones;
     }
@@ -234,14 +234,14 @@ class CustomersController {
           headers: headers,
           body: body);
       if (response["status"] != 5000) {
-        Get.snackbar("Create Customer", "Create New Customer Success");
+        Get.snackbar("Create Customer".tr, "Create New Customer Success".tr);
         Get.offAll(() => const MainControlScreen());
       } else {
-        Get.snackbar("Create Customer", "Failed Create New Customer",
+        Get.snackbar("Create Customer".tr, "Failed Create New Customer".tr,
             backgroundColor: Colors.red);
       }
     } catch (e) {
-      Get.snackbar("error", "Something went wrong please try agin",
+      Get.snackbar("error".tr, "Something went wrong please try agin".tr,
           backgroundColor: Colors.red);
     }
   }

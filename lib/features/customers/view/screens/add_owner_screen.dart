@@ -26,8 +26,8 @@ class AddOwnerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Add New Owner",
+        title:  Text(
+          "Add New Owner".tr,
         ),
       ),
       body: SingleChildScrollView(
@@ -41,7 +41,7 @@ class AddOwnerScreen extends StatelessWidget {
                 children: [
                   CustomTextField(
                     prefixIconData: Iconsax.user,
-                    hintText: "Owner Name",
+                    hintText: "Owner Name".tr,
                     onChange: (value) {
                       ownerData.name = value;
                     },
@@ -53,7 +53,7 @@ class AddOwnerScreen extends StatelessWidget {
                   const VerticalSpacer(10),
                   CustomTextField(
                     prefixIconData: Iconsax.mobile,
-                    hintText: "Owner number",
+                    hintText: "Owner number".tr,
                     onChange: (value) {
                       ownerData.phoneNumber = value;
                     },
@@ -65,7 +65,7 @@ class AddOwnerScreen extends StatelessWidget {
                   const VerticalSpacer(10),
                   CustomTextField(
                     prefixIconData: Icons.email,
-                    hintText: "Owner Email",
+                    hintText: "Owner Email".tr,
                     onChange: (value) {
                       ownerData.email = value;
                     },
@@ -77,46 +77,46 @@ class AddOwnerScreen extends StatelessWidget {
                   const VerticalSpacer(10),
                   CustomSingleSelectField<String>(
                     items: CustomersController.daysData,
-                    title: "Work Start Day",
+                    title: "Work Start Day".tr,
                     onSelectionDone: (value) async {
                       ownerData.workStartDay = value;
                     },
                     itemAsString: (item) => item,
                     decoration:
-                        selectionFiledDecoration(hintText: "Work Start Day"),
+                        selectionFiledDecoration(hintText: "Work Start Day".tr),
                   ),
                   const VerticalSpacer(10),
                   CustomSingleSelectField<String>(
                     items: CustomersController.daysData,
-                    title: "Work End Day",
+                    title: "Work End Day".tr,
                     onSelectionDone: (value) async {
                       ownerData.workEndDay = value;
                     },
                     itemAsString: (item) => item,
                     decoration:
-                        selectionFiledDecoration(hintText: " Work End Day"),
+                        selectionFiledDecoration(hintText: " Work End Day".tr),
                   ),
                   const VerticalSpacer(10),
                   CustomSingleSelectField<String>(
                     items: CustomersController.timeList,
-                    title: "Work Start At",
+                    title: "Work Start At".tr,
                     onSelectionDone: (value) async {
                       ownerData.workStartTime = value;
                     },
                     itemAsString: (item) => item,
                     decoration:
-                        selectionFiledDecoration(hintText: "Work Start At"),
+                        selectionFiledDecoration(hintText: "Work Start At".tr),
                   ),
                   const VerticalSpacer(10),
                   CustomSingleSelectField<String>(
                     items: CustomersController.timeList,
-                    title: "Work End At",
+                    title: "Work End At".tr,
                     onSelectionDone: (value) async {
                       ownerData.workEndTime = value;
                     },
                     itemAsString: (item) => item,
                     decoration:
-                        selectionFiledDecoration(hintText: "Work End At"),
+                        selectionFiledDecoration(hintText: "Work End At".tr),
                   ),
                   VerticalSpacer(30.h),
                   Row(

@@ -22,7 +22,7 @@ class ProfileCard extends StatelessWidget {
         color: const Color(0xffF9F6F6),
         borderRadius: BorderRadius.circular(10),
       ),
-      height: MediaQuery.of(context).size.height * 0.1,
+      height: MediaQuery.of(context).size.height * 0.12,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: const EdgeInsets.all(12.0),

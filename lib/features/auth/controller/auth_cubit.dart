@@ -44,12 +44,12 @@ class AuthCubit extends Cubit<AuthStates> {
         preferences.setString("userName", response["profile"]["full_name"]);
         preferences.setString("image", response["profile"]["image"]);
         BlocProvider.of<UserCubit>(context).getCurrentUserInfo();
-        await BlocProvider.of<GetAllCustomerCubit>(context)
-                .getAllCustomers();
+        await BlocProvider.of<GetAllCustomerCubit>(context).getAllCustomers();
         emit(LoginSuccessState());
       }
     } catch (e) {
-      Get.snackbar("Connection Error", "Please check your internet connection",
+      Get.snackbar("Connection Error".tr,
+          "Please check your internet connection".trParams(),
           backgroundColor: Colors.red);
     }
   }
@@ -67,9 +67,11 @@ class AuthCubit extends Cubit<AuthStates> {
 
   void logOut({required BuildContext context}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    String appLanguage = preferences.getString("appLang") ?? "en";
     preferences.clear();
     emit(AuthInitState());
-    Get.snackbar("Logout Success", "Your location isn't tracked now");
+    preferences.setString("appLang", appLanguage);
+    Get.snackbar("Logout Success".tr, "Your location isn't tracked now".tr);
     await await Get.offAll(() => LoginScreen());
   }
 
@@ -145,6 +147,5 @@ class AuthCubit extends Cubit<AuthStates> {
       },
     );
     location.enableBackgroundMode(enable: true);
-
   }
 }

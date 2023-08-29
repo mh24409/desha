@@ -63,7 +63,7 @@ class ProductDetails extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "${product.price.toString()} EG",
+                    "${product.price.toString()} ${"EG".tr}",
                     style: TextStyle(
                       fontSize: 24.sp,
                       color: const Color(0xff03283F),
@@ -108,7 +108,7 @@ class ProductDetails extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "Available Quantity",
+                    "Available Quantity".tr,
                     style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
