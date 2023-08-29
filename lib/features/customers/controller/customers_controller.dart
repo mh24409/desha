@@ -183,7 +183,6 @@ class CustomersController {
       "Authorization": "token $userToken",
       "Content-Type": "text/html",
     };
-    print(customerData.saleZoneId);
     Map<String, dynamic> body = {
       "title": customerData.name,
       "customer_type": customerData.customerTypeId,

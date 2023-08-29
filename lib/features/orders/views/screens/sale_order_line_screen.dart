@@ -5,26 +5,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_selector/widget/flutter_single_select.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-
 import '../../../../core/Constants/ui_constants.dart';
+import '../../../../core/shared/methods/auth_validation.dart';
 import '../../../../core/widgets/widgets/horizontal_spacer.dart';
 import '../../../../core/widgets/widgets/vertical_spacer.dart';
+import '../../controller/order_controller.dart';
 import '../../model/customer_products_model.dart';
+import '../widgets/product_offers_bottom_sheet_body.dart';
+import '../widgets/product_offers_bottom_sheet_header.dart';
+import '../widgets/selected_product_details_card.dart';
 
 // ignore: must_be_immutable
-class SaleOrderLineScreen extends StatelessWidget {
+class SaleOrderLineScreen extends StatefulWidget {
   int invoiceId;
-  int total = 0;
   List<CustomerProductsModel> offers;
-  SaleOrderLineScreen({Key? key, required this.invoiceId, required this.offers})
-      : super(key: key);
+  SaleOrderLineScreen({
+    Key? key,
+    required this.invoiceId,
+    required this.offers,
+  }) : super(key: key);
 
+  @override
+  State<SaleOrderLineScreen> createState() => _SaleOrderLineScreenState();
+}
+
+class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
+  double total = 0;
+  List<CustomerProductsModel> saleOrderLineProducts = [];
+  CustomerProductsModel? selectedProduct;
+  GlobalKey<FormState> formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sale Order Lines"),
+        title: Text("Sale Order Lines".tr),
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -48,68 +62,42 @@ class SaleOrderLineScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(child: ListView()),
+            Expanded(
+                child: ListView.builder(
+              itemBuilder: (context, index) {
+                return SelectedProductDetailsCard(
+                  selectedProduct: saleOrderLineProducts[index],
+                  buttonAction: () {
+                    setState(() {
+                      saleOrderLineProducts.removeAt(index);
+                      total = 0;
+                      for (var product in saleOrderLineProducts) {
+                        total = total + product.total;
+                      }
+                    });
+                  },
+                );
+              },
+              itemCount: saleOrderLineProducts.length,
+            )),
             VerticalSpacer(10.h),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: CustomSingleSelectField<String>(
-                items: offers.map((e) => e.title).toList(),
+                items: widget.offers.map((e) => e.title).toList(),
                 title: "Product Name",
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Sale Zone is Required";
+                    return "Product is required";
                   }
                   return null;
                 },
                 onSelectionDone: (value) {
-                  for (var item in offers) {
+                  for (var item in widget.offers) {
                     if (item.title == value) {
+                      selectedProduct = item;
                       if (item.offers.isNotEmpty) {
-                        Get.bottomSheet(
-                          Container(
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                Container(
-                                  color: UiConstant.kCosmoCareCustomColors1,
-                                  height: 40.h,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Get.back();
-                                          },
-                                          child: const Icon(
-                                            Iconsax.close_circle,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        HorizontalSpacer(15.w),
-                                        const Text(
-                                          "Available offers for this product",
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: ListView.builder(
-                                    itemBuilder: (context, index) {
-                                      return Text(
-                                          item.offers[index].bonusProducts);
-                                    },
-                                    itemCount: item.offers.length,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
+                        showProductOffers(context, item);
                       }
                     }
                   }
@@ -119,30 +107,65 @@ class SaleOrderLineScreen extends StatelessWidget {
               ),
             ),
             VerticalSpacer(10.h),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomTextField(
-                      prefixIconData: Icons.format_list_numbered,
-                      hintText: "Quantity",
+            Form(
+              key: formKey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextField(
+                        prefixIconData: Icons.format_list_numbered,
+                        hintText: "Quantity",
+                        keyboardType: TextInputType.number,
+                        validate: (value) {
+                          return quantityControllerValidator(value);
+                        },
+                        onChange: (value) {
+                          if (selectedProduct != null) {
+                            selectedProduct!.quantity = value;
+                          } else {
+                            Get.snackbar("Select Product At first", "");
+                          }
+                        },
+                      ),
                     ),
-                  ),
-                  HorizontalSpacer(10.w),
-                  Expanded(
-                    child: CustomButton(
-                      buttonWidth: MediaQuery.of(context).size.width * 0.4,
-                      buttonHeight: 45.h,
-                      buttonMargin: 0,
-                      buttonTextFontSize: 14,
-                      buttonText: "Add",
-                      buttonBorderRadius: 10,
-                      buttonAction: () {},
-                      buttonColor: UiConstant.kCosmoCareCustomColors1,
+                    HorizontalSpacer(10.w),
+                    Expanded(
+                      child: CustomButton(
+                        buttonWidth: MediaQuery.of(context).size.width * 0.4,
+                        buttonHeight: 45.h,
+                        buttonMargin: 0,
+                        buttonTextFontSize: 14,
+                        buttonText: "Add",
+                        buttonBorderRadius: 10,
+                        buttonAction: () {
+                          if (formKey.currentState!.validate()) {
+                            if (saleOrderLineProducts.any((product) =>
+                                product.productId ==
+                                selectedProduct!.productId)) {
+                              Get.snackbar("this product already added", "",
+                                  backgroundColor: Colors.blue);
+                            } else {
+                              setState(() {
+                                selectedProduct!.total = (selectedProduct!
+                                            .price *
+                                        int.parse(selectedProduct!.quantity)) -
+                                    selectedProduct!.discountAmount;
+                                saleOrderLineProducts.add(selectedProduct!);
+                                total = 0;
+                                for (var product in saleOrderLineProducts) {
+                                  total = total + product.total;
+                                }
+                              });
+                            }
+                          }
+                        },
+                        buttonColor: UiConstant.kCosmoCareCustomColors1,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             VerticalSpacer(10.h),
@@ -167,10 +190,40 @@ class SaleOrderLineScreen extends StatelessWidget {
                 contentGap: 6.0,
                 buttonColor: Colors.green,
                 borderRadius: 10,
-                onPressed: () async {},
+                onPressed: () async {
+                  await OrderController.createSaleOrderLines(
+                    invoiceId: widget.invoiceId,
+                    products: saleOrderLineProducts,
+                  );
+                },
               ),
             ),
             VerticalSpacer(20.h),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<dynamic> showProductOffers(
+      BuildContext context, CustomerProductsModel item) {
+    return Get.bottomSheet(
+      Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            const ProductOffersBottomSheetHeader(),
+            const Divider(),
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return ProductOffersBottomSheetBody(
+                    offersModel: item.offers[index],
+                  );
+                },
+                itemCount: item.offers.length,
+              ),
+            )
           ],
         ),
       ),

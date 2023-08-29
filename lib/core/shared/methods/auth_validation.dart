@@ -45,6 +45,14 @@ String? ownerNameControllerValidator(String? value) {
   return null;
 }
 
+
+String? quantityControllerValidator(String? value) {
+  if (value!.isEmpty) {
+    return 'Quantity empty'.tr;
+  }
+  return null;
+}
+
 String? addressControllerValidator(String? value) {
   if (value!.isEmpty) {
     return 'Customer address is empty'.tr;

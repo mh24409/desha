@@ -10,6 +10,8 @@ class CustomerProductsModel {
   double price;
   double discountAmount;
   List<OffersModel> offers;
+  String quantity;
+  double total;
 
   CustomerProductsModel(
       {required this.productId,
@@ -20,7 +22,10 @@ class CustomerProductsModel {
       required this.priceBeforeTax,
       required this.price,
       required this.discountAmount,
-      required this.offers});
+      required this.offers,
+      this.quantity = '',
+      this.total = 0.0
+      });
 
   factory CustomerProductsModel.fromJson(Map<String, dynamic> json) {
     List<OffersModel> offers = List<OffersModel>.from(
@@ -32,8 +37,8 @@ class CustomerProductsModel {
         productCode: json['product_code'],
         brand: json['brand'],
         priceBeforeTax: json['price_before_tax'],
-        price: json['price'],
-        discountAmount: json['discount_amount'],
+        price: json['price'] ?? 0.0,
+        discountAmount: json['discount_amount']?? 0.0,
         offers: offers);
   }
 }

@@ -212,11 +212,12 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                     int invoiceId = await OrderController.createSaleOrder(
                         customerId: widget.customer.id);
                     if (invoiceId != 0) {
-                    List<CustomerProductsModel> offers =  await OrderController.getCustomerOffers(
-                          customerId: widget.customer.id);
+                      List<CustomerProductsModel> offers =
+                          await OrderController.getCustomerOffers(
+                              customerId: widget.customer.id);
                       Get.to(
                         () => SaleOrderLineScreen(
-                          offers:offers,
+                          offers: offers,
                           invoiceId: invoiceId,
                         ),
                       );

@@ -1,8 +1,6 @@
 import 'package:cosmo_care/core/Constants/assets_path_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/Constants/ui_constants.dart';
-import '../../../core/widgets/widgets/vertical_spacer.dart';
 
 class CosmoCareSplashWidget extends StatelessWidget {
   const CosmoCareSplashWidget({Key? key}) : super(key: key);
