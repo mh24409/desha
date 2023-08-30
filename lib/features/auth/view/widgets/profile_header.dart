@@ -42,7 +42,7 @@ class ProfileHeader extends StatelessWidget {
                       size: MediaQuery.of(context).size.width / 4,
                     ),
                   ),
-                  VerticalSpacer(10.h),
+                  Flexible(child: VerticalSpacer(10.h)),
                   Text(
                     userName,
                     style: TextStyle(fontSize: 16.sp),

@@ -44,40 +44,44 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBgKbpgVPfqj8txEItRkmoFx4bzrp2DC4k',
-    appId: '1:684068065529:web:e11bb2026aa7af1a905228',
-    messagingSenderId: '684068065529',
-    projectId: 'cosmocare-c2fec',
-    authDomain: 'cosmocare-c2fec.firebaseapp.com',
-    storageBucket: 'cosmocare-c2fec.appspot.com',
-    measurementId: 'G-YLVK7LGXYL',
+    apiKey: 'AIzaSyCfpWI_aAaf49CTBkvzk5-QpNGjY7Cm18I',
+    appId: '1:428294323885:web:995d57548d3c0020225024',
+    messagingSenderId: '428294323885',
+    projectId: 'cosmo-care-8ffaa',
+    authDomain: 'cosmo-care-8ffaa.firebaseapp.com',
+    databaseURL: 'https://cosmo-care-8ffaa-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'cosmo-care-8ffaa.appspot.com',
+    measurementId: 'G-XQDGE396K8',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDdH7obDZj0lmtBrSvxlCZCeoWjhnmO0jQ',
-    appId: '1:684068065529:android:6d3ae49cb0c6fb8a905228',
-    messagingSenderId: '684068065529',
-    projectId: 'cosmocare-c2fec',
-    storageBucket: 'cosmocare-c2fec.appspot.com',
+    apiKey: 'AIzaSyBgE2EgaSMcKv8g-kukQ4C3xj2yweY-fko',
+    appId: '1:428294323885:android:a65fcda2a703e8ff225024',
+    messagingSenderId: '428294323885',
+    projectId: 'cosmo-care-8ffaa',
+    databaseURL: 'https://cosmo-care-8ffaa-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'cosmo-care-8ffaa.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBBplJwyIJMQ9PVDgNFdG_-Llz5Ut29uR8',
-    appId: '1:684068065529:ios:17901ccd13b5f75c905228',
-    messagingSenderId: '684068065529',
-    projectId: 'cosmocare-c2fec',
-    storageBucket: 'cosmocare-c2fec.appspot.com',
-    iosClientId: '684068065529-fl95gpcgk71b05qsf9278hn1t5d6ijgg.apps.googleusercontent.com',
-    iosBundleId: 'com.example.appRelease2',
+    apiKey: 'AIzaSyCLOcRQDMO4UngcWU-ui9G5JqdYxSIF1ng',
+    appId: '1:428294323885:ios:4042353c49aee0d7225024',
+    messagingSenderId: '428294323885',
+    projectId: 'cosmo-care-8ffaa',
+    databaseURL: 'https://cosmo-care-8ffaa-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'cosmo-care-8ffaa.appspot.com',
+    iosClientId: '428294323885-o2jt0c6v6u7q5rl9e54b5bt756vj66u6.apps.googleusercontent.com',
+    iosBundleId: 'technology.technotown.cosmocare',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBBplJwyIJMQ9PVDgNFdG_-Llz5Ut29uR8',
-    appId: '1:684068065529:ios:17901ccd13b5f75c905228',
-    messagingSenderId: '684068065529',
-    projectId: 'cosmocare-c2fec',
-    storageBucket: 'cosmocare-c2fec.appspot.com',
-    iosClientId: '684068065529-fl95gpcgk71b05qsf9278hn1t5d6ijgg.apps.googleusercontent.com',
-    iosBundleId: 'com.example.appRelease2',
+    apiKey: 'AIzaSyCLOcRQDMO4UngcWU-ui9G5JqdYxSIF1ng',
+    appId: '1:428294323885:ios:4042353c49aee0d7225024',
+    messagingSenderId: '428294323885',
+    projectId: 'cosmo-care-8ffaa',
+    databaseURL: 'https://cosmo-care-8ffaa-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'cosmo-care-8ffaa.appspot.com',
+    iosClientId: '428294323885-o2jt0c6v6u7q5rl9e54b5bt756vj66u6.apps.googleusercontent.com',
+    iosBundleId: 'technology.technotown.cosmocare',
   );
 }

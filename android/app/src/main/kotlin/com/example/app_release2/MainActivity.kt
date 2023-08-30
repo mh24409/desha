@@ -1,4 +1,4 @@
-package com.example.app_release2
+package technology.technotown.cosmocare
 
 import io.flutter.embedding.android.FlutterActivity
 

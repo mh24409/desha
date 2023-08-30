@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "684068065529",
-    "project_id": "cosmocare-c2fec",
-    "storage_bucket": "cosmocare-c2fec.appspot.com"
+    "project_number": "428294323885",
+    "firebase_url": "https://cosmo-care-8ffaa-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "cosmo-care-8ffaa",
+    "storage_bucket": "cosmo-care-8ffaa.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:684068065529:android:6d3ae49cb0c6fb8a905228",
+        "mobilesdk_app_id": "1:428294323885:android:a65fcda2a703e8ff225024",
         "android_client_info": {
-          "package_name": "com.example.app_release2"
+          "package_name": "technology.technotown.cosmocare"
         }
       },
       "oauth_client": [
         {
-          "client_id": "684068065529-4lv4ugt70nvjncgdmiusvj7t5p4rj5mg.apps.googleusercontent.com",
+          "client_id": "428294323885-g46jdgp513dnq7arsr5t611oi6bfpbq8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDdH7obDZj0lmtBrSvxlCZCeoWjhnmO0jQ"
+          "current_key": "AIzaSyBgE2EgaSMcKv8g-kukQ4C3xj2yweY-fko"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "684068065529-4lv4ugt70nvjncgdmiusvj7t5p4rj5mg.apps.googleusercontent.com",
+              "client_id": "428294323885-g46jdgp513dnq7arsr5t611oi6bfpbq8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

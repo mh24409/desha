@@ -55,8 +55,8 @@ class AuthCubit extends Cubit<AuthStates> {
   }
 
   void onSplashViewScreenLaunch(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 5));
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    await Future.delayed(const Duration(seconds: 5));
     bool loginState = preferences.getBool('isLoggedIn') ?? false;
     if (loginState == true) {
       emit(LoginSuccessState());
@@ -68,32 +68,13 @@ class AuthCubit extends Cubit<AuthStates> {
   void logOut({required BuildContext context}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String appLanguage = preferences.getString("appLang") ?? "en";
+    int userId = preferences.getInt("id")!;
     preferences.clear();
     emit(AuthInitState());
     preferences.setString("appLang", appLanguage);
     Get.snackbar("Logout Success".tr, "Your location isn't tracked now".tr);
+    await _deleteUserFromFirebase(userId: userId.toString());
     await await Get.offAll(() => LoginScreen());
-  }
-
-  static Future<void> _updateUserLocation({
-    required String userId,
-    required double lat,
-    required double lng,
-    required String fullName,
-    required String image,
-    required String timestamp,
-    required String email,
-  }) async {
-    FirebaseDatabase database = FirebaseDatabase.instance;
-    final DatabaseReference usersRef = database.ref().child('users');
-    await usersRef.child(userId).update({
-      'lat': lat.toString(),
-      'lng': lng.toString(),
-      'full_name': fullName,
-      'image': image,
-      'timestamp': timestamp,
-      'username': email,
-    });
   }
 
   static void liveLocation() async {
@@ -147,5 +128,32 @@ class AuthCubit extends Cubit<AuthStates> {
       },
     );
     location.enableBackgroundMode(enable: true);
+  }
+
+  static Future<void> _updateUserLocation({
+    required String userId,
+    required double lat,
+    required double lng,
+    required String fullName,
+    required String image,
+    required String timestamp,
+    required String email,
+  }) async {
+    FirebaseDatabase database = FirebaseDatabase.instance;
+    final DatabaseReference usersRef = database.ref().child('users');
+    await usersRef.child(userId).update({
+      'lat': lat.toString(),
+      'lng': lng.toString(),
+      'full_name': fullName,
+      'image': image,
+      'timestamp': timestamp,
+      'username': email,
+    });
+  }
+
+  static Future<void> _deleteUserFromFirebase({required String userId}) async {
+    FirebaseDatabase database = FirebaseDatabase.instance;
+    final DatabaseReference usersRef = database.ref().child('users');
+    await usersRef.child(userId).remove();
   }
 }
