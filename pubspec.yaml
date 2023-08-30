@@ -40,18 +40,18 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+
 flutter:
+  assets:
+    - assets/images/
+  
+  uses-material-design: true
 
 flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/logo1.png"
-  min_sdk_android: 21
-
-  uses-material-design: true
-
-  assets:
-    - assets/images/
+  min_sdk_android: 21  
   
   # example:
   fonts:
