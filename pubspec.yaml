@@ -1,11 +1,11 @@
 name: cosmo_care
 description: A new Flutter project.
 
-publish_to: 'none' 
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.0 <3.0.0'
+  sdk: ">=2.19.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -44,15 +44,15 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
-  
+
   uses-material-design: true
 
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/logo1.png"
-  min_sdk_android: 21  
-  
+  image_path: "assets/images/app_icon.png"
+  min_sdk_android: 21
+
   # example:
   fonts:
     - family: Gilory
