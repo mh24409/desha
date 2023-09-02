@@ -1,5 +1,6 @@
 class ApiConstants {
-  static const String baseUrl = 'https://cosmocareprod-training.technotown.technology';
+  // static const String baseUrl = 'https://cosmocareprod-training.technotown.technology';
+  static const String baseUrl = 'https://cosmocare.technotown.technology';
   static const String loginEndPoint = '/login';
   static const String getCustomerTypesEndPoint = '/types';
   static const String getCustomersEndPoint = '/customers';
