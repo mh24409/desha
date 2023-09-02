@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../core/Constants/api_constants.dart';
 import '../../../core/helper/api_helper.dart';
 import '../model/category_model.dart';
@@ -11,12 +13,14 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
   Future<void> getProductDividedByCategories() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String userToken = preferences.getString("token")!;
+    String language = Get.locale?.languageCode ?? 'en';
     Map<String, String> header = {
-        'Authorization': 'Bearer $userToken',
-      };
+      'Authorization': 'Bearer $userToken',
+    };
     emit(GetCateLoadingState());
     final response = await ApiHelper().get(
-      url: ApiConstants.baseUrl + ApiConstants.categoriesEndPoint,
+      url:
+          "${ApiConstants.baseUrl}${ApiConstants.categoriesEndPoint}?lang=$language",
       headers: header,
     );
     List<CategoryModel> categories = [];
