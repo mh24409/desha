@@ -29,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
                 ProfileHeader(
                   userName: state.currentUser.userName!,
                 ),
-                VerticalSpacer(20.h),
+                Flexible(child: VerticalSpacer(20.h)),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: ProfileCard(
@@ -37,7 +37,7 @@ class ProfileScreen extends StatelessWidget {
                     cardValue: state.currentUser.userName!,
                   ),
                 ),
-                VerticalSpacer(20.h),
+                Flexible(child: VerticalSpacer(20.h)),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: ProfileCard(
@@ -45,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
                     cardValue: state.currentUser.email!,
                   ),
                 ),
-                VerticalSpacer(40.h),
+                Flexible(child: VerticalSpacer(40.h)),
                 EasyButton(
                   idleStateWidget: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
