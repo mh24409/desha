@@ -18,7 +18,7 @@ const Map<String, String> en = {
   "Please check your internet connection":
       "Please check your internet connection",
   "Logout Success": "Logout Success",
-  "Your location isn't tracked now":"Your location isn't tracked now",
+  "Your location isn't tracked now": "Your location isn't tracked now",
   "Authentication Failed": "Authentication Failed",
   "your email or password are not correct":
       "your email or password are not correct",
@@ -123,5 +123,14 @@ const Map<String, String> en = {
   'account': 'account',
   'products': 'products',
   'customers': 'customers',
-  'map': 'map'
+  'map': 'map',
+  'Accept': 'Accept',
+  'Reject': 'Reject',
+  'Location Permission': 'Location Permission',
+  'Please allow permission': 'Please allow permission',
+  'The app cannot function without this permission':
+      'The app cannot function without this permission',
+  'Cosmocare app ': 'Cosmocare app ',
+  'collects location data for sales management to manage sale team agents by monitoring their location when they are logged in, even when the app is closed and not in use. The app stops monitoring when you are logged out.':
+      'collects location data for sales management to manage sale team agents by monitoring their location when they are logged in, even when the app is closed and not in use. The app stops monitoring when you are logged out.'
 };

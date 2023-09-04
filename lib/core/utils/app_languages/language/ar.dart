@@ -116,5 +116,14 @@ const Map<String, String> ar = {
   'account': 'الحساب',
   'products': 'المنتجات',
   'customers': 'العملاء',
-  'map': 'الخريطة'
+  'map': 'الخريطة',
+  'Accept': 'تقبل',
+  'Reject': 'رفض',
+  'Location Permission': 'إذن الموقع',
+  'Please allow permission': 'أرجو أن تسمحوا بالإذن',
+  'The app cannot function without this permission':
+      'لا يمكن للتطبيق العمل بدون هذا الإذن',
+  'Cosmocare app ': 'تطبيق كوزموكير ',
+  'collects location data for sales management to manage sale team agents by monitoring their location when they are logged in, even when the app is closed and not in use. The app stops monitoring when you are logged out.':
+      'يجمع بيانات الموقع لإدارة المبيعات لإدارة وكلاء فريق البيع من خلال مراقبة موقعهم عند تسجيل الدخول، حتى عندما يكون التطبيق مغلقا وغير مستخدم. يتوقف التطبيق عن المراقبة عند تسجيل الخروج.'
 };
