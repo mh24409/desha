@@ -24,7 +24,7 @@ class AddResponsibleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(
+        title: Text(
           "Add New Responsible".tr,
         ),
       ),
@@ -92,7 +92,7 @@ class AddResponsibleScreen extends StatelessWidget {
                     },
                     itemAsString: (item) => item,
                     decoration:
-                        selectionFiledDecoration(hintText: " Work End Day".tr),
+                        selectionFiledDecoration(hintText: "Work End Day".tr),
                   ),
                   const VerticalSpacer(10),
                   CustomSingleSelectField<String>(
@@ -103,7 +103,7 @@ class AddResponsibleScreen extends StatelessWidget {
                     },
                     itemAsString: (item) => item,
                     decoration:
-                        selectionFiledDecoration(hintText: "Work Start At"),
+                        selectionFiledDecoration(hintText: "Work Start At".tr),
                   ),
                   const VerticalSpacer(10),
                   CustomSingleSelectField<String>(

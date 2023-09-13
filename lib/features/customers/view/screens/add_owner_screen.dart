@@ -26,7 +26,7 @@ class AddOwnerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(
+        title: Text(
           "Add New Owner".tr,
         ),
       ),
@@ -94,7 +94,7 @@ class AddOwnerScreen extends StatelessWidget {
                     },
                     itemAsString: (item) => item,
                     decoration:
-                        selectionFiledDecoration(hintText: " Work End Day".tr),
+                        selectionFiledDecoration(hintText: "Work End Day".tr),
                   ),
                   const VerticalSpacer(10),
                   CustomSingleSelectField<String>(
