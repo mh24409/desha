@@ -1,11 +1,10 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import 'core/Constants/ui_constants.dart';
 import 'core/utils/app_languages/controller/binding.dart';
 import 'core/utils/app_languages/translation/translation.dart';
@@ -46,9 +45,9 @@ class CosmoCareTrackingApp extends StatelessWidget {
           create: (context) => GetAllCustomerCubit()..getAllCustomers(),
         ),
         BlocProvider<CategoriesCubit>(
-          create: (context) => CategoriesCubit()..getProductDividedByCategories(),
+          create: (context) =>
+              CategoriesCubit()..getProductDividedByCategories(),
         ),
-        
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
