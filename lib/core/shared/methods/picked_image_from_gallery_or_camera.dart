@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart';
 import '../../utils/enums/picked_image_source.dart';
 
-Future<File> pickedImageFromGalleryOrCamera({
+Future<String> pickedImageFromGalleryOrCamera({
   required PickedImageSources imageSources,
 }) async {
   ImagePicker picker = ImagePicker();
@@ -11,6 +13,7 @@ Future<File> pickedImageFromGalleryOrCamera({
         ? ImageSource.gallery
         : ImageSource.camera,
   );
-  File pickedImage = File(pickedFile!.path);
-  return pickedImage ;
+  Uint8List pickedImage = File(pickedFile!.path).readAsBytesSync();
+  String base64Image = base64Encode(pickedImage);
+  return base64Image;
 }

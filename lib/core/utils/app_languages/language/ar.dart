@@ -125,5 +125,9 @@ const Map<String, String> ar = {
       'لا يمكن للتطبيق العمل بدون هذا الإذن',
   'Cosmocare app ': 'تطبيق كوزموكير ',
   'collects location data for sales management to manage sale team agents by monitoring their location when they are logged in, even when the app is closed and not in use. The app stops monitoring when you are logged out.':
-      'يجمع بيانات الموقع لإدارة المبيعات لإدارة وكلاء فريق البيع من خلال مراقبة موقعهم عند تسجيل الدخول، حتى عندما يكون التطبيق مغلقا وغير مستخدم. يتوقف التطبيق عن المراقبة عند تسجيل الخروج.'
+      'يجمع بيانات الموقع لإدارة المبيعات لإدارة وكلاء فريق البيع من خلال مراقبة موقعهم عند تسجيل الدخول، حتى عندما يكون التطبيق مغلقا وغير مستخدم. يتوقف التطبيق عن المراقبة عند تسجيل الخروج.',
+  'Choose Image': 'اختر صورة',
+  'Customer Image is Required': 'صورة العميل مطلوبة',
+  'Camera': 'الكاميرا',
+  'Image Selected ✅': 'تم اختيار الصورة ✅'
 };

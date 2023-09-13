@@ -64,7 +64,8 @@ class CustomersController {
       }
       return customers;
     } catch (e) {
-      Get.snackbar("Connection Error".tr, "Please check your internet connection".tr,
+      Get.snackbar(
+          "Connection Error".tr, "Please check your internet connection".tr,
           backgroundColor: Colors.red);
       return customers;
     }
@@ -197,6 +198,7 @@ class CustomersController {
       "email": customerData.email,
       "term_duration": customerData.paymentTermId,
       "sales_unit": customerData.saleZoneId,
+      "image": customerData.image,
       "owners": ownerData != null
           ? [
               {

@@ -132,5 +132,9 @@ const Map<String, String> en = {
       'The app cannot function without this permission',
   'Cosmocare app ': 'Cosmocare app ',
   'collects location data for sales management to manage sale team agents by monitoring their location when they are logged in, even when the app is closed and not in use. The app stops monitoring when you are logged out.':
-      'collects location data for sales management to manage sale team agents by monitoring their location when they are logged in, even when the app is closed and not in use. The app stops monitoring when you are logged out.'
+      'collects location data for sales management to manage sale team agents by monitoring their location when they are logged in, even when the app is closed and not in use. The app stops monitoring when you are logged out.',
+  'Choose Image': 'Choose Image',
+  'Customer Image is Required': 'Customer Image is Required',
+  'Camera': 'Camera',
+  'Image Selected ✅': 'Image Selected ✅'
 };

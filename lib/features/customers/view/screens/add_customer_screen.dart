@@ -1,5 +1,6 @@
 import 'package:cosmo_care/core/Constants/ui_constants.dart';
 import 'package:cosmo_care/core/shared/methods/auth_validation.dart';
+import 'package:cosmo_care/core/utils/enums/picked_image_source.dart';
 import 'package:cosmo_care/core/widgets/widgets/custom_text_field.dart';
 import 'package:cosmo_care/features/customers/model/city_model.dart';
 import 'package:cosmo_care/features/customers/model/customer_type_model.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_custom_selector/widget/flutter_single_select.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../../../core/shared/methods/picked_image_from_gallery_or_camera.dart';
 import '../../../../core/widgets/widgets/custom_button_widget.dart';
 import '../../controller/customers_controller.dart';
 import '../../model/create_customer_modeling.dart';
@@ -23,7 +25,13 @@ class AddCustomerScreen extends StatefulWidget {
   List<GovernmentModel> governments;
   List<SaleZoneModel> saleZone;
 
-  AddCustomerScreen({Key? key, required this.governments, required this.payments, required this.types, required this.saleZone}) : super(key: key);
+  AddCustomerScreen(
+      {Key? key,
+      required this.governments,
+      required this.payments,
+      required this.types,
+      required this.saleZone})
+      : super(key: key);
   @override
   State<AddCustomerScreen> createState() => _AddCustomerScreenState();
 }
@@ -32,18 +40,20 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
   CustomerData customerData = CustomerData();
   List<CityModel> cities = [];
   GlobalKey<FormState> formKey = GlobalKey();
+  TextEditingController imageController = TextEditingController();
+  String? customerImage;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(
+        title: Text(
           "Add New Customer".tr,
         ),
       ),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height + 150,
+      body: SizedBox(
+        height: 1.sh,
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
@@ -51,7 +61,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                   Text("New Customer Data".tr),
+                  Text("New Customer Data".tr),
                   CustomTextField(
                     prefixIconData: Iconsax.user,
                     hintText: "Customer Name".tr,
@@ -63,10 +73,9 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       customerData.name = value;
                     },
                   ),
+                  SizedBox(height: 10.h),
                   CustomSingleSelectField<String>(
-                    
-                    items:
-                        widget.types.map((e) => e.title!).toList(),
+                    items: widget.types.map((e) => e.title!).toList(),
                     title: "Customers Types".tr,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -74,7 +83,6 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       }
                       return null;
                     },
-                    
                     onSelectionDone: (value) {
                       for (var item in widget.types) {
                         if (item.title == value) {
@@ -85,11 +93,10 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     itemAsString: (item) => item,
                     decoration: selectionFiledDecoration(
                         hintText: "Customers Types".tr),
-                        
                   ),
+                  SizedBox(height: 10.h),
                   CustomSingleSelectField<String>(
-                    items:
-                        widget.saleZone.map((e) => e.title!).toList(),
+                    items: widget.saleZone.map((e) => e.title!).toList(),
                     title: "Sale Zone".tr,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -105,9 +112,10 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       }
                     },
                     itemAsString: (item) => item,
-                    decoration: selectionFiledDecoration(
-                        hintText: "Sale Zone".tr),
+                    decoration:
+                        selectionFiledDecoration(hintText: "Sale Zone".tr),
                   ),
+                  SizedBox(height: 10.h),
                   CustomSingleSelectField<String>(
                     items: widget.payments.map((e) => e.title!).toList(),
                     title: "Payment Terms".tr,
@@ -125,9 +133,10 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       }
                     },
                     itemAsString: (item) => item,
-                    decoration: selectionFiledDecoration(
-                        hintText: "Payment Terms".tr),
+                    decoration:
+                        selectionFiledDecoration(hintText: "Payment Terms".tr),
                   ),
+                  SizedBox(height: 10.h),
                   CustomTextField(
                     prefixIconData: Iconsax.location,
                     hintText: "Address".tr,
@@ -139,6 +148,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       customerData.address = value;
                     },
                   ),
+                  SizedBox(height: 10.h),
                   CustomTextField(
                     prefixIconData: Iconsax.user,
                     hintText: "Distinctive Address".tr,
@@ -149,8 +159,9 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       customerData.distinctiveAddress = value;
                     },
                   ),
+                  SizedBox(height: 10.h),
                   CustomSingleSelectField<String>(
-                    items:widget.governments.map((e) => e.title!).toList(),
+                    items: widget.governments.map((e) => e.title!).toList(),
                     title: "Government".tr,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -163,8 +174,8 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                         if (item.title == value) {
                           customerData.governmentId = item.id;
                           List<CityModel> currentCities =
-                              await CustomersController
-                                  .getAllCustomerCities(govId: item.id!);
+                              await CustomersController.getAllCustomerCities(
+                                  govId: item.id!);
                           setState(() {
                             cities = currentCities;
                           });
@@ -175,6 +186,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     decoration:
                         selectionFiledDecoration(hintText: "Government".tr),
                   ),
+                  SizedBox(height: 10.h),
                   CustomSingleSelectField<String>(
                       items: cities.map((e) => e.title!).toList(),
                       title: "City".tr,
@@ -192,7 +204,9 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                         }
                       },
                       itemAsString: (item) => item,
-                      decoration: selectionFiledDecoration(hintText: "City".tr)),
+                      decoration:
+                          selectionFiledDecoration(hintText: "City".tr)),
+                  SizedBox(height: 10.h),
                   CustomTextField(
                     prefixIconData: Iconsax.mobile,
                     hintText: "Phone Number".tr,
@@ -203,6 +217,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       customerData.phoneNumber = value;
                     },
                   ),
+                  SizedBox(height: 10.h),
                   CustomTextField(
                     prefixIconData: Icons.web,
                     hintText: "Website".tr,
@@ -210,6 +225,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       customerData.website = value;
                     },
                   ),
+                  SizedBox(height: 10.h),
                   CustomTextField(
                     prefixIconData: Icons.email,
                     hintText: "Email".tr,
@@ -220,6 +236,79 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       customerData.email = value;
                     },
                   ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        flex: 6,
+                        child: CustomTextField(
+                          readOnly: true,
+                          controller: imageController,
+                          prefixIconData: Iconsax.image,
+                          hintText: "Choose Image".tr,
+                          validate: (p0) {
+                            if (customerImage == null) {
+                              return "Customer Image is Required".tr;
+                            }
+                            return null;
+                          },
+                          onTap: () async {
+                            Get.bottomSheet(
+                              SizedBox(
+                                height: 100.h,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ListTile(
+                                      leading: const Icon(Iconsax.camera),
+                                      title: Text("Camera".tr),
+                                      onTap: () async {
+                                        String base64Image =
+                                            await pickedImageFromGalleryOrCamera(
+                                                imageSources:
+                                                    PickedImageSources.camera);
+                                        setState(() {
+                                          customerImage = base64Image;
+                                        });
+                                        customerData.image = base64Image;
+                                        imageController.text =
+                                            customerImage == null
+                                                ? "Choose Image".tr
+                                                : "Image Selected ✅".tr;
+                                        Get.back();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              elevation: 0,
+                              backgroundColor: Colors.white,
+                            );
+                          },
+                        ),
+                      ),
+                      (customerImage == null)
+                          ? const SizedBox.shrink()
+                          : Flexible(
+                              child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      customerImage = null;
+                                      imageController.text = "Choose Image".tr;
+                                    });
+                                    customerData.image = null;
+                                  },
+                                  child: Icon(
+                                    Icons.highlight_remove_sharp,
+                                    size: 40.sp,
+                                    color: Colors.red,
+                                  )),
+                            )
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
                   CustomButton(
                     buttonColor: UiConstant.kCosmoCareCustomColors1,
                     buttonHeight: 40.h,

@@ -12,6 +12,7 @@ class CustomerData {
   int? saleZoneId;
   double? lat;
   double? lng;
+  String? image;
 
   CustomerData({
     this.name,
@@ -26,7 +27,8 @@ class CustomerData {
     this.cityId,
     this.lat,
     this.lng,
-    this.saleZoneId
+    this.saleZoneId,
+    this.image,
   });
 }
 

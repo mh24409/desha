@@ -22,27 +22,32 @@ class CustomTextField extends StatelessWidget {
   final AutovalidateMode autovalidateMode;
   String? Function(String?)? validate;
   TextEditingController? controller;
+  void Function()? onTap;
+  bool readOnly;
 
-  CustomTextField(
-      {super.key,
-      this.initValue,
-      this.maxLines = 1,
-      required this.prefixIconData,
-      this.iconColor =  Colors.grey,
-      required this.hintText,
-      this.onChange,
-      this.height = 15,
-      this.isFilled = true,
-      this.focusesBorderColor = UiConstant.kCosmoCareCustomColors1,
-      this.enableBorderColor = UiConstant.kCosmoCareCustomColors1,
-      this.borderRadius = 10,
-      this.obscureText = false,
-      this.filledColor = Colors.white70,
-      this.keyboardType = TextInputType.emailAddress,
-      this.validate,
-      this.autovalidateMode = AutovalidateMode.disabled,
-      this.isEnable = true,
-      this.controller});
+  CustomTextField({
+    super.key,
+    this.initValue,
+    this.maxLines = 1,
+    required this.prefixIconData,
+    this.iconColor = Colors.grey,
+    required this.hintText,
+    this.onChange,
+    this.height = 15,
+    this.isFilled = true,
+    this.focusesBorderColor = UiConstant.kCosmoCareCustomColors1,
+    this.enableBorderColor = UiConstant.kCosmoCareCustomColors1,
+    this.borderRadius = 10,
+    this.obscureText = false,
+    this.filledColor = Colors.white70,
+    this.keyboardType = TextInputType.emailAddress,
+    this.validate,
+    this.autovalidateMode = AutovalidateMode.disabled,
+    this.isEnable = true,
+    this.controller,
+    this.onTap,
+    this.readOnly = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -68,21 +73,21 @@ class CustomTextField extends StatelessWidget {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
-          borderSide:  BorderSide(
+          borderSide: BorderSide(
             color: enableBorderColor,
             style: BorderStyle.solid,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
-          borderSide:  BorderSide(
+          borderSide: BorderSide(
             color: focusesBorderColor,
             style: BorderStyle.solid,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
-          borderSide:  BorderSide(
+          borderSide: BorderSide(
             color: enableBorderColor,
             style: BorderStyle.solid,
           ),
@@ -95,6 +100,8 @@ class CustomTextField extends StatelessWidget {
           ),
         ),
       ),
+      readOnly: readOnly,
+      onTap: onTap,
     );
   }
 }
