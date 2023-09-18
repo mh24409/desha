@@ -143,6 +143,16 @@ class AddOwnerScreen extends StatelessWidget {
                         buttonColor: UiConstant.kCosmoCareCustomColors1,
                         borderRadius: 10,
                         onPressed: () async {
+                          if (responsibleData == null) {
+                            Get.snackbar(
+                              "Cannot create",
+                              "You must add at least one owner or one responsible."
+                                  .tr,
+                              backgroundColor: Colors.red,
+                              snackPosition: SnackPosition.TOP,
+                            );
+                            return;
+                          }
                           await CustomersController.createCustomer(
                               customerData: customerData,
                               ownerData: null,

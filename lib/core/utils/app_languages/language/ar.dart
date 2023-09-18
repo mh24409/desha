@@ -129,5 +129,8 @@ const Map<String, String> ar = {
   'Choose Image': 'اختر صورة',
   'Customer Image is Required': 'صورة العميل مطلوبة',
   'Camera': 'الكاميرا',
-  'Image Selected ✅': 'تم اختيار الصورة ✅'
+  'Image Selected ✅': 'تم اختيار الصورة ✅',
+  "You must add at least one owner or one responsible.":
+      "يجب اضافة مسؤول او مالك واحد علي الاقل",
+  "Cannot create": "لا يمكن إنشاء"
 };
