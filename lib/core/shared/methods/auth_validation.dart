@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 String? emailControllerValidator(String? value) {
   if (value!.isEmpty) {
-    return "Email Field Is required".tr;
+    return null;
   } else if (!GetUtils.isEmail(value)) {
     return "email is in a bad format".tr;
   }
@@ -44,7 +44,6 @@ String? ownerNameControllerValidator(String? value) {
   }
   return null;
 }
-
 
 String? quantityControllerValidator(String? value) {
   if (value!.isEmpty) {
