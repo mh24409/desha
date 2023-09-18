@@ -1,4 +1,3 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:cosmo_care/core/Constants/ui_constants.dart';
 import 'package:cosmo_care/core/widgets/widgets/vertical_spacer.dart';
 import 'package:cosmo_care/features/products/views/product_details.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+
 import '../../../core/Constants/assets_path_constants.dart';
 import '../controller/categories_cubit.dart';
 import '../controller/categories_states.dart';
@@ -24,7 +24,7 @@ class ProductDividedByCateScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-               Text("CosmoCare Current Products".tr),
+              Text("CosmoCare Current Products".tr),
               GestureDetector(
                 onTap: () async {
                   await BlocProvider.of<CategoriesCubit>(context)
@@ -80,8 +80,8 @@ class ProductDividedByCateScreen extends StatelessWidget {
                                   onTap: () {
                                     Get.to(
                                       () => ProductDetails(
-                                        product: state
-                                            .categories[index].products[position],
+                                        product: state.categories[index]
+                                            .products[position],
                                       ),
                                     );
                                   },
@@ -89,17 +89,20 @@ class ProductDividedByCateScreen extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 12, vertical: 15),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Container(
-                                          width:
-                                              MediaQuery.of(context).size.height *
-                                                  0.15,
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.15,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.15,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.15,
                                           decoration: const BoxDecoration(
                                             color: Color(0xffF9F6F6),
                                             boxShadow: [
@@ -111,22 +114,34 @@ class ProductDividedByCateScreen extends StatelessWidget {
                                               ),
                                             ],
                                           ),
-                                          child: ConditionalBuilder(
-                                            condition: state
-                                                    .categories[index]
-                                                    .products[position]
-                                                    .imageURL !=
-                                                "",
-                                            builder: (context) {
-                                            
-                                              return Image.asset(
-                                                AssetsPathConstants
-                                                    .kProductPlaceholder,
-                                                fit: BoxFit.fill,
+                                          child: Image.network(
+                                            state.categories[index]
+                                                .products[position].imageURL,
+                                            fit: BoxFit.fill,
+                                            loadingBuilder: (context, child,
+                                                loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              }
+                                              return Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: UiConstant
+                                                      .kCosmoCareCustomColors1,
+                                                  value: loadingProgress
+                                                              .expectedTotalBytes !=
+                                                          null
+                                                      ? loadingProgress
+                                                              .cumulativeBytesLoaded /
+                                                          loadingProgress
+                                                              .expectedTotalBytes!
+                                                      : null,
+                                                ),
                                               );
-                                              
                                             },
-                                            fallback: (context) => Image.asset(
+                                            errorBuilder:
+                                                (context, error, stackTrace) =>
+                                                    Image.asset(
                                               AssetsPathConstants
                                                   .kProductPlaceholder,
                                               fit: BoxFit.fill,
@@ -135,9 +150,10 @@ class ProductDividedByCateScreen extends StatelessWidget {
                                         ),
                                         VerticalSpacer(5.h),
                                         SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.height *
-                                                  0.15,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.15,
                                           child: Text(
                                             state.categories[index]
                                                 .products[position].title,
@@ -155,7 +171,8 @@ class ProductDividedByCateScreen extends StatelessWidget {
                                   ),
                                 );
                               },
-                              itemCount: state.categories[index].products.length,
+                              itemCount:
+                                  state.categories[index].products.length,
                             ),
                           )
                         ],

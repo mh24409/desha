@@ -35,13 +35,22 @@ class ProductDetails extends StatelessWidget {
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: ConditionalBuilder(
-                  condition: product.imageURL != "",
-                  builder: (context) => Image.asset(
-                    AssetsPathConstants.kProductPlaceholder,
-                    fit: BoxFit.fill,
-                  ),
-                  fallback: (context) => Image.asset(
+                child: Image.network(
+                  product.imageURL,
+                  fit: BoxFit.fill,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: UiConstant.kCosmoCareCustomColors1,
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) => Image.asset(
                     AssetsPathConstants.kProductPlaceholder,
                     fit: BoxFit.fill,
                   ),
