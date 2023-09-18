@@ -1,8 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../../features/products/controller/categories_cubit.dart';
 import '../../utils/app_languages/controller/app_langauge_controller.dart';
 
 class AppLanguageSelectorWidget extends StatelessWidget {
@@ -55,7 +57,9 @@ class AppLanguageSelectorWidget extends StatelessWidget {
           onChanged: (value) async {
             controller.changeSelectedLanguage(value!);
             await Get.updateLocale(Locale(value));
-           },
+            await BlocProvider.of<CategoriesCubit>(context)
+                .getProductDividedByCategories();
+          },
           buttonStyleData: ButtonStyleData(width: 100.w),
         ),
       ),
