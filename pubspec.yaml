@@ -50,7 +50,7 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/app_icon.png"
+  image_path: "assets/images/app_icon.jpeg"
   min_sdk_android: 21
 
   # example:
