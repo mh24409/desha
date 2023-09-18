@@ -3,20 +3,25 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:cosmo_care/core/Constants/assets_path_constants.dart';
 import 'package:cosmo_care/core/Constants/ui_constants.dart';
+import 'package:cosmo_care/core/shared/global_variables.dart' as global;
 import 'package:cosmo_care/core/widgets/widgets/vertical_spacer.dart';
+import 'package:cosmo_care/features/check_in_tracking/controller/track_check_cubit.dart';
+import 'package:cosmo_care/features/check_in_tracking/controller/track_check_states.dart';
 import 'package:cosmo_care/features/customers/view/widgets/details_row.dart';
 import 'package:easy_loading_button/easy_loading_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../core/widgets/widgets/custom_button_widget.dart';
 import '../../../orders/controller/order_controller.dart';
 import '../../../orders/model/customer_products_model.dart';
 import '../../../orders/views/screens/sale_order_line_screen.dart';
 import '../../model/customer_model.dart';
-import 'package:cosmo_care/core/shared/global_variables.dart' as global;
 
 class CustomerDetailsScreen extends StatefulWidget {
   final CustomerModel customer;
@@ -33,6 +38,20 @@ enum DetailsView { CustomerDetails, Responsibility, Owner }
 
 class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
   DetailsView _currentView = DetailsView.CustomerDetails;
+  bool isCheckIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getCheckInState();
+    });
+  }
+
+  _getCheckInState() async {
+    await BlocProvider.of<TrackCheckingCubit>(context)
+        .getCustomerTrackCheckingState(widget.customer.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,59 +200,120 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
             ),
             _buildDetailsContent(),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: EasyButton(
-                idleStateWidget: Text(
-                  'Add Order'.tr,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                loadingStateWidget: const CircularProgressIndicator(
-                  strokeWidth: 3.0,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.white,
-                  ),
-                ),
-                useWidthAnimation: true,
-                useEqualLoadingStateWidgetDimension: true,
-                width: MediaQuery.of(context).size.width * 0.6,
-                height: 45.h,
-                contentGap: 6.0,
-                buttonColor: UiConstant.kCosmoCareCustomColors1,
-                borderRadius: 20,
-                onPressed: () async {
-                  if (OrderController.inSaveZoneToCreateOrder(
-                    customerLat: widget.customer.lat,
-                    customerLong: widget.customer.lng,
-                    currentLat: global.currentUserLat,
-                    currentLong: global.currentUserLong,
-                  )) {
-                    int invoiceId = await OrderController.createSaleOrder(
-                        customerId: widget.customer.id);
-                    if (invoiceId != 0) {
-                      List<CustomerProductsModel> offers =
-                          await OrderController.getCustomerOffers(
+              padding: EdgeInsets.symmetric(
+                vertical: 10.h,
+                horizontal: 10.w,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: EasyButton(
+                      idleStateWidget: Text(
+                        'Add Order'.tr,
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      loadingStateWidget: const CircularProgressIndicator(
+                        strokeWidth: 3.0,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.white,
+                        ),
+                      ),
+                      useWidthAnimation: true,
+                      useEqualLoadingStateWidgetDimension: true,
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      height: 45.h,
+                      contentGap: 6.0,
+                      buttonColor: UiConstant.kCosmoCareCustomColors1,
+                      borderRadius: 20,
+                      onPressed: () async {
+                        if (OrderController.inSaveZoneToCreateOrder(
+                          customerLat: widget.customer.lat,
+                          customerLong: widget.customer.lng,
+                          currentLat: global.currentUserLat,
+                          currentLong: global.currentUserLong,
+                        )) {
+                          int invoiceId = await OrderController.createSaleOrder(
                               customerId: widget.customer.id);
-                      Get.to(
-                        () => SaleOrderLineScreen(
-                          offers: offers,
-                          invoiceId: invoiceId,
+                          if (invoiceId != 0) {
+                            List<CustomerProductsModel> offers =
+                                await OrderController.getCustomerOffers(
+                                    customerId: widget.customer.id);
+                            Get.to(
+                              () => SaleOrderLineScreen(
+                                offers: offers,
+                                invoiceId: invoiceId,
+                              ),
+                            );
+                          }
+                        } else {
+                          Get.snackbar(
+                            "Can't Create Order".tr,
+                            "You mustn't be in a distance more than 500m from the customer"
+                                .tr,
+                            backgroundColor: Colors.red,
+                            duration: const Duration(
+                              seconds: 5,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                  Flexible(child: SizedBox(width: 1.w)),
+                  BlocBuilder<TrackCheckingCubit, TrackCheckingStates>(
+                      builder: (trackCheckingContext, trackCheckingState) {
+                    if (trackCheckingState is TrackCheckingSuccessState) {
+                      isCheckIn = trackCheckingState.isCheckIn;
+                      return Flexible(
+                        child: CustomButton(
+                          buttonWidth: 0.6.sw,
+                          buttonHeight: 45.h,
+                          buttonBorderRadius: 20.r,
+                          buttonMargin: 0,
+                          buttonTextFontSize: 14.sp,
+                          buttonText:
+                              (isCheckIn) ? 'Check out'.tr : 'Check in'.tr,
+                          buttonAction: () async {
+                            if (OrderController.inSaveZoneToCreateOrder(
+                              customerLat: widget.customer.lat,
+                              customerLong: widget.customer.lng,
+                              currentLat: global.currentUserLat,
+                              currentLong: global.currentUserLong,
+                            )) {
+                              await BlocProvider.of<TrackCheckingCubit>(context)
+                                  .trackChecking(isCheckIn, widget.customer.lat,
+                                      widget.customer.lng, widget.customer.id);
+                              Get.snackbar(
+                                  (isCheckIn) ? "Check out".tr : "Check in".tr,
+                                  "Changed customer status successfully".tr,
+                                  backgroundColor: Colors.green);
+                            } else {
+                              Get.snackbar(
+                                "Can't check in".tr,
+                                "You mustn't be in a distance more than 500m from the customer"
+                                    .tr,
+                                backgroundColor: Colors.red,
+                                duration: const Duration(
+                                  seconds: 5,
+                                ),
+                              );
+                            }
+                          },
+                          buttonColor: UiConstant.kCosmoCareCustomColors1,
+                        ),
+                      );
+                    } else {
+                      return const Flexible(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 3.0,
                         ),
                       );
                     }
-                  } else {
-                    Get.snackbar(
-                      "Can't Create Order".tr,
-                      "You mustn't be in a distance more than 500m from the customer"
-                          .tr,
-                      backgroundColor: Colors.red,
-                      duration: const Duration(
-                        seconds: 5,
-                      ),
-                    );
-                  }
-                },
+                  }),
+                ],
               ),
             )
           ],
@@ -326,7 +406,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
             ),
           );
         } else {
-          return  Center(child: Text("No Responsiblies For this Customer".tr));
+          return Center(child: Text("No Responsiblies For this Customer".tr));
         }
 
       case DetailsView.Owner:
@@ -384,7 +464,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
             ),
           );
         } else {
-          return  Center(child: Text("No Owners For this Customer".tr));
+          return Center(child: Text("No Owners For this Customer".tr));
         }
     }
   }

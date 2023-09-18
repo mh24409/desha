@@ -139,5 +139,9 @@ const Map<String, String> en = {
   'Image Selected ✅': 'Image Selected ✅',
   "You must either add owner or responsible.":
       "You must either add owner or responsible.",
-  "Cannot create": "Cannot create"
+  "Cannot create": "Cannot create",
+  "Check in": "Check in",
+  "Check out": "Check out",
+  "Can't check in": "Can't check in",
+  "Changed customer status successfully": "Changed customer status successfully"
 };
