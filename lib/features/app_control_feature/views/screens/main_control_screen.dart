@@ -9,7 +9,7 @@ import '../../../../core/widgets/widgets/app_language_selector_widget.dart';
 import '../../../auth/view/screens/profile_screen.dart';
 import '../../../customers/view/screens/customer_screen.dart';
 import '../../../map/views/screens/map_screen.dart';
-import '../../../products/views/product_divided_by_cate_screen.dart';
+import '../../../products/views/screens/product_divided_by_category_screen.dart';
 import '../../controllers/main_view_control_cubit.dart';
 import '../../controllers/main_view_control_state.dart';
 
@@ -119,7 +119,7 @@ class _MainControlScreenState extends State<MainControlScreen> {
           } else if (state is ProductViewStates) {
             return const ProductDividedByCateScreen();
           } else if (state is CustomersViewStates) {
-            return  const CustomersScreen();
+            return const CustomersScreen();
           } else {
             return const MapScreen();
           }

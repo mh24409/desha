@@ -1,3 +1,4 @@
+import 'package:cosmo_care/features/products/model/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,7 +9,9 @@ import '../model/category_model.dart';
 import 'categories_states.dart';
 
 class CategoriesCubit extends Cubit<CategoriesStates> {
-  CategoriesCubit() : super(GetCateInitState());
+  CategoriesCubit() : super(GetCategoryInitState());
+
+  Set<ProductsModel> productsSet = {};
 
   Future<void> getProductDividedByCategories() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -17,7 +20,7 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
     Map<String, String> header = {
       'Authorization': 'Bearer $userToken',
     };
-    emit(GetCateLoadingState());
+    emit(GetCategoryLoadingState());
     final response = await ApiHelper().get(
       url:
           "${ApiConstants.baseUrl}${ApiConstants.categoriesEndPoint}?lang=$language",
@@ -26,15 +29,18 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
     List<CategoryModel> categories = [];
 
     if (response["status"] == 200) {
+      productsSet.clear();
       for (var category in response['data'].values) {
-        categories.add(CategoryModel.fromJson(category));
+        CategoryModel categoryModel = CategoryModel.fromJson(category);
+        categories.add(categoryModel);
+        productsSet.addAll(categoryModel.products);
       }
 
-      emit(GetCateSuccessState(categories: categories));
+      emit(GetCategorySuccessState(categories: categories));
     } else if (response["status"] == 400) {
-      emit(GetCateSuccessState(categories: []));
+      emit(GetCategorySuccessState(categories: []));
     } else {
-      emit(GetCateFailedState());
+      emit(GetCategoryFailedState());
     }
   }
 }

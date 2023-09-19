@@ -2,9 +2,9 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../core/Constants/assets_path_constants.dart';
-import '../../../core/Constants/ui_constants.dart';
-import '../model/product_model.dart';
+import '../../../../core/Constants/assets_path_constants.dart';
+import '../../../../core/Constants/ui_constants.dart';
+import '../../model/product_model.dart';
 
 // ignore: must_be_immutable
 class ProductDetails extends StatelessWidget {
