@@ -12,33 +12,37 @@ class CustomerProductsModel {
   List<OffersModel> offers;
   String quantity;
   double total;
+  String image;
 
-  CustomerProductsModel(
-      {required this.productId,
-      required this.title,
-      required this.details,
-      required this.productCode,
-      required this.brand,
-      required this.priceBeforeTax,
-      required this.price,
-      required this.discountAmount,
-      required this.offers,
-      this.quantity = '',
-      this.total = 0.0
-      });
+  CustomerProductsModel({
+    required this.productId,
+    required this.title,
+    required this.details,
+    required this.productCode,
+    required this.brand,
+    required this.priceBeforeTax,
+    required this.price,
+    required this.discountAmount,
+    required this.offers,
+    this.quantity = '',
+    this.total = 0.0,
+    required this.image,
+  });
 
   factory CustomerProductsModel.fromJson(Map<String, dynamic> json) {
     List<OffersModel> offers = List<OffersModel>.from(
         json['offers'].map((item) => OffersModel.fromJson(item)));
     return CustomerProductsModel(
-        productId: json['product_id'],
-        title: json['title'],
-        details: json['details'],
-        productCode: json['product_code'],
-        brand: json['brand'],
-        priceBeforeTax: json['price_before_tax'],
-        price: json['price'] ?? 0.0,
-        discountAmount: json['discount_amount']?? 0.0,
-        offers: offers);
+      productId: json['product_id'],
+      title: json['title'],
+      details: json['details'],
+      productCode: (json['product_code'] == false) ? "" : json['product_code'],
+      brand: json['brand'],
+      priceBeforeTax: json['price_before_tax'],
+      price: json['price'] ?? 0.0,
+      discountAmount: json['discount_amount'] ?? 0.0,
+      image: json['image'] ?? '',
+      offers: offers,
+    );
   }
 }

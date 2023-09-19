@@ -143,5 +143,9 @@ const Map<String, String> en = {
   "Check in": "Check in",
   "Check out": "Check out",
   "Can't check in": "Can't check in",
-  "Changed customer status successfully": "Changed customer status successfully"
+  "Changed customer status successfully":
+      "Changed customer status successfully",
+  "Please add products": "Please add products",
+  "You must add at least one product":
+      "You must add at least one product"
 };

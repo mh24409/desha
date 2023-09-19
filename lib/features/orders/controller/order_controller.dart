@@ -38,8 +38,18 @@ class OrderController {
         headers: header,
         body: body,
       );
-      return response["invoiceid"];
+      if (response['status'] == 200) {
+        return response["invoiceid"];
+      } else {
+        Get.snackbar(
+          "Something went wrong. please try agin".tr,
+          "",
+          backgroundColor: Colors.red,
+        );
+        return 0;
+      }
     } catch (e) {
+      debugPrint("Error: ${e.toString()}");
       Get.snackbar(
         "Something went wrong. please try agin".tr,
         "",
@@ -52,6 +62,7 @@ class OrderController {
   static Future<List<CustomerProductsModel>> getCustomerOffers(
       {required int customerId}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    String language = Get.locale?.languageCode ?? 'en';
     String userToken = preferences.getString("token")!;
     Map<String, String> header = {
       'Authorization': 'Bearer $userToken',
@@ -60,7 +71,8 @@ class OrderController {
     List<CustomerProductsModel> products = [];
     try {
       final response = await ApiHelper().get(
-        url: "${ApiConstants.baseUrl}/invoices/product?customer_id=$customerId",
+        url:
+            "${ApiConstants.baseUrl}/invoices/product?customer_id=$customerId&lang=$language",
         headers: header,
       );
       for (var element in response) {

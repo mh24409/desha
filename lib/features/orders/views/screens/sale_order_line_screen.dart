@@ -1,10 +1,11 @@
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:cosmo_care/core/widgets/widgets/custom_button_widget.dart';
 import 'package:cosmo_care/core/widgets/widgets/custom_text_field.dart';
 import 'package:easy_loading_button/easy_loading_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_selector/widget/flutter_single_select.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import '../../../../core/Constants/ui_constants.dart';
 import '../../../../core/shared/methods/auth_validation.dart';
 import '../../../../core/widgets/widgets/horizontal_spacer.dart';
@@ -35,6 +36,12 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
   CustomerProductsModel? selectedProduct;
   TextEditingController quantityController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
+
+  final TextEditingController autoCompleteTextController =
+      TextEditingController();
+  GlobalKey<AutoCompleteTextFieldState<CustomerProductsModel>> autoCompleteKey =
+      GlobalKey<AutoCompleteTextFieldState<CustomerProductsModel>>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,51 +71,70 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
               ),
             ),
             Expanded(
+                flex: 3,
                 child: ListView.builder(
-              itemBuilder: (context, index) {
-                return SelectedProductDetailsCard(
-                  selectedProduct: saleOrderLineProducts[index],
-                  buttonAction: () {
-                    setState(() {
-                      saleOrderLineProducts.removeAt(index);
-                      total = 0;
-                      for (var product in saleOrderLineProducts) {
-                        total = total + product.total;
-                      }
-                    });
+                  itemBuilder: (context, index) {
+                    return SelectedProductDetailsCard(
+                      selectedProduct: saleOrderLineProducts[index],
+                      buttonAction: () {
+                        setState(() {
+                          saleOrderLineProducts.removeAt(index);
+                          total = 0;
+                          for (var product in saleOrderLineProducts) {
+                            total = total + product.total;
+                          }
+                        });
+                      },
+                    );
                   },
-                );
-              },
-              itemCount: saleOrderLineProducts.length,
-            )),
-            VerticalSpacer(10.h),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: CustomSingleSelectField<String>(
-                items: widget.offers.map((e) => e.title).toList(),
-                title: "Product Name".tr,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Product is required".tr;
-                  }
-                  return null;
-                },
-                onSelectionDone: (value) {
-                  for (var item in widget.offers) {
-                    if (item.title == value) {
-                      selectedProduct = item;
-                      if (item.offers.isNotEmpty) {
-                        showProductOffers(context, item);
-                      }
-                    }
-                  }
-                },
-                itemAsString: (item) => item,
-                decoration:
-                    selectionFiledDecoration(hintText: "Product Name".tr),
+                  itemCount: saleOrderLineProducts.length,
+                )),
+            SizedBox(height: 10.h),
+            Flexible(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: AutoCompleteTextField<CustomerProductsModel>(
+                  key: autoCompleteKey,
+                  suggestions: widget.offers,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(15),
+                    hintText: "Product Name".tr,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: UiConstant.kCosmoCareCustomColors1,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                  ),
+                  itemBuilder: (context, suggestion) {
+                    return Container(
+                      color: Colors.transparent,
+                      child: ListTile(
+                        title: Text(suggestion.title),
+                      ),
+                    );
+                  },
+                  itemFilter: (suggestion, query) {
+                    return suggestion.title
+                        .toLowerCase()
+                        .contains(query.toLowerCase());
+                  },
+                  itemSorter: (a, b) => a.title.compareTo(b.title),
+                  itemSubmitted: (product) {
+                    showProductOffers(context, product);
+                    selectedProduct = product;
+                    autoCompleteTextController.text = product.title;
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  autofocus: true,
+                  controller: autoCompleteTextController,
+                  clearOnSubmit: false,
+                ),
               ),
             ),
-            VerticalSpacer(10.h),
+            SizedBox(height: 10.h),
             Form(
               key: formKey,
               child: Padding(
@@ -164,6 +190,7 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
                                 for (var product in saleOrderLineProducts) {
                                   total = total + product.total;
                                 }
+                                autoCompleteTextController.clear();
                               });
                             }
                           }
@@ -198,10 +225,19 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
                 buttonColor: Colors.green,
                 borderRadius: 10,
                 onPressed: () async {
-                  await OrderController.createSaleOrderLines(
-                    invoiceId: widget.invoiceId,
-                    products: saleOrderLineProducts,
-                  );
+                  if (saleOrderLineProducts.isNotEmpty) {
+                    await OrderController.createSaleOrderLines(
+                      invoiceId: widget.invoiceId,
+                      products: saleOrderLineProducts,
+                    );
+                  } else {
+                    Get.snackbar(
+                      "Please add products".tr,
+                      "You must add at least one product".tr,
+                      backgroundColor: Colors.red,
+                      snackPosition: SnackPosition.TOP,
+                    );
+                  }
                 },
               ),
             ),

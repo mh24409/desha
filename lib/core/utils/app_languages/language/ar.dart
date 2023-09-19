@@ -93,7 +93,7 @@ const Map<String, String> ar = {
   "Select Product At first": "حدد منتج اولا",
   "Add": "اضافة",
   "this product already added": "هذا المنتج موجود بالفعل",
-  'Save': 'Save',
+  'Save': 'حفظ',
   "Available offers for this product": "العروض المتاحة لهذا المنتج",
   "Product": "المنتج",
   "Bonus": "الزيادة",
@@ -136,5 +136,7 @@ const Map<String, String> ar = {
   "Check in": "تسجيل الوصول",
   "Check out": "تسجيل المغادرة",
   "Can't check in": "لا يمكن تسجيل الوصول",
-  "Changed customer status successfully": "تم تغيير حالة العميل بنجاح"
+  "Changed customer status successfully": "تم تغيير حالة العميل بنجاح",
+  "Please add products": "من فضلك اضف منتجات",
+  "You must add at least one product": "يجب اضافة منتج واحد علي الاقل",
 };

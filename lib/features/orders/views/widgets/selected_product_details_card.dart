@@ -31,16 +31,28 @@ class SelectedProductDetailsCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Image.asset(AssetsPathConstants.kProductPlaceholder),
-                    CustomButton(
-                      buttonWidth: Get.width,
-                      buttonHeight: 30.h,
-                      buttonBorderRadius: 0,
-                      buttonMargin: 0,
-                      buttonTextFontSize: 12,
-                      buttonText: "delete".tr,
-                      buttonAction: buttonAction,
-                      buttonColor: UiConstant.kCosmoCareCustomColors1,
+                    (selectedProduct.image == '')
+                        ? Flexible(
+                            child: Image.asset(
+                                AssetsPathConstants.kProductPlaceholder))
+                        : Flexible(
+                            flex: 2,
+                            child: Image.network(
+                              selectedProduct.image,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                    Flexible(
+                      child: CustomButton(
+                        buttonWidth: Get.width,
+                        buttonHeight: 30.h,
+                        buttonBorderRadius: 0,
+                        buttonMargin: 0,
+                        buttonTextFontSize: 12,
+                        buttonText: "delete".tr,
+                        buttonAction: buttonAction,
+                        buttonColor: UiConstant.kCosmoCareCustomColors1,
+                      ),
                     )
                   ],
                 ),
@@ -66,7 +78,7 @@ class SelectedProductDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Text("Price before tax".tr),
+                        Text("Price before tax".tr),
                         Text(
                           selectedProduct.priceBeforeTax.toString(),
                         ),
@@ -76,7 +88,7 @@ class SelectedProductDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Text("price with tax".tr),
+                        Text("price with tax".tr),
                         Text(selectedProduct.price.toString()),
                       ],
                     ),
@@ -84,7 +96,7 @@ class SelectedProductDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Text("Discount Amount".tr),
+                        Text("Discount Amount".tr),
                         Text(
                           selectedProduct.discountAmount
                               .toString()
@@ -96,7 +108,7 @@ class SelectedProductDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Text("total".tr),
+                        Text("total".tr),
                         Text(
                           selectedProduct.total.toString(),
                         ),
