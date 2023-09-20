@@ -11,7 +11,7 @@ class DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height *0.06,
+      height: 0.06.sh,
       child: Column(
         children: [
           Row(
@@ -22,8 +22,8 @@ class DetailRow extends StatelessWidget {
             ],
           ),
           Divider(
-          color: Colors.grey.shade200,
-         )
+            color: Colors.grey.shade200,
+          )
         ],
       ),
     );

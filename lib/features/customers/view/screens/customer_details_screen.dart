@@ -110,13 +110,13 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                 image: NetworkImage(widget.customer.image!),
                 height: MediaQuery.of(context).size.height * 0.25,
                 width: MediaQuery.of(context).size.width * 0.7,
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
               ),
               fallback: (context) => Image(
                 image: const AssetImage(AssetsPathConstants.kProfile),
                 height: 200.w,
                 width: 200.w,
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
               ),
             ),
             VerticalSpacer(10.h),
@@ -198,7 +198,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                 ),
               ],
             ),
-            _buildDetailsContent(),
+            Flexible(child: _buildDetailsContent()),
             Padding(
               padding: EdgeInsets.symmetric(
                 vertical: 10.h,
@@ -325,9 +325,16 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
   Widget _buildDetailsContent() {
     switch (_currentView) {
       case DetailsView.CustomerDetails:
+        String governmentAndCity = (widget.customer.government != null)
+            ? widget.customer.government!.title ?? ""
+            : "";
+        governmentAndCity += " - ";
+        governmentAndCity += (widget.customer.city != null)
+            ? widget.customer.city!.title ?? ""
+            : "";
         return Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
+          padding: EdgeInsets.all(12.h),
+          child: ListView(
             children: [
               DetailRow(
                   icon: Iconsax.message,
@@ -338,6 +345,10 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
               DetailRow(
                 icon: Iconsax.location,
                 detailText: widget.customer.address,
+              ),
+              DetailRow(
+                icon: Icons.location_city_rounded,
+                detailText: governmentAndCity,
               ),
               DetailRow(
                 icon: Iconsax.link,
