@@ -81,7 +81,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                       _controller.clear();
                       FocusManager.instance.primaryFocus?.unfocus();
                     },
-                    autofocus: true,
+                    autofocus: false,
                     controller: _controller,
                     clearOnSubmit: false,
                   ),
