@@ -30,7 +30,6 @@ class LoginScreen extends StatelessWidget {
           if (state is LoginSuccessState) {
             AuthCubit.liveLocation();
             await Get.offAll(() => const MainControlScreen());
-            
           }
           if (state is LoginFailureState) {
             Get.snackbar(
@@ -55,8 +54,8 @@ class LoginScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: Center(
                         child: Image.asset(
-                          AssetsPathConstants.kColoredLogoPath,
-                          scale: 3,
+                          AssetsPathConstants.kBlueLogoPath,
+                          scale: 2,
                         ),
                       ),
                     ),
