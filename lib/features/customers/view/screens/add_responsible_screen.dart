@@ -51,7 +51,7 @@ class AddResponsibleScreen extends StatelessWidget {
                   const VerticalSpacer(10),
                   CustomTextField(
                     prefixIconData: Iconsax.mobile,
-                    hintText: "Phone number".tr,
+                    hintText: "Phone Number".tr,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     onChange: (value) {
                       responsibleData.phoneNumber = value;

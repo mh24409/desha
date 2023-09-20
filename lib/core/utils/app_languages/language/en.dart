@@ -65,7 +65,6 @@ const Map<String, String> en = {
   'Create': 'Create',
   "Add New Responsible": "Add New Responsible",
   "Responsible Name": "Responsible Name",
-  "Phone number": "Phone number",
   "Skip": "Skip",
   'Customer Details': 'Customer Details',
   'Responsibility': 'Responsibility',
@@ -136,6 +135,7 @@ const Map<String, String> en = {
   'Choose Image': 'Choose Image',
   'Customer Image is Required': 'Customer Image is Required',
   'Camera': 'Camera',
+  "Photo Library": "Photo Library",
   'Image Selected ✅': 'Image Selected ✅',
   "You must either add owner or responsible.":
       "You must either add owner or responsible.",
@@ -146,6 +146,5 @@ const Map<String, String> en = {
   "Changed customer status successfully":
       "Changed customer status successfully",
   "Please add products": "Please add products",
-  "You must add at least one product":
-      "You must add at least one product"
+  "You must add at least one product": "You must add at least one product"
 };
