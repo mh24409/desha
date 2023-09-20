@@ -192,7 +192,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       title: "City".tr,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "City is Required";
+                          return "City is Required".tr;
                         }
                         return null;
                       },
@@ -269,6 +269,25 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                                             await pickedImageFromGalleryOrCamera(
                                                 imageSources:
                                                     PickedImageSources.camera);
+                                        setState(() {
+                                          customerImage = base64Image;
+                                        });
+                                        customerData.image = base64Image;
+                                        imageController.text =
+                                            customerImage == null
+                                                ? "Choose Image".tr
+                                                : "Image Selected ✅".tr;
+                                        Get.back();
+                                      },
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(Iconsax.gallery),
+                                      title: Text("Photo Library".tr),
+                                      onTap: () async {
+                                        String base64Image =
+                                            await pickedImageFromGalleryOrCamera(
+                                                imageSources:
+                                                    PickedImageSources.gallery);
                                         setState(() {
                                           customerImage = base64Image;
                                         });
