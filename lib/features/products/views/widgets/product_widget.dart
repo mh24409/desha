@@ -47,7 +47,7 @@ class ProductWidget extends StatelessWidget {
               ),
               child: Image.network(
                 product.imageURL,
-                fit: BoxFit.fill,
+                fit: BoxFit.contain,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) {
                     return child;
@@ -64,7 +64,7 @@ class ProductWidget extends StatelessWidget {
                 },
                 errorBuilder: (context, error, stackTrace) => Image.asset(
                   AssetsPathConstants.kProductPlaceholder,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),

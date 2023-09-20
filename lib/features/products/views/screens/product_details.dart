@@ -37,7 +37,7 @@ class ProductDetails extends StatelessWidget {
                 ),
                 child: Image.network(
                   product.imageURL,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.contain,
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Center(
