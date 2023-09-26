@@ -95,27 +95,27 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                         hintText: "Customers Types".tr),
                   ),
                   SizedBox(height: 10.h),
-                  CustomSingleSelectField<String>(
-                    items: widget.saleZone.map((e) => e.title!).toList(),
-                    title: "Sale Zone".tr,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Sale Zone is Required".tr;
-                      }
-                      return null;
-                    },
-                    onSelectionDone: (value) {
-                      for (var item in widget.saleZone) {
-                        if (item.title == value) {
-                          customerData.saleZoneId = item.id;
-                        }
-                      }
-                    },
-                    itemAsString: (item) => item,
-                    decoration:
-                        selectionFiledDecoration(hintText: "Sale Zone".tr),
-                  ),
-                  SizedBox(height: 10.h),
+                  // CustomSingleSelectField<String>(
+                  //   items: widget.saleZone.map((e) => e.title!).toList(),
+                  //   title: "Sale Zone".tr,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return "Sale Zone is Required".tr;
+                  //     }
+                  //     return null;
+                  //   },
+                  //   onSelectionDone: (value) {
+                  //     for (var item in widget.saleZone) {
+                  //       if (item.title == value) {
+                  //         customerData.saleZoneId = item.id;
+                  //       }
+                  //     }
+                  //   },
+                  //   itemAsString: (item) => item,
+                  //   decoration:
+                  //       selectionFiledDecoration(hintText: "Sale Zone".tr),
+                  // ),
+                  // SizedBox(height: 10.h),
                   CustomSingleSelectField<String>(
                     items: widget.payments.map((e) => e.title!).toList(),
                     title: "Payment Terms".tr,

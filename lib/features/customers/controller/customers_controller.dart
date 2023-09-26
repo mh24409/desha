@@ -197,7 +197,7 @@ class CustomersController {
       "website": customerData.website,
       "email": customerData.email,
       "term_duration": customerData.paymentTermId,
-      "sales_unit": customerData.saleZoneId,
+      // "sales_unit": customerData.saleZoneId,
       "image": customerData.image,
       "owners": ownerData != null
           ? [
