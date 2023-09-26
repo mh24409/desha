@@ -1,6 +1,5 @@
 import 'package:cosmo_care/core/Constants/assets_path_constants.dart';
 import 'package:flutter/material.dart';
-import '../../../core/Constants/ui_constants.dart';
 
 class CosmoCareSplashWidget extends StatelessWidget {
   const CosmoCareSplashWidget({Key? key}) : super(key: key);
@@ -9,7 +8,7 @@ class CosmoCareSplashWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: UiConstant.kCosmoCareCustomColors1,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: SizedBox(
@@ -18,7 +17,7 @@ class CosmoCareSplashWidget extends StatelessWidget {
           child: Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Image.asset(AssetsPathConstants.kWhiteLogoPath),
+              child: Image.asset(AssetsPathConstants.kBlueLogoPath),
             ),
           ),
         ),
