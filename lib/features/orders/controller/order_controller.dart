@@ -133,4 +133,53 @@ class OrderController {
       );
     }
   }
+
+  static Future<void> createSaleOrderandLines(
+      {required int customerId,
+      required List<CustomerProductsModel> products}) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String userToken = preferences.getString("token")!;
+    Map<String, String> header = {
+      'Authorization': 'token $userToken',
+      "Content-Type": "text/html",
+    };
+    List<Map<String, dynamic>> invoiceItems = products.map((selectedProduct) {
+      return {
+        "product_id": selectedProduct.productId,
+        "count": int.parse(selectedProduct.quantity)
+      };
+    }).toList();
+    Map<String, dynamic> body = {
+      'customer_id': customerId,
+      "invoice_items": invoiceItems
+    };
+    try {
+      final response = await ApiHelper().post(
+        url: ApiConstants.baseUrl + ApiConstants.createSaleOrderAndLineEndPoint,
+        headers: header,
+        body: body,
+      );
+      if (response['status'] != 200) {
+        Get.snackbar(
+          "Something went wrong. please try agin".tr,
+          "",
+          backgroundColor: Colors.red,
+        );
+      } else {
+        Get.offAll(const MainControlScreen());
+        Get.snackbar(
+          "New Sale Order".tr,
+          "Creating Success".tr,
+          backgroundColor: Colors.green,
+        );
+      }
+    } catch (e) {
+      debugPrint("Error: ${e.toString()}");
+      Get.snackbar(
+        "Something went wrong. please try agin".tr,
+        "",
+        backgroundColor: Colors.red,
+      );
+    }
+  }
 }

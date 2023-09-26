@@ -10,5 +10,7 @@ class ApiConstants {
   static const String categoriesEndPoint = '/products_categorized';
   static const String saleZonesEndPoint = '/sales-unit';
   static const String createSaleOrderEndPoint = '/invoices/invoice';
+  static const String createSaleOrderAndLineEndPoint =
+      '/invoices/create_invoice';
   static const String trackChecking = '/tracking/check';
 }

@@ -235,19 +235,15 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                           currentLat: global.currentUserLat,
                           currentLong: global.currentUserLong,
                         )) {
-                          int invoiceId = await OrderController.createSaleOrder(
-                              customerId: widget.customer.id);
-                          if (invoiceId != 0) {
-                            List<CustomerProductsModel> offers =
-                                await OrderController.getCustomerOffers(
-                                    customerId: widget.customer.id);
-                            Get.to(
-                              () => SaleOrderLineScreen(
-                                offers: offers,
-                                invoiceId: invoiceId,
-                              ),
-                            );
-                          }
+                          List<CustomerProductsModel> offers =
+                              await OrderController.getCustomerOffers(
+                                  customerId: widget.customer.id);
+                          Get.to(
+                            () => SaleOrderLineScreen(
+                              customerId: widget.customer.id,
+                              offers: offers,
+                            ),
+                          );
                         } else {
                           Get.snackbar(
                             "Can't Create Order".tr,

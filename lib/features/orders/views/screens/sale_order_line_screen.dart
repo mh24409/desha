@@ -16,13 +16,12 @@ import '../widgets/product_offers_bottom_sheet_body.dart';
 import '../widgets/product_offers_bottom_sheet_header.dart';
 import '../widgets/selected_product_details_card.dart';
 
-// ignore: must_be_immutable
 class SaleOrderLineScreen extends StatefulWidget {
-  int invoiceId;
-  List<CustomerProductsModel> offers;
-  SaleOrderLineScreen({
+  final List<CustomerProductsModel> offers;
+  final int customerId;
+  const SaleOrderLineScreen({
     Key? key,
-    required this.invoiceId,
+    required this.customerId,
     required this.offers,
   }) : super(key: key);
 
@@ -226,8 +225,8 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
                 borderRadius: 10,
                 onPressed: () async {
                   if (saleOrderLineProducts.isNotEmpty) {
-                    await OrderController.createSaleOrderLines(
-                      invoiceId: widget.invoiceId,
+                    await OrderController.createSaleOrderandLines(
+                      customerId: widget.customerId,
                       products: saleOrderLineProducts,
                     );
                   } else {
