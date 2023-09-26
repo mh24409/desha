@@ -55,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                       child: Center(
                         child: Image.asset(
                           AssetsPathConstants.kBlueLogoPath,
-                          scale: 2,
+                          scale: 3,
                         ),
                       ),
                     ),
