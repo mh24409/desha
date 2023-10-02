@@ -74,12 +74,13 @@ class CustomersController {
   static Future<List<GovernmentModel>> getAllGovernments() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String userToken = preferences.getString("token")!;
+    String language = Get.locale?.languageCode ?? 'en';
     List<GovernmentModel> governments = [];
     Map<String, String> headers = {"Authorization": "Bearer $userToken"};
     try {
       final response = await ApiHelper().get(
-          url: ApiConstants.baseUrl +
-              ApiConstants.getCustomerGovernmentsEndPoint,
+          url:
+              "${ApiConstants.baseUrl}${ApiConstants.getCustomerGovernmentsEndPoint}?lang=$language",
           headers: headers);
 
       for (var gov in response) {
@@ -137,11 +138,13 @@ class CustomersController {
       {required int govId}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String userToken = preferences.getString("token")!;
+    String language = Get.locale?.languageCode ?? 'en';
     List<CityModel> cities = [];
     Map<String, String> headers = {"Authorization": "Bearer $userToken"};
     try {
       final response = await ApiHelper().get(
-          url: "${ApiConstants.baseUrl}/governorates/$govId/cities",
+          url:
+              "${ApiConstants.baseUrl}/governorates/$govId/cities?lang=$language",
           headers: headers);
       for (var city in response) {
         cities.add(CityModel.fromJson(city));
