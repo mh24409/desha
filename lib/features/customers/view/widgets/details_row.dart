@@ -18,11 +18,13 @@ class DetailRow extends StatelessWidget {
             children: [
               Icon(icon, color: UiConstant.kCosmoCareCustomColors1),
               SizedBox(width: 12.w),
-              Text(detailText),
+              Flexible(child: Text(detailText)),
             ],
           ),
-          Divider(
-            color: Colors.grey.shade200,
+          Flexible(
+            child: Divider(
+              color: Colors.grey.shade200,
+            ),
           )
         ],
       ),
