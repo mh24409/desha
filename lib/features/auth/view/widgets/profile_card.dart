@@ -1,5 +1,6 @@
 import 'package:cosmo_care/core/widgets/widgets/vertical_spacer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class ProfileCard extends StatelessWidget {
@@ -32,13 +33,17 @@ class ProfileCard extends StatelessWidget {
           children: [
             Text(
               cardName,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
+                fontSize: 14.sp,
               ),
             ),
             VerticalSpacer(MediaQuery.of(context).size.height * 0.02),
-            Text(cardValue),
+            Text(
+              cardValue,
+              style: TextStyle(fontSize: 11.sp),
+            ),
           ],
         ),
       ),

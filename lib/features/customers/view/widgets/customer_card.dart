@@ -65,8 +65,9 @@ class CustomerCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         customer.title,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          fontSize: 12.sp,
                         ),
                       ),
                       Row(
@@ -79,8 +80,9 @@ class CustomerCard extends StatelessWidget {
                           Expanded(
                             child: Text(
                               customer.address,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.black,
+                                fontSize: 10.sp,
                               ),
                               overflow: TextOverflow.fade,
                             ),
