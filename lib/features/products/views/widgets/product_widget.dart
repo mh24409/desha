@@ -31,54 +31,59 @@ class ProductWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: MediaQuery.of(context).size.height * 0.15,
-              height: MediaQuery.of(context).size.height * 0.15,
-              decoration: const BoxDecoration(
-                color: Color(0xffF9F6F6),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    spreadRadius: 2,
-                    blurRadius: 2,
-                    offset: Offset(2, 3),
-                  ),
-                ],
-              ),
-              child: Image.network(
-                product.imageURL,
-                fit: BoxFit.contain,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: UiConstant.kCosmoCareCustomColors1,
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                          : null,
+            Flexible(
+              flex: 2,
+              child: Container(
+                width: MediaQuery.of(context).size.height * 0.15,
+                height: MediaQuery.of(context).size.height * 0.15,
+                decoration: const BoxDecoration(
+                  color: Color(0xffF9F6F6),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      spreadRadius: 2,
+                      blurRadius: 2,
+                      offset: Offset(2, 3),
                     ),
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) => Image.asset(
-                  AssetsPathConstants.kProductPlaceholder,
+                  ],
+                ),
+                child: Image.network(
+                  product.imageURL,
                   fit: BoxFit.contain,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: UiConstant.kCosmoCareCustomColors1,
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) => Image.asset(
+                    AssetsPathConstants.kProductPlaceholder,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
             SizedBox(height: 5.h),
-            SizedBox(
-              width: MediaQuery.of(context).size.height * 0.15,
-              child: Text(
-                product.title,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
+            Flexible(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.height * 0.15,
+                child: Text(
+                  product.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             )

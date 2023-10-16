@@ -33,13 +33,16 @@ class ProfileHeader extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.2,
               child: Column(
                 children: [
-                  CircleAvatar(
-                    radius: MediaQuery.of(context).size.width / 6,
-                    backgroundColor: const Color(0xffD9D9D9),
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.white,
-                      size: MediaQuery.of(context).size.width / 4,
+                  Flexible(
+                    flex: 10,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width / 6,
+                      backgroundColor: const Color(0xffD9D9D9),
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.white,
+                        size: MediaQuery.of(context).size.width / 4,
+                      ),
                     ),
                   ),
                   Flexible(child: VerticalSpacer(10.h)),

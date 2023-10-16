@@ -26,8 +26,11 @@ class ProfileScreen extends StatelessWidget {
           if (state is UserSuccessState) {
             return Column(
               children: [
-                ProfileHeader(
-                  userName: state.currentUser.userName!,
+                Flexible(
+                  flex: 10,
+                  child: ProfileHeader(
+                    userName: state.currentUser.userName!,
+                  ),
                 ),
                 Flexible(child: VerticalSpacer(20.h)),
                 Padding(
