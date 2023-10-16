@@ -28,6 +28,10 @@
 	<string>Cosmocare needs access to location to manage sale team agents location when they are logged in. The app stops monitoring when you are logged out.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Cosmocare needs access to location to manage sale team agents location when they are logged in. The app stops monitoring when you are logged out.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Cosmocare needs access to camera to add customer image</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Cosmocare needs access to photo library to add customer image</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
