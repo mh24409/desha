@@ -13,6 +13,8 @@ class CustomerData {
   double? lat;
   double? lng;
   String? image;
+  List<String> otherCustomerProfileImages;
+  List<String> customerDocuments ;
 
   CustomerData({
     this.name,
@@ -29,6 +31,8 @@ class CustomerData {
     this.lng,
     this.saleZoneId,
     this.image,
+    required this.customerDocuments ,
+   required this.otherCustomerProfileImages
   });
 }
 

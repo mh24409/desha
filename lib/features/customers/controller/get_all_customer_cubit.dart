@@ -25,20 +25,22 @@ class GetAllCustomerCubit extends Cubit<GetAllCustomersStates> {
           headers: headers);
       for (var customer in response) {
         customers.add(CustomerModel.fromJson(customer));
+        
       }
       allFilteredCustomers = customers;
       allCustomers = customers;
       emit(GetAllCustomersSuccessState(customers: customers));
+     
     } catch (e) {
-      Get.snackbar("Connection Error".tr, "Please check your internet connection".tr,
+      Get.snackbar(
+          "Connection Error".tr, "Please check your internet connection".tr,
           backgroundColor: Colors.red);
       emit(GetAllCustomersFailedState());
     }
   }
 
   filterCustomers(String query) {
-    List<CustomerModel> filteredCustomers =
-        allCustomers.where((customer) {
+    List<CustomerModel> filteredCustomers = allCustomers.where((customer) {
       final name = customer.title.toLowerCase();
       final queryLower = query.toLowerCase();
       return name.contains(queryLower);

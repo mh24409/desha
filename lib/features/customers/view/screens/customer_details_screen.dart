@@ -104,14 +104,28 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                 ],
               ),
             ),
+            
             ConditionalBuilder(
               condition: widget.customer.image != null &&
                   widget.customer.image!.isNotEmpty,
-              builder: (context) => Image(
-                image: NetworkImage(widget.customer.image!),
-                height: MediaQuery.of(context).size.height * 0.25,
-                width: MediaQuery.of(context).size.width * 0.7,
-                fit: BoxFit.contain,
+              builder: (context) => Expanded(
+                child: CarouselSlider.builder(
+                  itemCount: widget.customer.images!.length,
+                  slideBuilder: (index) {
+                    return Column(
+                      children: [
+                        Image(
+                          image: NetworkImage(widget.customer.images![index]),
+                          height: MediaQuery.of(context).size.height * 0.27,
+                          fit: BoxFit.contain,
+                        ),
+                        VerticalSpacer(10.h)
+                      ],
+                    );
+                  },
+                  slideTransform: const CubeTransform(),
+                  slideIndicator: CircularSlideIndicator(),
+                ),
               ),
               fallback: (context) => Image(
                 image: const AssetImage(AssetsPathConstants.kProfile),

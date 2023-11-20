@@ -12,6 +12,7 @@ Future<String> pickedImageFromGalleryOrCamera({
     source: imageSources == PickedImageSources.gallery
         ? ImageSource.gallery
         : ImageSource.camera,
+    imageQuality: 40
   );
   Uint8List pickedImage = File(pickedFile!.path).readAsBytesSync();
   String base64Image = base64Encode(pickedImage);

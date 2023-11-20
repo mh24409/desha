@@ -202,6 +202,8 @@ class CustomersController {
       "term_duration": customerData.paymentTermId,
       // "sales_unit": customerData.saleZoneId,
       "image": customerData.image,
+      "images": customerData.otherCustomerProfileImages,
+      "docs":customerData.customerDocuments,
       "owners": ownerData != null
           ? [
               {

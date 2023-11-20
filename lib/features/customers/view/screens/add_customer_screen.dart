@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:cosmo_care/core/Constants/ui_constants.dart';
 import 'package:cosmo_care/core/shared/methods/auth_validation.dart';
 import 'package:cosmo_care/core/utils/enums/picked_image_source.dart';
@@ -37,7 +40,8 @@ class AddCustomerScreen extends StatefulWidget {
 }
 
 class _AddCustomerScreenState extends State<AddCustomerScreen> {
-  CustomerData customerData = CustomerData();
+  CustomerData customerData =
+      CustomerData(customerDocuments: [], otherCustomerProfileImages: []);
   List<CityModel> cities = [];
   GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController imageController = TextEditingController();
@@ -312,21 +316,28 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                           ? const SizedBox.shrink()
                           : Flexible(
                               child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      customerImage = null;
-                                      imageController.text = "Choose Image".tr;
-                                    });
-                                    customerData.image = null;
-                                  },
-                                  child: Icon(
-                                    Icons.highlight_remove_sharp,
-                                    size: 40.sp,
-                                    color: Colors.red,
-                                  )),
+                                onTap: () {
+                                  setState(() {
+                                    customerImage = null;
+                                    imageController.text = "Choose Image".tr;
+                                  });
+                                  customerData.image = null;
+                                },
+                                child: Icon(
+                                  Icons.highlight_remove_sharp,
+                                  size: 40.sp,
+                                  color: Colors.red,
+                                ),
+                              ),
                             )
                     ],
                   ),
+                  SizedBox(height: 10.h),
+                  addMultiImageForCustomer(context),
+                  buildChosesOtherCustomerImages(),
+                  SizedBox(height: 10.h),
+                  addMultiDocumentsForCustomer(context),
+                  buildChosesDocuments(),
                   SizedBox(height: 10.h),
                   CustomButton(
                     buttonColor: UiConstant.kCosmoCareCustomColors1,
@@ -335,9 +346,15 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     buttonWidth: MediaQuery.of(context).size.width / 1.5,
                     buttonAction: () {
                       if (formKey.currentState!.validate()) {
-                        Get.to(() => AddResponsibleScreen(
-                              customerData: customerData,
-                            ));
+                        if (customerData.customerDocuments.length >= 2) {
+                          Get.to(() => AddResponsibleScreen(
+                                customerData: customerData,
+                              ));
+                        } else {
+                          Get.snackbar("Required Documents",
+                              "You must set at least 2 documents",
+                              backgroundColor: Colors.red);
+                        }
                       }
                     },
                     buttonMargin: 10,
@@ -371,6 +388,206 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
       ),
       contentPadding: const EdgeInsets.all(15),
       hintText: hintText,
+    );
+  }
+
+  Padding addMultiImageForCustomer(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "more images for the customer (Optional)",
+            style: TextStyle(
+                color: UiConstant.kCosmoCareCustomColors1,
+                fontWeight: FontWeight.bold,
+                fontSize: 14.sp),
+          ),
+          GestureDetector(
+            onTap: () {
+              Get.bottomSheet(
+                SizedBox(
+                  height: 100.h,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ListTile(
+                        leading: const Icon(Iconsax.camera),
+                        title: Text("Camera".tr),
+                        onTap: () async {
+                          String base64Image =
+                              await pickedImageFromGalleryOrCamera(
+                            imageSources: PickedImageSources.camera,
+                          );
+                          setState(() {
+                            customerData.otherCustomerProfileImages
+                                .add(base64Image);
+                          });
+                          Get.back();
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Iconsax.gallery),
+                        title: Text("Photo Library".tr),
+                        onTap: () async {
+                          String base64Image =
+                              await pickedImageFromGalleryOrCamera(
+                                  imageSources: PickedImageSources.gallery);
+                          setState(() {
+                            customerData.otherCustomerProfileImages
+                                .add(base64Image);
+                          });
+
+                          Get.back();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                elevation: 0,
+                backgroundColor: Colors.white,
+              );
+            },
+            child: const Icon(
+              Iconsax.add_circle,
+              color: UiConstant.kCosmoCareCustomColors1,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  ConditionalBuilder buildChosesOtherCustomerImages() {
+    return ConditionalBuilder(
+      condition: customerData.otherCustomerProfileImages.isNotEmpty,
+      builder: (context) => GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, childAspectRatio: 0.7),
+        itemCount: customerData.otherCustomerProfileImages.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onLongPress: () {
+              setState(() {
+                customerData.otherCustomerProfileImages
+                    .remove(customerData.otherCustomerProfileImages[index]);
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Image.memory(
+                base64Decode(
+                  customerData.otherCustomerProfileImages[index],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+      fallback: (context) => Container(),
+    );
+  }
+
+  Padding addMultiDocumentsForCustomer(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Add Document (Required 2 at least)",
+            style: TextStyle(
+              color: UiConstant.kCosmoCareCustomColors1,
+              fontWeight: FontWeight.bold,
+              fontSize: 14.sp,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Get.bottomSheet(
+                SizedBox(
+                  height: 100.h,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ListTile(
+                        leading: const Icon(Iconsax.camera),
+                        title: Text("Camera".tr),
+                        onTap: () async {
+                          String base64Image =
+                              await pickedImageFromGalleryOrCamera(
+                                  imageSources: PickedImageSources.camera);
+                          setState(() {
+                            customerData.customerDocuments.add(base64Image);
+                          });
+                          Get.back();
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Iconsax.gallery),
+                        title: Text("Photo Library".tr),
+                        onTap: () async {
+                          String base64Image =
+                              await pickedImageFromGalleryOrCamera(
+                                  imageSources: PickedImageSources.gallery);
+                          setState(() {
+                            customerData.customerDocuments.add(base64Image);
+                          });
+
+                          Get.back();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                elevation: 0,
+                backgroundColor: Colors.white,
+              );
+            },
+            child: const Icon(
+              Iconsax.add_circle,
+              color: UiConstant.kCosmoCareCustomColors1,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  ConditionalBuilder buildChosesDocuments() {
+    return ConditionalBuilder(
+      condition: customerData.customerDocuments.isNotEmpty,
+      builder: (context) => GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, childAspectRatio: 0.7),
+        itemCount: customerData.customerDocuments.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onLongPress: () {
+              setState(() {
+                customerData.customerDocuments
+                    .remove(customerData.customerDocuments[index]);
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Image.memory(
+                base64Decode(
+                  customerData.customerDocuments[index],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+      fallback: (context) => Container(),
     );
   }
 }
