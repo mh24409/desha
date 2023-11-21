@@ -1,6 +1,7 @@
 class ApiConstants {
   // static const String baseUrl = 'https://cosmocareprod-training.technotown.technology';
-  static const String baseUrl = 'https://cosmocare.technotown.technology';
+  // static const String baseUrl = 'https://cosmocare.technotown.technology';
+  static const String baseUrl = 'http://192.168.202.251:8069';
   static const String loginEndPoint = '/login';
   static const String getCustomerTypesEndPoint = '/types';
   static const String getCustomersEndPoint = '/customers';
@@ -13,4 +14,8 @@ class ApiConstants {
   static const String createSaleOrderAndLineEndPoint =
       '/invoices/create_invoice';
   static const String trackChecking = '/tracking/check';
+  static const String visitCheckInEndPoint = '/visit/check_in';
+  static const String visitCheckOutEndPoint = '/visit/check_out';
+  static const String visitStatesEndPoint = '/visit/states';
+  static const String userOrdersEndPoint = '/user/orders';
 }

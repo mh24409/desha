@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:cosmo_care/core/Constants/assets_path_constants.dart';
@@ -7,17 +7,19 @@ import 'package:cosmo_care/core/shared/global_variables.dart' as global;
 import 'package:cosmo_care/core/widgets/widgets/vertical_spacer.dart';
 import 'package:cosmo_care/features/check_in_tracking/controller/track_check_cubit.dart';
 import 'package:cosmo_care/features/check_in_tracking/controller/track_check_states.dart';
+import 'package:cosmo_care/features/check_in_tracking/model/visit_state_model.dart';
 import 'package:cosmo_care/features/customers/view/widgets/details_row.dart';
 import 'package:easy_loading_button/easy_loading_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
+import 'package:flutter_custom_selector/widget/flutter_single_select.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../../../core/widgets/widgets/custom_button_widget.dart';
+import '../../../../core/widgets/widgets/custom_text_field.dart';
 import '../../../orders/controller/order_controller.dart';
 import '../../../orders/model/customer_products_model.dart';
 import '../../../orders/views/screens/sale_order_line_screen.dart';
@@ -39,6 +41,9 @@ enum DetailsView { CustomerDetails, Responsibility, Owner }
 class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
   DetailsView _currentView = DetailsView.CustomerDetails;
   bool isCheckIn = false;
+  int? visitStateId;
+  String? visitReportDescription;
+  GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   void initState() {
@@ -104,7 +109,6 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                 ],
               ),
             ),
-            
             ConditionalBuilder(
               condition: widget.customer.image != null &&
                   widget.customer.image!.isNotEmpty,
@@ -298,13 +302,173 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                               currentLat: global.currentUserLat,
                               currentLong: global.currentUserLong,
                             )) {
-                              await BlocProvider.of<TrackCheckingCubit>(context)
-                                  .trackChecking(isCheckIn, widget.customer.lat,
-                                      widget.customer.lng, widget.customer.id);
-                              Get.snackbar(
-                                  (isCheckIn) ? "Check out".tr : "Check in".tr,
-                                  "Changed customer status successfully".tr,
-                                  backgroundColor: Colors.green);
+                              if (!isCheckIn) {
+                                await BlocProvider.of<TrackCheckingCubit>(
+                                        context)
+                                    .customerCheckInVisit(
+                                        latitude: widget.customer.lat,
+                                        longitude: widget.customer.lng,
+                                        customerId: widget.customer.id);
+                              } else {
+                                Get.bottomSheet(
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.4,
+                                    child: Form(
+                                      key: formKey,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 15),
+                                              child: Text(
+                                                "Status And Reporting",
+                                                style: TextStyle(
+                                                    color: UiConstant
+                                                        .kCosmoCareCustomColors1,
+                                                    fontSize: 18.sp),
+                                              ),
+                                            ),
+                                            const VerticalSpacer(10),
+                                            FutureBuilder<
+                                                List<VisitStateModel>>(
+                                              future: TrackCheckingCubit
+                                                  .getVisitStatesModel(),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return const Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: UiConstant
+                                                          .kCosmoCareCustomColors1,
+                                                    ),
+                                                  );
+                                                } else {
+                                                  return Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 10),
+                                                    child:
+                                                        CustomSingleSelectField<
+                                                            String>(
+                                                      items: snapshot.data!
+                                                          .map((e) => e.name)
+                                                          .toList(),
+                                                      title: "State".tr,
+                                                      validator: (value) {
+                                                        if (value == null ||
+                                                            value.isEmpty) {
+                                                          return "State is Required"
+                                                              .tr;
+                                                        }
+                                                        return null;
+                                                      },
+                                                      onSelectionDone:
+                                                          (value) async {
+                                                        for (var item
+                                                            in snapshot.data!) {
+                                                          if (item.name ==
+                                                              value) {
+                                                            visitStateId =
+                                                                item.id;
+                                                          }
+                                                        }
+                                                      },
+                                                      itemAsString: (item) =>
+                                                          item,
+                                                      decoration:
+                                                          selectionFiledDecoration(
+                                                        hintText: "State".tr,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                            ),
+                                            VerticalSpacer(10.h),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              child: CustomTextField(
+                                                prefixIconData: Iconsax.text,
+                                                hintText:
+                                                    "Report Description".tr,
+                                                maxLines: 2,
+                                                validate: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return "Report is Required"
+                                                        .tr;
+                                                  }
+                                                  return null;
+                                                },
+                                                onChange: (value) {
+                                                  visitReportDescription =
+                                                      value;
+                                                },
+                                              ),
+                                            ),
+                                            VerticalSpacer(15.h),
+                                            Center(
+                                              child: EasyButton(
+                                                idleStateWidget: Text(
+                                                  'Submit'.tr,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                loadingStateWidget:
+                                                    const CircularProgressIndicator(
+                                                  strokeWidth: 3.0,
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(
+                                                    Colors.white,
+                                                  ),
+                                                ),
+                                                useWidthAnimation: true,
+                                                useEqualLoadingStateWidgetDimension:
+                                                    true,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.6,
+                                                height: 45.h,
+                                                contentGap: 6.0,
+                                                buttonColor: UiConstant
+                                                    .kCosmoCareCustomColors1,
+                                                borderRadius: 10,
+                                                onPressed: () async {
+                                                  if (formKey.currentState!
+                                                      .validate()) {
+                                                    await BlocProvider.of<
+                                                                TrackCheckingCubit>(
+                                                            context)
+                                                        .customerCheckOutVisit(
+                                                      statusId: visitStateId!,
+                                                      reportDescription:
+                                                          visitReportDescription!,
+                                                      customerId:
+                                                          widget.customer.id,
+                                                    );
+                                                    Navigator.pop(context);
+                                                  }
+                                                },
+                                              ),
+                                            ),
+                                            VerticalSpacer(10.h),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.white,
+                                );
+                              }
                             } else {
                               Get.snackbar(
                                 "Can't check in".tr,
@@ -529,5 +693,19 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
           ));
         }
     }
+  }
+
+  selectionFiledDecoration({required hintText}) {
+    return InputDecoration(
+      disabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(
+          color: UiConstant.kCosmoCareCustomColors1,
+          style: BorderStyle.solid,
+        ),
+      ),
+      contentPadding: const EdgeInsets.all(15),
+      hintText: hintText,
+    );
   }
 }
