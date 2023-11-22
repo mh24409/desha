@@ -2,7 +2,7 @@ abstract class MainControlViewState {}
 
 class MainControlViewInitStates extends MainControlViewState {}
 
-class AccountViewStates extends MainControlViewState {}
+class DashBoardViewStates extends MainControlViewState {}
 
 class ProductViewStates extends MainControlViewState {}
 

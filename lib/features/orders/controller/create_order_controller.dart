@@ -7,7 +7,7 @@ import '../../../core/Constants/api_constants.dart';
 import '../../../core/helper/api_helper.dart';
 import '../model/customer_products_model.dart';
 
-class OrderController {
+class CreateOrderController {
   static final GeolocatorPlatform _geolocator = GeolocatorPlatform.instance;
 
   static bool inSaveZoneToCreateOrder(

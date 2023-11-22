@@ -5,31 +5,30 @@ import 'package:easy_loading_button/easy_loading_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../../../core/Constants/ui_constants.dart';
 import '../../../../core/shared/methods/auth_validation.dart';
 import '../../../../core/widgets/widgets/horizontal_spacer.dart';
 import '../../../../core/widgets/widgets/vertical_spacer.dart';
-import '../../controller/order_controller.dart';
+import '../../controller/create_order_controller.dart';
 import '../../model/customer_products_model.dart';
 import '../widgets/product_offers_bottom_sheet_body.dart';
 import '../widgets/product_offers_bottom_sheet_header.dart';
 import '../widgets/selected_product_details_card.dart';
 
-class SaleOrderLineScreen extends StatefulWidget {
+class CreateSaleOrderScreen extends StatefulWidget {
   final List<CustomerProductsModel> offers;
   final int customerId;
-  const SaleOrderLineScreen({
+  const CreateSaleOrderScreen({
     Key? key,
     required this.customerId,
     required this.offers,
   }) : super(key: key);
 
   @override
-  State<SaleOrderLineScreen> createState() => _SaleOrderLineScreenState();
+  State<CreateSaleOrderScreen> createState() => _CreateSaleOrderScreenState();
 }
 
-class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
+class _CreateSaleOrderScreenState extends State<CreateSaleOrderScreen> {
   double total = 0;
   List<CustomerProductsModel> saleOrderLineProducts = [];
   CustomerProductsModel? selectedProduct;
@@ -225,7 +224,7 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
                 borderRadius: 10,
                 onPressed: () async {
                   if (saleOrderLineProducts.isNotEmpty) {
-                    await OrderController.createSaleOrderAndLines(
+                    await CreateOrderController.createSaleOrderAndLines(
                       customerId: widget.customerId,
                       products: saleOrderLineProducts,
                     );

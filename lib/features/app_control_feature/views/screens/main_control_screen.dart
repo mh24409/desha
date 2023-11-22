@@ -9,6 +9,7 @@ import '../../../../core/widgets/widgets/app_language_selector_widget.dart';
 import '../../../auth/view/screens/profile_screen.dart';
 import '../../../customers/view/screens/customer_screen.dart';
 import '../../../map/views/screens/map_screen.dart';
+import '../../../orders/views/screens/sale_orders_screen.dart';
 import '../../../products/views/screens/product_divided_by_category_screen.dart';
 import '../../controllers/main_view_control_cubit.dart';
 import '../../controllers/main_view_control_state.dart';
@@ -33,9 +34,9 @@ class _MainControlScreenState extends State<MainControlScreen> {
         centerTitle: true,
         title: BlocBuilder<MainViewControlCubit, MainControlViewState>(
           builder: (context, state) {
-            if (state is AccountViewStates) {
+            if (state is DashBoardViewStates) {
               return Text(
-                "Profile".tr,
+                "Dashboard".tr,
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
@@ -77,6 +78,7 @@ class _MainControlScreenState extends State<MainControlScreen> {
           AppLanguageSelectorWidget(),
         ],
       ),
+      drawer: Drawer(),
       bottomNavigationBar:
           BlocBuilder<MainViewControlCubit, MainControlViewState>(
         builder: (context, state) {
@@ -90,8 +92,8 @@ class _MainControlScreenState extends State<MainControlScreen> {
                 context.read<MainViewControlCubit>().selectedIndexForBottomBar,
             items: [
               BottomNavigationBarItem(
-                icon: const Icon(Iconsax.user),
-                label: 'account'.tr,
+                icon: const Icon(Iconsax.main_component),
+                label: 'Dashboard'.tr,
               ),
               BottomNavigationBarItem(
                 icon: const Icon(Iconsax.category),
@@ -114,8 +116,8 @@ class _MainControlScreenState extends State<MainControlScreen> {
       ),
       body: BlocBuilder<MainViewControlCubit, MainControlViewState>(
         builder: (context, state) {
-          if (state is AccountViewStates) {
-            return const ProfileScreen();
+          if (state is DashBoardViewStates) {
+            return const SaleOrdersScreen();
           } else if (state is ProductViewStates) {
             return const ProductDividedByCateScreen();
           } else if (state is CustomersViewStates) {

@@ -20,9 +20,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/widgets/widgets/custom_button_widget.dart';
 import '../../../../core/widgets/widgets/custom_text_field.dart';
-import '../../../orders/controller/order_controller.dart';
+import '../../../orders/controller/create_order_controller.dart';
 import '../../../orders/model/customer_products_model.dart';
-import '../../../orders/views/screens/sale_order_line_screen.dart';
+import '../../../orders/views/screens/create_sale_order__screen.dart';
 import '../../model/customer_model.dart';
 
 class CustomerDetailsScreen extends StatefulWidget {
@@ -224,17 +224,18 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                       buttonColor: UiConstant.kCosmoCareCustomColors1,
                       borderRadius: 20.r,
                       onPressed: () async {
-                        if (OrderController.inSaveZoneToCreateOrder(
+                        if (CreateOrderController.inSaveZoneToCreateOrder(
                           customerLat: widget.customer.lat,
                           customerLong: widget.customer.lng,
                           currentLat: global.currentUserLat,
                           currentLong: global.currentUserLong,
                         )) {
                           List<CustomerProductsModel> offers =
-                              await OrderController.getCustomerOffers(
-                                  customerId: widget.customer.id,);
+                              await CreateOrderController.getCustomerOffers(
+                            customerId: widget.customer.id,
+                          );
                           Get.to(
-                            () => SaleOrderLineScreen(
+                            () => CreateSaleOrderScreen(
                               customerId: widget.customer.id,
                               offers: offers,
                             ),
@@ -268,7 +269,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                           buttonText:
                               (isCheckIn) ? 'Check out'.tr : 'Check in'.tr,
                           buttonAction: () async {
-                            if (OrderController.inSaveZoneToCreateOrder(
+                            if (CreateOrderController.inSaveZoneToCreateOrder(
                               customerLat: widget.customer.lat,
                               customerLong: widget.customer.lng,
                               currentLat: global.currentUserLat,
