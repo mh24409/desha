@@ -225,7 +225,7 @@ class _SaleOrderLineScreenState extends State<SaleOrderLineScreen> {
                 borderRadius: 10,
                 onPressed: () async {
                   if (saleOrderLineProducts.isNotEmpty) {
-                    await OrderController.createSaleOrderandLines(
+                    await OrderController.createSaleOrderAndLines(
                       customerId: widget.customerId,
                       products: saleOrderLineProducts,
                     );

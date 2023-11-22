@@ -24,41 +24,6 @@ class OrderController {
     }
   }
 
-  static Future<int> createSaleOrder({required int customerId}) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String userToken = preferences.getString("token")!;
-    Map<String, String> header = {
-      'Authorization': 'token $userToken',
-      "Content-Type": "text/html",
-    };
-    Map<String, int> body = {'customer_id': customerId};
-    try {
-      final response = await ApiHelper().post(
-        url: ApiConstants.baseUrl + ApiConstants.createSaleOrderEndPoint,
-        headers: header,
-        body: body,
-      );
-      if (response['status'] == 200) {
-        return response["invoiceid"];
-      } else {
-        Get.snackbar(
-          "Something went wrong. please try agin".tr,
-          "",
-          backgroundColor: Colors.red,
-        );
-        return 0;
-      }
-    } catch (e) {
-      debugPrint("Error: ${e.toString()}");
-      Get.snackbar(
-        "Something went wrong. please try agin".tr,
-        "",
-        backgroundColor: Colors.red,
-      );
-      return 0;
-    }
-  }
-
   static Future<List<CustomerProductsModel>> getCustomerOffers(
       {required int customerId}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -89,52 +54,7 @@ class OrderController {
     }
   }
 
-  static Future<void> createSaleOrderLines(
-      {required int invoiceId,
-      required List<CustomerProductsModel> products}) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String userToken = preferences.getString("token")!;
-    Map<String, String> header = {
-      'Authorization': 'token $userToken',
-      "Content-Type": "text/html",
-    };
-    List<Map<String, dynamic>> invoiceItems = products.map((selectedProduct) {
-      return {
-        "product_id": selectedProduct.productId,
-        "count": int.parse(selectedProduct.quantity)
-      };
-    }).toList();
-    Map<String, dynamic> body = {"invoice_items": invoiceItems};
-    try {
-      final response = await ApiHelper().post(
-        url: "${ApiConstants.baseUrl}/invoices/invoice/$invoiceId",
-        headers: header,
-        body: body,
-      );
-      if (response["status"] == 5000) {
-        Get.snackbar(
-          "Something went wrong. please try agin".tr,
-          "",
-          backgroundColor: Colors.red,
-        );
-      } else {
-        Get.offAll(const MainControlScreen());
-        Get.snackbar(
-          "New Sale Order".tr,
-          "Creating Success".tr,
-          backgroundColor: Colors.green,
-        );
-      }
-    } catch (e) {
-      Get.snackbar(
-        "Internet connection".tr,
-        "Please check your internet connection".tr,
-        backgroundColor: Colors.red,
-      );
-    }
-  }
-
-  static Future<void> createSaleOrderandLines(
+  static Future<void> createSaleOrderAndLines(
       {required int customerId,
       required List<CustomerProductsModel> products}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
