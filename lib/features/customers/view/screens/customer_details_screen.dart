@@ -109,35 +109,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                 ],
               ),
             ),
-            ConditionalBuilder(
-              condition: widget.customer.image != null &&
-                  widget.customer.image!.isNotEmpty,
-              builder: (context) => Expanded(
-                child: CarouselSlider.builder(
-                  itemCount: widget.customer.images!.length,
-                  slideBuilder: (index) {
-                    return Column(
-                      children: [
-                        Image(
-                          image: NetworkImage(widget.customer.images![index]),
-                          height: MediaQuery.of(context).size.height * 0.27,
-                          fit: BoxFit.contain,
-                        ),
-                        VerticalSpacer(10.h)
-                      ],
-                    );
-                  },
-                  slideTransform: const CubeTransform(),
-                  slideIndicator: CircularSlideIndicator(),
-                ),
-              ),
-              fallback: (context) => Image(
-                image: const AssetImage(AssetsPathConstants.kProfile),
-                height: 200.w,
-                width: 200.w,
-                fit: BoxFit.contain,
-              ),
-            ),
+            buildUserProfileMultiImages(),
             VerticalSpacer(10.h),
             Row(
               children: [
@@ -260,7 +232,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                         )) {
                           List<CustomerProductsModel> offers =
                               await OrderController.getCustomerOffers(
-                                  customerId: widget.customer.id);
+                                  customerId: widget.customer.id,);
                           Get.to(
                             () => SaleOrderLineScreen(
                               customerId: widget.customer.id,
@@ -306,168 +278,13 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                                 await BlocProvider.of<TrackCheckingCubit>(
                                         context)
                                     .customerCheckInVisit(
-                                        latitude: widget.customer.lat,
-                                        longitude: widget.customer.lng,
-                                        customerId: widget.customer.id);
-                              } else {
-                                Get.bottomSheet(
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.4,
-                                    child: Form(
-                                      key: formKey,
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 15),
-                                              child: Text(
-                                                "Status And Reporting",
-                                                style: TextStyle(
-                                                    color: UiConstant
-                                                        .kCosmoCareCustomColors1,
-                                                    fontSize: 18.sp),
-                                              ),
-                                            ),
-                                            const VerticalSpacer(10),
-                                            FutureBuilder<
-                                                List<VisitStateModel>>(
-                                              future: TrackCheckingCubit
-                                                  .getVisitStatesModel(),
-                                              builder: (context, snapshot) {
-                                                if (snapshot.connectionState ==
-                                                    ConnectionState.waiting) {
-                                                  return const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color: UiConstant
-                                                          .kCosmoCareCustomColors1,
-                                                    ),
-                                                  );
-                                                } else {
-                                                  return Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 10),
-                                                    child:
-                                                        CustomSingleSelectField<
-                                                            String>(
-                                                      items: snapshot.data!
-                                                          .map((e) => e.name)
-                                                          .toList(),
-                                                      title: "State".tr,
-                                                      validator: (value) {
-                                                        if (value == null ||
-                                                            value.isEmpty) {
-                                                          return "State is Required"
-                                                              .tr;
-                                                        }
-                                                        return null;
-                                                      },
-                                                      onSelectionDone:
-                                                          (value) async {
-                                                        for (var item
-                                                            in snapshot.data!) {
-                                                          if (item.name ==
-                                                              value) {
-                                                            visitStateId =
-                                                                item.id;
-                                                          }
-                                                        }
-                                                      },
-                                                      itemAsString: (item) =>
-                                                          item,
-                                                      decoration:
-                                                          selectionFiledDecoration(
-                                                        hintText: "State".tr,
-                                                      ),
-                                                    ),
-                                                  );
-                                                }
-                                              },
-                                            ),
-                                            VerticalSpacer(10.h),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10),
-                                              child: CustomTextField(
-                                                prefixIconData: Iconsax.text,
-                                                hintText:
-                                                    "Report Description".tr,
-                                                maxLines: 2,
-                                                validate: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return "Report is Required"
-                                                        .tr;
-                                                  }
-                                                  return null;
-                                                },
-                                                onChange: (value) {
-                                                  visitReportDescription =
-                                                      value;
-                                                },
-                                              ),
-                                            ),
-                                            VerticalSpacer(15.h),
-                                            Center(
-                                              child: EasyButton(
-                                                idleStateWidget: Text(
-                                                  'Submit'.tr,
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                loadingStateWidget:
-                                                    const CircularProgressIndicator(
-                                                  strokeWidth: 3.0,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(
-                                                    Colors.white,
-                                                  ),
-                                                ),
-                                                useWidthAnimation: true,
-                                                useEqualLoadingStateWidgetDimension:
-                                                    true,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.6,
-                                                height: 45.h,
-                                                contentGap: 6.0,
-                                                buttonColor: UiConstant
-                                                    .kCosmoCareCustomColors1,
-                                                borderRadius: 10,
-                                                onPressed: () async {
-                                                  if (formKey.currentState!
-                                                      .validate()) {
-                                                    await BlocProvider.of<
-                                                                TrackCheckingCubit>(
-                                                            context)
-                                                        .customerCheckOutVisit(
-                                                      statusId: visitStateId!,
-                                                      reportDescription:
-                                                          visitReportDescription!,
-                                                      customerId:
-                                                          widget.customer.id,
-                                                    );
-                                                    Navigator.pop(context);
-                                                  }
-                                                },
-                                              ),
-                                            ),
-                                            VerticalSpacer(10.h),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  backgroundColor: Colors.white,
+                                  latitude: widget.customer.lat,
+                                  longitude: widget.customer.lng,
+                                  customerId: widget.customer.id,
                                 );
+                              } else {
+                                buildCheckoutStatesAndReportDescriptionBottomSheet(
+                                    context);
                               }
                             } else {
                               Get.snackbar(
@@ -498,6 +315,175 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  ConditionalBuilder buildUserProfileMultiImages() {
+    return ConditionalBuilder(
+      condition:
+          widget.customer.image != null && widget.customer.image!.isNotEmpty,
+      builder: (context) => Expanded(
+        child: CarouselSlider.builder(
+          itemCount: widget.customer.images!.length,
+          slideBuilder: (index) {
+            return Column(
+              children: [
+                Image(
+                  image: NetworkImage(widget.customer.images![index]),
+                  height: MediaQuery.of(context).size.height * 0.27,
+                  fit: BoxFit.contain,
+                ),
+                VerticalSpacer(10.h)
+              ],
+            );
+          },
+          slideTransform: const CubeTransform(),
+          slideIndicator: CircularSlideIndicator(),
+        ),
+      ),
+      fallback: (context) => Image(
+        image: const AssetImage(AssetsPathConstants.kProfile),
+        height: 200.w,
+        width: 200.w,
+        fit: BoxFit.contain,
+      ),
+    );
+  }
+
+  Future<dynamic> buildCheckoutStatesAndReportDescriptionBottomSheet(
+      BuildContext context) {
+    return Get.bottomSheet(
+      buildCheckOutStatesAndReportDescriptionPart(context),
+      backgroundColor: Colors.white,
+    );
+  }
+
+  SizedBox buildCheckOutStatesAndReportDescriptionPart(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.4,
+      child: Form(
+        key: formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                child: Text(
+                  "Status And Reporting".tr,
+                  style: TextStyle(
+                    color: UiConstant.kCosmoCareCustomColors1,
+                    fontSize: 18.sp,
+                  ),
+                ),
+              ),
+              const VerticalSpacer(10),
+              buildVisitStatesSelectorWidget(),
+              VerticalSpacer(10.h),
+              buildCheckOutReportDescriptionTextFiled(),
+              VerticalSpacer(15.h),
+              buildCheckOutSubmitStatesAndReportButton(context),
+              VerticalSpacer(10.h),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Center buildCheckOutSubmitStatesAndReportButton(BuildContext context) {
+    return Center(
+      child: EasyButton(
+        idleStateWidget: Text(
+          'Submit'.tr,
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        loadingStateWidget: const CircularProgressIndicator(
+          strokeWidth: 3.0,
+          valueColor: AlwaysStoppedAnimation<Color>(
+            Colors.white,
+          ),
+        ),
+        useWidthAnimation: true,
+        useEqualLoadingStateWidgetDimension: true,
+        width: MediaQuery.of(context).size.width * 0.6,
+        height: 45.h,
+        contentGap: 6.0,
+        buttonColor: UiConstant.kCosmoCareCustomColors1,
+        borderRadius: 10,
+        onPressed: () async {
+          if (formKey.currentState!.validate()) {
+            await BlocProvider.of<TrackCheckingCubit>(context)
+                .customerCheckOutVisit(
+              statusId: visitStateId!,
+              reportDescription: visitReportDescription!,
+              customerId: widget.customer.id,
+            );
+            Navigator.pop(context);
+          }
+        },
+      ),
+    );
+  }
+
+  Padding buildCheckOutReportDescriptionTextFiled() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: CustomTextField(
+        prefixIconData: Iconsax.text,
+        hintText: "Report Description".tr,
+        maxLines: 2,
+        validate: (value) {
+          if (value == null || value.isEmpty) {
+            return "Report is Required".tr;
+          }
+          return null;
+        },
+        onChange: (value) {
+          visitReportDescription = value;
+        },
+      ),
+    );
+  }
+
+  FutureBuilder<List<VisitStateModel>> buildVisitStatesSelectorWidget() {
+    return FutureBuilder<List<VisitStateModel>>(
+      future: TrackCheckingCubit.getVisitStatesModel(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: UiConstant.kCosmoCareCustomColors1,
+            ),
+          );
+        } else {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: CustomSingleSelectField<String>(
+              items: snapshot.data!.map((e) => e.name).toList(),
+              title: "State".tr,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "State is Required".tr;
+                }
+                return null;
+              },
+              onSelectionDone: (value) async {
+                for (var item in snapshot.data!) {
+                  if (item.name == value) {
+                    visitStateId = item.id;
+                  }
+                }
+              },
+              itemAsString: (item) => item,
+              decoration: selectionFiledDecoration(
+                hintText: "State".tr,
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 
