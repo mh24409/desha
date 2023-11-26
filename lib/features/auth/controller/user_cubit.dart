@@ -45,7 +45,6 @@ class UserCubit extends Cubit<UserStates> {
       body: body,
       headers: headers,
     );
-    print(response);
     if (response["status"] == 200) {
       String imageUrl = await getImage();
       preferences.setString("image", imageUrl);
@@ -75,7 +74,6 @@ class UserCubit extends Cubit<UserStates> {
       url: ApiConstants.baseUrl + ApiConstants.getProfileImageEndPoint,
       headers: headers,
     );
-    print(response);
     if (response["status"] == 200) {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.setString("image", response['data']['image']);

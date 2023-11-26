@@ -46,9 +46,9 @@ class SaleOrderFullDetails extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width,
               color: Colors.grey.shade200,
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                child: Text("Order Product Lines"),
+              child:  Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                child: Text("Order Product Lines".tr),
               ),
             ),
             SizedBox(

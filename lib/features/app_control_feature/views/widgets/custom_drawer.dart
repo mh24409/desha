@@ -33,23 +33,23 @@ class CustomDrawer extends StatelessWidget {
               scale: 1.4,
             ),
           ),
-          const DrawerListOfMenuHeader(
+           DrawerListOfMenuHeader(
             icon: Iconsax.setting,
-            title: "Settings",
+            title: "Settings".tr,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               children: [
                 ClickedOptionWidget(
-                  optionName: "Change Password",
+                  optionName: "Change Password".tr,
                   onTap: () {
                     Get.to(() => ChangePasswordScreen());
                   },
                 ),
                 VerticalSpacer(12.h),
                 ClickedOptionWidget(
-                  optionName: "Forget Password",
+                  optionName: "Forget Password".tr,
                   onTap: () async {
                     await launchUrl(
                       Uri.parse(
@@ -63,16 +63,16 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           VerticalSpacer(25.h),
-          const DrawerListOfMenuHeader(
+           DrawerListOfMenuHeader(
             icon: Iconsax.more,
-            title: "More",
+            title: "More".tr,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               children: [
                 ClickedOptionWidget(
-                  optionName: "My Profile",
+                  optionName: "My Profile".tr,
                   onTap: () {
                     Get.to(() =>  UserProfileView());
                   },

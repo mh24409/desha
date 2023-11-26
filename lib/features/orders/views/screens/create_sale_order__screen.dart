@@ -227,6 +227,7 @@ class _CreateSaleOrderScreenState extends State<CreateSaleOrderScreen> {
                     await CreateOrderController.createSaleOrderAndLines(
                       customerId: widget.customerId,
                       products: saleOrderLineProducts,
+                      context: context
                     );
                   } else {
                     Get.snackbar(

@@ -1,11 +1,13 @@
 import 'package:cosmo_care/features/app_control_feature/views/screens/main_control_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/Constants/api_constants.dart';
 import '../../../core/helper/api_helper.dart';
 import '../model/customer_products_model.dart';
+import 'cubit/user_sale_orders_cubit.dart';
 
 class CreateOrderController {
   static final GeolocatorPlatform _geolocator = GeolocatorPlatform.instance;
@@ -56,7 +58,7 @@ class CreateOrderController {
 
   static Future<void> createSaleOrderAndLines(
       {required int customerId,
-      required List<CustomerProductsModel> products}) async {
+      required List<CustomerProductsModel> products, required BuildContext context}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String userToken = preferences.getString("token")!;
     int salePersonId = preferences.getInt("id")!;
@@ -68,12 +70,13 @@ class CreateOrderController {
       return {
         "product_id": selectedProduct.productId,
         "count": int.parse(selectedProduct.quantity),
-        "sale_person_id" : salePersonId
+        
       };
     }).toList();
     Map<String, dynamic> body = {
       'customer_id': customerId,
-      "invoice_items": invoiceItems
+      "invoice_items": invoiceItems,
+      "sale_person_id" : salePersonId
     };
     try {
       final response = await ApiHelper().post(
@@ -88,6 +91,8 @@ class CreateOrderController {
           backgroundColor: Colors.red,
         );
       } else {
+        await BlocProvider.of<UserSaleOrdersCubit>(context).getCurrentUserSaleOrders();
+
         Get.offAll(const MainControlScreen());
         Get.snackbar(
           "New Sale Order".tr,

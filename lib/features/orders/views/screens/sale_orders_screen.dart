@@ -115,7 +115,7 @@ class SaleOrdersScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "My Sale Orders",
+              "My Sale Orders".tr,
               style: TextStyle(color: Colors.white, fontSize: 18.sp),
             ),
             GestureDetector(

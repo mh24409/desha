@@ -146,5 +146,46 @@ const Map<String, String> en = {
   "Changed customer status successfully":
       "Changed customer status successfully",
   "Please add products": "Please add products",
-  "You must add at least one product": "You must add at least one product"
+  "You must add at least one product": "You must add at least one product",
+  "Dashboard": "Dashboard",
+  "Order Name": "Order Name",
+  "Total Price": "Total Price",
+  "Item Count": "Item Count",
+  "Untaxed Amount": "Untaxed Amount",
+  "Taxes": "Taxes",
+  "Order Product Lines": "Order Product Lines",
+  "Description": "Description",
+  "Delivered Quantity": "Delivered Quantity",
+  "Invoice Quantity": "Invoice Quantity",
+  "Price": "Price",
+  "Discount 1": "Discount 1",
+  "Discount 2": "Discount 2",
+  "Sub Total": "Sub Total",
+  "Settings": "Settings",
+  "Change Password": "Change Password",
+  "Forget Password": "Forget Password",
+  "More": "More",
+  "My Profile": "My Profile",
+  "more images for the customer (Optional)":
+      "more images for the customer (Optional)",
+  "Add Document (Required 2 at least)": "Add Document (Required 2 at least)",
+  "Current Password": "Current Password",
+  "New Password": "New Password",
+  "Confirm New Password": "Confirm New Password",
+  "Update Password": "Update Password",
+  "Change Password Done":"Change Password Done",
+  "Current Password Isn't Correct":"Current Password Isn't Correct",
+  "Error":"Error",
+  "profile update":"profile update",
+  "This email already exists":"This email already exists",
+"update success":"update success",
+"Update email successfully":"Update email successfully",
+"Please login again"  :"Please login again",
+"Image update":"Image update",
+"My Sale Orders":"My Sale Orders"
+
+
+
+
+
 };

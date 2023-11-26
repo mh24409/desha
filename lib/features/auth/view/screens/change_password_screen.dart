@@ -43,7 +43,7 @@ class ChangePasswordScreen extends StatelessWidget {
                       ),
                       HorizontalSpacer(30.w),
                       Text(
-                        "Change Password",
+                        "Change Password".tr,
                         style: TextStyle(
                           fontSize: 22.sp,
                           fontWeight: FontWeight.bold,

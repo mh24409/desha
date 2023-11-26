@@ -398,7 +398,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "more images for the customer (Optional)",
+            "more images for the customer (Optional)".tr,
             style: TextStyle(
                 color: UiConstant.kCosmoCareCustomColors1,
                 fontWeight: FontWeight.bold,
@@ -499,7 +499,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Add Document (Required 2 at least)",
+            "Add Document (Required 2 at least)".tr,
             style: TextStyle(
               color: UiConstant.kCosmoCareCustomColors1,
               fontWeight: FontWeight.bold,
