@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class OrderOneInfoInLine extends StatelessWidget {
   String propName;
   String value;
-  OrderOneInfoInLine({Key? key, required this.propName, required this.value})
+  bool hasDivider;
+  OrderOneInfoInLine({Key? key, required this.propName, required this.value, this .hasDivider = true})
       : super(key: key);
 
   @override
@@ -43,7 +44,9 @@ class OrderOneInfoInLine extends StatelessWidget {
             ),
           ],
         ),
-        Divider(color: Colors.grey.shade200,)
+       hasDivider ? Divider(
+          color: Colors.grey.shade200,
+        ) : Container()
       ],
     );
   }

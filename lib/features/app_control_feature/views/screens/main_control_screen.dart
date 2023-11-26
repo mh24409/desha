@@ -13,6 +13,7 @@ import '../../../orders/views/screens/sale_orders_screen.dart';
 import '../../../products/views/screens/product_divided_by_category_screen.dart';
 import '../../controllers/main_view_control_cubit.dart';
 import '../../controllers/main_view_control_state.dart';
+import '../widgets/custom_drawer.dart';
 
 class MainControlScreen extends StatefulWidget {
   const MainControlScreen({Key? key}) : super(key: key);
@@ -78,7 +79,7 @@ class _MainControlScreenState extends State<MainControlScreen> {
           AppLanguageSelectorWidget(),
         ],
       ),
-      drawer: Drawer(),
+      drawer: const CustomDrawer(),
       bottomNavigationBar:
           BlocBuilder<MainViewControlCubit, MainControlViewState>(
         builder: (context, state) {

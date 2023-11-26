@@ -2,6 +2,7 @@ class ApiConstants {
   // static const String baseUrl = 'https://cosmocareprod-training.technotown.technology';
   // static const String baseUrl = 'https://cosmocare.technotown.technology';
   static const String baseUrl = 'http://192.168.202.251:8069';
+  static const String resetPasswordURL = '$baseUrl/web/reset_password';
   static const String loginEndPoint = '/login';
   static const String getCustomerTypesEndPoint = '/types';
   static const String getCustomersEndPoint = '/customers';
@@ -18,4 +19,7 @@ class ApiConstants {
   static const String visitCheckOutEndPoint = '/visit/check_out';
   static const String visitStatesEndPoint = '/visit/states';
   static const String userOrdersEndPoint = '/user/orders';
+  static const String changePasswordEndPoint = '/change_password';
+  static const String editProfileEndPoint = '/mob/edit_profile';
+  static const String getProfileImageEndPoint = '/mob/get_user_prof_image';
 }

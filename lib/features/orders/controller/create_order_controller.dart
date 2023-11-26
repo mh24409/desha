@@ -59,6 +59,7 @@ class CreateOrderController {
       required List<CustomerProductsModel> products}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String userToken = preferences.getString("token")!;
+    int salePersonId = preferences.getInt("id")!;
     Map<String, String> header = {
       'Authorization': 'token $userToken',
       "Content-Type": "text/html",
@@ -66,7 +67,8 @@ class CreateOrderController {
     List<Map<String, dynamic>> invoiceItems = products.map((selectedProduct) {
       return {
         "product_id": selectedProduct.productId,
-        "count": int.parse(selectedProduct.quantity)
+        "count": int.parse(selectedProduct.quantity),
+        "sale_person_id" : salePersonId
       };
     }).toList();
     Map<String, dynamic> body = {

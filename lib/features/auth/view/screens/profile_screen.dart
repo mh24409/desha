@@ -18,77 +18,45 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: BlocBuilder<UserCubit, UserStates>(
-        builder: (context, state) {
-          if (state is UserSuccessState) {
-            return Column(
-              children: [
-                Flexible(
-                  flex: 10,
-                  child: ProfileHeader(
-                    userName: state.currentUser.userName!,
-                  ),
-                ),
-                Flexible(child: VerticalSpacer(20.h)),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: ProfileCard(
-                    cardName: "User Name".tr,
-                    cardValue: state.currentUser.userName!,
-                  ),
-                ),
-                Flexible(child: VerticalSpacer(20.h)),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: ProfileCard(
-                    cardName: "User Email".tr,
-                    cardValue: state.currentUser.email!,
-                  ),
-                ),
-                Flexible(child: VerticalSpacer(40.h)),
-                EasyButton(
-                  idleStateWidget: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Logout'.tr,
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      const HorizontalSpacer(5),
-                      const Icon(
-                        Iconsax.logout,
-                        color: Colors.white,
-                      )
-                    ],
-                  ),
-                  loadingStateWidget: const CircularProgressIndicator(
-                    strokeWidth: 3.0,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.white,
+    return Scaffold(
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: BlocBuilder<UserCubit, UserStates>(
+          builder: (context, state) {
+            if (state is UserSuccessState) {
+              return Column(
+                children: [
+                  Flexible(
+                    flex: 10,
+                    child: ProfileHeader(
+                      userName: state.currentUser.userName!,
                     ),
                   ),
-                  useWidthAnimation: true,
-                  useEqualLoadingStateWidgetDimension: true,
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  height: 40.h,
-                  contentGap: 6.0,
-                  buttonColor: UiConstant.kCosmoCareCustomColors1,
-                  borderRadius: 10,
-                  onPressed: () async {
-                    context.read<AuthCubit>().logOut(context: context);
-                  },
-                )
-              ],
-            );
-          } else {
-            return Container();
-          }
-        },
+                  Flexible(child: VerticalSpacer(20.h)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: ProfileCard(
+                      cardName: "User Name".tr,
+                      cardValue: state.currentUser.userName!,
+                    ),
+                  ),
+                  Flexible(child: VerticalSpacer(20.h)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: ProfileCard(
+                      cardName: "User Email".tr,
+                      cardValue: state.currentUser.email!,
+                    ),
+                  ),
+                 
+                ],
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
       ),
     );
   }

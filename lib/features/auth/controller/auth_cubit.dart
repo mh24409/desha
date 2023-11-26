@@ -11,6 +11,7 @@ import '../../../core/Constants/ui_constants.dart';
 import '../../../core/helper/api_helper.dart';
 import '../../../core/widgets/widgets/custom_button_widget.dart';
 import '../../customers/controller/get_all_customer_cubit.dart';
+import '../../orders/controller/cubit/user_sale_orders_cubit.dart';
 import '../view/screens/login_screen.dart';
 import 'auth_state.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -48,6 +49,7 @@ class AuthCubit extends Cubit<AuthStates> {
         preferences.setString("image", response["profile"]["image"]);
         BlocProvider.of<UserCubit>(context).getCurrentUserInfo();
         await BlocProvider.of<GetAllCustomerCubit>(context).getAllCustomers();
+        await BlocProvider.of<UserSaleOrdersCubit>(context).getCurrentUserSaleOrders();
         emit(LoginSuccessState());
       }
     } catch (e) {
