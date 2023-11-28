@@ -173,5 +173,6 @@ const Map<String, String> ar = {
   "Update email successfully": "تم تحديث البريد الإلكتروني بنجاح",
   "Please login again": "الرجاء تسجيل الدخول مرة أخرى",
   "Image update": "تحديث الصورة",
-  "My Sale Orders": "طلبات البيع الخاصة بي"
+  "My Sale Orders": "طلبات البيع الخاصة بي",
+  "Discount": "الخصم"
 };

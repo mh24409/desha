@@ -182,7 +182,8 @@ const Map<String, String> en = {
 "Update email successfully":"Update email successfully",
 "Please login again"  :"Please login again",
 "Image update":"Image update",
-"My Sale Orders":"My Sale Orders"
+"My Sale Orders":"My Sale Orders",
+"Discount":"Discount"
 
 
 

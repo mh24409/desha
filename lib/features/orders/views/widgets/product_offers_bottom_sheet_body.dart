@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/Constants/ui_constants.dart';
 import '../../model/offers_model.dart';
@@ -18,9 +19,17 @@ class ProductOffersBottomSheetBody extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: Text(
                   offersModel.bonusProducts.toString(),
+                  style: TextStyle(fontSize: 12.sp),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  offersModel.extraDiscount.toString(),
+                  textAlign: TextAlign.center,
                 ),
               ),
               Expanded(

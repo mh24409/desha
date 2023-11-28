@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
+import 'dart:convert';
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:cosmo_care/core/Constants/assets_path_constants.dart';
 import 'package:cosmo_care/core/Constants/ui_constants.dart';
@@ -224,7 +226,12 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                       buttonColor: UiConstant.kCosmoCareCustomColors1,
                       borderRadius: 20.r,
                       onPressed: () async {
-                        if (true) {
+                        if (CreateOrderController.inSaveZoneToCreateOrder(
+                              customerLat: widget.customer.lat,
+                              customerLong: widget.customer.lng,
+                              currentLat: global.currentUserLat,
+                              currentLong: global.currentUserLong,
+                            )) {
                           List<CustomerProductsModel> offers =
                               await CreateOrderController.getCustomerOffers(
                             customerId: widget.customer.id,

@@ -30,7 +30,7 @@ class ProductOffersBottomSheetHeader extends StatelessWidget {
                   ),
                 ),
                 HorizontalSpacer(15.w),
-                 Text(
+                Text(
                   "Available offers for this product".tr,
                   style: const TextStyle(color: Colors.white),
                 ),
@@ -46,11 +46,17 @@ class ProductOffersBottomSheetHeader extends StatelessWidget {
               horizontal: 20,
             ),
             child: Row(
-              children:  [
+              children: [
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Text(
                     "Product".tr,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    "Discount".tr,
                   ),
                 ),
                 Expanded(
