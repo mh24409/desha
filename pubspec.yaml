@@ -8,40 +8,40 @@ environment:
   sdk: ">=2.19.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-
-  cupertino_icons: ^1.0.2
-  get: ^4.6.5
-  shared_preferences: ^2.2.0
-  http: ^0.13.6
-  firebase_core: ^2.15.0
-  firebase_database: ^10.2.4
-  google_maps_flutter: ^2.2.7
-  geolocator: ^8.2.0
+  autocomplete_textfield: ^2.0.1
   conditional_builder_null_safety: ^0.0.6
+  cupertino_icons: ^1.0.2
+  device_info_plus: ^9.1.0
   dio: ^4.0.6
   dropdown_button2: ^2.0.0
   easy_loading_button: ^0.3.2
   expandable: ^5.0.1
-  flutter_screenutil: ^5.5.4
-  sqflite: ^2.2.6
-  path: ^1.8.0
+  firebase_core: ^2.15.0
+  firebase_database: ^10.2.4
+  flutter:
+    sdk: flutter
   flutter_bloc: ^8.1.1
-  iconsax: ^0.0.8
-  image_picker: ^0.8.5+3
-  location: ^5.0.3
-  url_launcher: ^6.1.10
   flutter_carousel_slider: ^1.1.0
   flutter_custom_selector: ^0.0.3
-  autocomplete_textfield: ^2.0.1
-  device_info_plus: ^9.1.0
+  flutter_screenutil: ^5.5.4
+  geolocator: ^8.2.0
+  get: ^4.6.5
+  google_maps_flutter: ^2.2.7
+  http: ^0.13.6
+  iconsax: ^0.0.8
+  image_picker: ^0.8.5+3
+  intl: 
+  location: ^5.0.3
+  path: ^1.8.0
+  shared_preferences: ^2.2.0
+  sqflite: ^2.2.6
+  url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_launcher_icons: "^0.10.0"
+  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
 
 flutter:
   assets:

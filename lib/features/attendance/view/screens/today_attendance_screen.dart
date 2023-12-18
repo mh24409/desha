@@ -7,7 +7,7 @@ import '../../../../core/constants/ui_constants.dart';
 import '../../controller/today_attendance_cubit.dart';
 import '../../controller/today_attendance_state.dart';
 import '../widgets/attendance_time_widget.dart';
-
+import 'package:intl/intl.dart';
 
 class TodayAttendanceScreen extends StatelessWidget {
   const TodayAttendanceScreen({super.key});
@@ -27,7 +27,7 @@ class TodayAttendanceScreen extends StatelessWidget {
                     color: UiConstant.kCosmoCareCustomColors1, fontSize: 20.sp),
               ),
               Text(
-                ": ${DateTime.now().toString()}",
+                ": ${DateFormat('EEEE, d MMMM yyyy').format(DateTime.now())}",
                 style: TextStyle(
                     color: UiConstant.kCosmoCareCustomColors1, fontSize: 20.sp),
               ),

@@ -183,7 +183,33 @@ const Map<String, String> en = {
 "Please login again"  :"Please login again",
 "Image update":"Image update",
 "My Sale Orders":"My Sale Orders",
-"Discount":"Discount"
+"Discount":"Discount",
+
+'Failed to get attendance history': 'Failed to get attendance history',
+  'Failed to get attendance data': 'Failed to get attendance data',
+  'Failed to check in': 'Failed to check in',
+  'Failed to check out': 'Failed to check out',
+  'Checked in successfully': 'Checked in successfully',
+  'Checked out successfully': 'Checked out successfully',
+  'Attendance History': 'Attendance History',
+  'You don\'t have any attendance history':
+      'You don\'t have any attendance history',
+  'Date': 'Date',
+  'Check In Time': 'Check In Time',
+  'Check Out Time': 'Check Out Time',
+  'Checked in': 'Checked in',
+  'Checked out': 'Checked out',
+  'Done for the day👍🏼': 'Done for the day👍🏼',
+  'Already checked in and out': 'Already checked in and out',
+  'You have already checked in and out today':
+      'You have already checked in and out today',
+  'Time': 'Time',
+'Today': 'Today',
+
+"Attendance":"Attendance",
+"Attendance Sheet":"Attendance Sheet",
+"History":"History",
+"Refresh History":"Refresh History"
 
 
 
