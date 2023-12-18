@@ -226,12 +226,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                       buttonColor: UiConstant.kCosmoCareCustomColors1,
                       borderRadius: 20.r,
                       onPressed: () async {
-                        if (CreateOrderController.inSaveZoneToCreateOrder(
-                              customerLat: widget.customer.lat,
-                              customerLong: widget.customer.lng,
-                              currentLat: global.currentUserLat,
-                              currentLong: global.currentUserLong,
-                            )) {
+                        if (true) {
                           List<CustomerProductsModel> offers =
                               await CreateOrderController.getCustomerOffers(
                             customerId: widget.customer.id,

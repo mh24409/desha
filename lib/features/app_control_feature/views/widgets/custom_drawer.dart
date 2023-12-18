@@ -11,6 +11,7 @@ import '../../../../core/Constants/assets_path_constants.dart';
 import '../../../../core/Constants/ui_constants.dart';
 import '../../../../core/widgets/widgets/horizontal_spacer.dart';
 import '../../../../core/widgets/widgets/vertical_spacer.dart';
+import '../../../attendance/view/screens/attendance_control_view.dart';
 import '../../../auth/controller/auth_cubit.dart';
 import '../../../auth/view/screens/change_password_screen.dart';
 import '../../../auth/view/screens/user_profile_view.dart';
@@ -75,6 +76,13 @@ class CustomDrawer extends StatelessWidget {
                   optionName: "My Profile".tr,
                   onTap: () {
                     Get.to(() =>  UserProfileView());
+                  },
+                ),
+                VerticalSpacer(12.h),
+                ClickedOptionWidget(
+                  optionName: "Attendance".tr,
+                  onTap: () {
+                    Get.to(() => const AttendanceControlScreen());
                   },
                 ),
                 VerticalSpacer(12.h),

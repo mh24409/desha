@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/Constants/api_constants.dart';
 import '../../../core/Constants/ui_constants.dart';
 import '../../../core/helper/api_helper.dart';
+import '../../../core/shared/methods/imei_getter.dart';
 import '../../../core/widgets/widgets/custom_button_widget.dart';
 import '../../customers/controller/get_all_customer_cubit.dart';
 import '../../orders/controller/cubit/user_sale_orders_cubit.dart';
@@ -23,9 +24,11 @@ class AuthCubit extends Cubit<AuthStates> {
   Future<void> signInWithEmailAndPassword(context,
       {required String email, required String password}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    String imei = await getIMEI();
     Map<String, String> body = {
       'identity': email,
       'password': password,
+      'imei': imei
     };
     Map<String, String> headers = {"Content-Type": "text/html"};
 
@@ -41,6 +44,7 @@ class AuthCubit extends Cubit<AuthStates> {
       } else {
         preferences.setBool("isLoggedIn", true);
         preferences.setString("password", password);
+        preferences.setInt("employee_id", response["profile"]["employee_id"]);
         preferences.setString("trackingID", response["trackingID"]);
         preferences.setString("token", response["token"]);
         preferences.setInt("id", response["profile"]["id"]);
@@ -49,7 +53,8 @@ class AuthCubit extends Cubit<AuthStates> {
         preferences.setString("image", response["profile"]["image"]);
         BlocProvider.of<UserCubit>(context).getCurrentUserInfo();
         await BlocProvider.of<GetAllCustomerCubit>(context).getAllCustomers();
-        await BlocProvider.of<UserSaleOrdersCubit>(context).getCurrentUserSaleOrders();
+        await BlocProvider.of<UserSaleOrdersCubit>(context)
+            .getCurrentUserSaleOrders();
         emit(LoginSuccessState());
       }
     } catch (e) {

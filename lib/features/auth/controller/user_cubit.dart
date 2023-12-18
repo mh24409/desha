@@ -22,6 +22,7 @@ class UserCubit extends Cubit<UserStates> {
     user.userImage = preferences.getString("image");
     user.trackingID = preferences.getString("trackingID");
     user.token = preferences.getString("token");
+    user.employeeId = preferences.getInt("employee_id");
 
     emit(
       UserSuccessState(

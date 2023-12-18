@@ -9,6 +9,8 @@ import 'core/Constants/ui_constants.dart';
 import 'core/utils/app_languages/controller/binding.dart';
 import 'core/utils/app_languages/translation/translation.dart';
 import 'features/app_control_feature/controllers/main_view_control_cubit.dart';
+import 'features/attendance/controller/attendance_history_cubit.dart';
+import 'features/attendance/controller/today_attendance_cubit.dart';
 import 'features/auth/controller/auth_cubit.dart';
 import 'features/auth/controller/user_cubit.dart';
 import 'features/check_in_tracking/controller/track_check_cubit.dart';
@@ -56,6 +58,12 @@ class CosmoCareTrackingApp extends StatelessWidget {
         BlocProvider<UserSaleOrdersCubit>(
           create: (context) => UserSaleOrdersCubit()..getCurrentUserSaleOrders(),
         ),
+        BlocProvider<TodayAttendanceCubit>(
+            create: (context) =>
+                TodayAttendanceCubit()..getTodayCheckingStatus()),
+        BlocProvider<AttendanceHistoryCubit>(
+            create: (context) =>
+                AttendanceHistoryCubit()..getAttendanceHistory()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
