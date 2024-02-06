@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cosmo_care/features/auth/controller/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,7 +72,39 @@ class AuthCubit extends Cubit<AuthStates> {
     await Future.delayed(const Duration(seconds: 5));
     bool loginState = preferences.getBool('isLoggedIn') ?? false;
     if (loginState == true) {
-      emit(LoginSuccessState());
+      String password = preferences.getString("password")!;
+      String email = preferences.getString("email")!;
+
+      try {
+        String imei = await getIMEI();
+        Map<String, String> body = {
+          'identity': email,
+          'password': password,
+          'imei': imei
+        };
+        Map<String, String> headers = {"Content-Type": "text/html"};
+        final response = await ApiHelper().post(
+            url: ApiConstants.baseUrl + ApiConstants.loginEndPoint,
+            body: body,
+            headers: headers);
+        if (response["status"] == 5000) {
+          logOut(context: context);
+          Get.snackbar(
+              "Login info changed".tr,
+              "Your email or password changed. please call your administrator to get your new login info"
+                  .tr,
+              backgroundColor: Colors.blue,
+              snackPosition: SnackPosition.BOTTOM,
+              duration: const Duration(seconds: 5));
+        } else {
+          preferences.setString("token", response["token"]);
+          emit(LoginSuccessState());
+        }
+      } catch (e) {
+        Get.snackbar("Connection Error".tr,
+            "Please check your internet connection".trParams(),
+            backgroundColor: Colors.red);
+      }
     } else {
       emit(LoginFailureState(errorMessage: "User Not Login"));
     }
