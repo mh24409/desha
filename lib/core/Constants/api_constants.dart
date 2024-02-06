@@ -1,7 +1,7 @@
 class ApiConstants {
   // static const String baseUrl = 'https://cosmocareprod-training.technotown.technology';
-  // static const String baseUrl = 'https://cosmocare.technotown.technology';
-  static const String baseUrl = 'http://192.168.202.251:8069';
+  static const String baseUrl = 'https://cosmocare.technotown.technology';
+  // static const String baseUrl = 'http://192.168.202.251:8069';
   static const String resetPasswordURL = '$baseUrl/web/reset_password';
   static const String loginEndPoint = '/login';
   static const String getCustomerTypesEndPoint = '/types';
@@ -12,7 +12,8 @@ class ApiConstants {
   static const String categoriesEndPoint = '/products_categorized';
   static const String saleZonesEndPoint = '/sales-unit';
   static const String createSaleOrderEndPoint = '/invoices/invoice';
-  static const String createSaleOrderAndLineEndPoint =  '/invoices/create_invoice';
+  static const String createSaleOrderAndLineEndPoint =
+      '/invoices/create_invoice';
   static const String trackChecking = '/tracking/check';
   static const String visitCheckInEndPoint = '/visit/check_in';
   static const String visitCheckOutEndPoint = '/visit/check_out';
@@ -23,8 +24,7 @@ class ApiConstants {
   static const String getProfileImageEndPoint = '/mob/get_user_prof_image';
   static const String checkInEndPoint = '/attendance_check_in';
   static const String checkOutEndPoint = '/attendance_check_out';
-  static const String todayCheckingStatusEndPoint = '/get_today_checking_status';
+  static const String todayCheckingStatusEndPoint =
+      '/get_today_checking_status';
   static const String attendanceHistoryEndPoint = '/get_attendance_history';
-
-
 }

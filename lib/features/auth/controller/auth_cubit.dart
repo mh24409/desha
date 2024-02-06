@@ -44,7 +44,8 @@ class AuthCubit extends Cubit<AuthStates> {
       } else {
         preferences.setBool("isLoggedIn", true);
         preferences.setString("password", password);
-        preferences.setInt("employee_id", response["profile"]["employee_id"]);
+        preferences.setInt(
+            "employee_id", response["profile"]["employee_id"] ?? 0);
         preferences.setString("trackingID", response["trackingID"]);
         preferences.setString("token", response["token"]);
         preferences.setInt("id", response["profile"]["id"]);
